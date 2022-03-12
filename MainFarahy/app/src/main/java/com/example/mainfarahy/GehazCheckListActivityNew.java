@@ -10,22 +10,18 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import android.os.Bundle;
+
 import android.view.View;
-import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.ExpandableListView.OnGroupCollapseListener;
 import android.widget.ExpandableListView.OnGroupExpandListener;
-import android.widget.ImageView;
 import android.widget.Toast;
 public class GehazCheckListActivityNew extends AppCompatActivity {
     ExpandableListAdapter listAdapter;
@@ -33,6 +29,7 @@ public class GehazCheckListActivityNew extends AppCompatActivity {
     List<String> listDataHeader;
     HashMap<String, List<GehazList>> listDataChild;
 DataBaseHelper myDb;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,9 +115,9 @@ DataBaseHelper myDb;
                 builder.setView(dialogView);
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
-                EditText commentEdit= (EditText) dialogView.findViewById(R.id.edit_box_id) ;
+                EditText commentEdit= (EditText) dialogView.findViewById(R.id.guest_edit_box_id) ;
                 commentEdit.setText(listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).GehazComment);
-                Button okButtonDialog= (Button) dialogView.findViewById(R.id.buttonOk_id);
+                Button okButtonDialog= (Button) dialogView.findViewById(R.id.guest_buttonOk_id);
                okButtonDialog.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -155,6 +152,9 @@ DataBaseHelper myDb;
                 return false;
             }
         });
+
+
+
 
 
 
@@ -368,14 +368,135 @@ DataBaseHelper myDb;
 
        // listDataHeader = new ArrayList<String>();
         //listDataChild = new HashMap<String, List<GehazList>>();
-        insertData("ٍSamya","Gamal","¨1/1/2022","مطابخ","شوك","","false");
-        insertData("ٍSamya","Gamal","¨1/1/2022","مطابخ","سكاكين","","false");
-        insertData("ٍSamya","Gamal","¨1/1/2022","مطابخ","معالق","","false");
+        String Matbakh="مطبخ";
+        String hamam="مستلزمات حمام";
+        String mafaresh="المفروشات";
 
-        insertData("ٍSamya","Gamal","¨1/1/2022","yosif","gzam","","false");
-        insertData("ٍSamya","Gamal","¨1/1/2022","yosif","lbs","","false");
-        insertData("ٍSamya","Gamal","¨1/1/2022","yosif","mmm","","false");
-loadData();
+        insertData("","","",Matbakh,"طقم صيني","","false");
+        insertData("","","",Matbakh,"طقم ملاعق و شوك","","false");
+        insertData("","","",Matbakh,"اطباق بلاستيك","","false");
+        insertData("","","",Matbakh,"طقم سكاكين","","false");
+        insertData("","","",Matbakh,"طقم معالق توزيع","","false");
+        insertData("","","",Matbakh,"طقم توابل","","false");
+        insertData("","","",Matbakh,"علب ثلاجة","","false");
+        insertData("","","",Matbakh,"طقم بايركس","","false");
+        insertData("","","",Matbakh,"طقم حلل","","false");
+        insertData("","","",Matbakh,"طقم صواني فرن","","false");
+        insertData("","","",Matbakh,"طواجن فرن","","false");
+        insertData("","","",Matbakh,"طقم جيلي","","false");
+        insertData("","","",Matbakh,"طقم شاي/قهوة","","false");
+        insertData("","","",Matbakh,"طاسات للقلي","","false");
+        insertData("","","",Matbakh,"ملاعق خشب/سيليكون","","false");
+        insertData("","","",Matbakh,"مبشرة","","false");
+        insertData("","","",Matbakh,"مقورة","","false");
+        insertData("","","",Matbakh,"لبانة","","false");
+        insertData("","","",Matbakh,"كبة","","false");
+        insertData("","","",Matbakh,"طقم صواني تقديم","","false");
+        insertData("","","",Matbakh,"مصفاة ستانلس","","false");
+        insertData("","","",Matbakh,"مصفاة بلاستيك","","false");
+        insertData("","","",Matbakh,"زجاجة مياه و اكواب","","false");
+        insertData("","","",Matbakh,"براد شاي","","false");
+        insertData("","","",Matbakh,"طبق كبير للسلطة","","false");
+        insertData("","","",Matbakh,"سلة مهملات","","false");
+        insertData("","","",Matbakh,"مقص مطبخ","","false");
+        insertData("","","",Matbakh,"شياطة الارز","","false");
+        insertData("","","",Matbakh,"مساكات للحاجات السخنة","","false");
+        insertData("","","",Matbakh,"حامل مناديل مطبخ","","false");
+        insertData("","","",Matbakh,"مريلة مطبخ","","false");
+        insertData("","","",Matbakh,"مصفاة صغيرة للسوائل","","false");
+        insertData("","","",Matbakh,"لوح تقطيع","","false");
+        insertData("","","",Matbakh,"صفاية ملاعق للحوض","","false");
+        insertData("","","",Matbakh,"كيتشن ماشين","","false");
+        insertData("","","",Matbakh,"مفرمة ثوم","","false");
+        insertData("","","",Matbakh,"عصارة ليمون","","false");
+        insertData("","","",Matbakh,"عصارة برتقال","","false");
+        insertData("","","",Matbakh,"ميزان مطبخ","","false");
+        insertData("","","",Matbakh,"فوط مطبخ","","false");
+        insertData("","","",Matbakh,"سلاطين صغيرة","","false");
+        insertData("","","",Matbakh,"كنكة قهوة","","false");
+        insertData("","","",Matbakh,"شفشق عصير","","false");
+        insertData("","","",Matbakh,"ولاعة بوتجاز","","false");
+        insertData("","","",Matbakh,"مدق للبتيك","","false");
+        insertData("","","",Matbakh,"نشابة عجين","","false");
+        insertData("","","",Matbakh,"اطباق ميكروويف","","false");
+        insertData("","","",Matbakh,"قطاعة بيتزا","","false");
+        insertData("","","",Matbakh,"معلقة ايس كريم","","false");
+        insertData("","","",Matbakh,"قوالب كيك","","false");
+        insertData("","","",Matbakh,"مساكة جاتوه","","false");
+        insertData("","","",Matbakh,"شيالة بسكويت","","false");
+        insertData("","","",Matbakh,"صواني بيتزا","","false");
+        insertData("","","",Matbakh,"صينية فطار","","false");
+        insertData("","","",Matbakh,"طقم خشاف","","false");
+        insertData("","","",Matbakh,"قوالب ثلج","","false");
+        insertData("","","",Matbakh,"فتاحة علب","","false");
+        insertData("","","",Matbakh,"اقماع","","false");
+        insertData("","","",Matbakh,"مضرب بيض يدوي","","false");
+        insertData("","","",Matbakh,"فرشاة بيض","","false");
+        insertData("","","",Matbakh,"هراسة بطاطس","","false");
+        insertData("","","",Matbakh,"بونبونيرة","","false");
+        insertData("","","",Matbakh,"كاسات","","false");
+        insertData("","","",Matbakh,"طفاية","","false");
+        insertData("","","",Matbakh,"منخل دقيق","","false");
+        insertData("","","",Matbakh,"برطمانات تخزين","","false");
+        insertData("","","",Matbakh,"قشارة بطاطس","","false");
+        insertData("","","",Matbakh,"قطاعة تفاح","","false");
+        insertData("","","",Matbakh,"مجات نسكافيه","","false");
+        insertData("","","",Matbakh,"جوانتي حرارة","","false");
+        insertData("","","",Matbakh,"طاسة جريل","","false");
+        insertData("","","",Matbakh,"خلاط","","false");
+        insertData("","","",Matbakh,"طبق تسالي","","false");
+        insertData("","","",Matbakh,"طقم عشاء للاستخدام اليومي","","false");
+
+        insertData("","","",hamam,"طقم دواسات","","false");
+        insertData("","","",hamam,"مساحة زجاج","","false");
+        insertData("","","",hamam,"سلة مهملات صفيرة","","false");
+        insertData("","","",hamam,"سبت غسيل","","false");
+        insertData("","","",hamam,"طبق بلاستيك للغسيل","","false");
+        insertData("","","",hamam,"مشابك","","false");
+        insertData("","","",hamam,"منشر غسيل داخلي","","false");
+        insertData("","","",hamam,"مشمع غسيل","","false");
+        insertData("","","",hamam,"شماعات للدولاب","","false");
+        insertData("","","",hamam,"مقشة و جاروف","","false");
+        insertData("","","",hamam,"مساحة ارضيات","","false");
+        insertData("","","",hamam,"جردل مسح","","false");
+        insertData("","","",hamam,"زعافة","","false");
+        insertData("","","",hamam,"فرشاة اسنان","","false");
+        insertData("","","",hamam,"سلاكة بلاعات","","false");
+        insertData("","","",hamam,"فرشاة الوبر للملابس","","false");
+        insertData("","","",hamam,"فرشاة تواليت","","false");
+        insertData("","","",hamam,"ليفة تنضيف الحوض","","false");
+        insertData("","","",hamam,"شموع","","false");
+        insertData("","","",hamam,"ورد مجفف","","false");
+        insertData("","","",hamam,"معطر حمام","","false");
+        insertData("","","",hamam,"منظف ارضيات","","false");
+        insertData("","","",hamam,"مبخرة","","false");
+        insertData("","","",hamam,"ملمع زجاج","","false");
+        insertData("","","",hamam,"ملمع خشب","","false");
+        insertData("","","",hamam,"طقم اكسسوارات الحمام","","false");
+
+        insertData("","","",mafaresh,"بطاطين","","false");
+        insertData("","","",mafaresh,"لحاف","","false");
+        insertData("","","",mafaresh,"اغطية لحاف","","false");
+        insertData("","","",mafaresh,"كوفرتة","","false");
+        insertData("","","",mafaresh,"مفرش سرسر دفاية","","false");
+        insertData("","","",mafaresh,"غطاء مرتبة","","false");
+        insertData("","","",mafaresh,"طقم ملايات","","false");
+        insertData("","","",mafaresh,"بشاكير قطن","","false");
+        insertData("","","",mafaresh,"طقم فوط قطن","","false");
+        insertData("","","",mafaresh,"برنس حمام","","false");
+        insertData("","","",mafaresh,"شبشب حمام","","false");
+        insertData("","","",mafaresh,"مفرش سفرة","","false");
+        insertData("","","",mafaresh,"مفارش نيش","","false");
+        insertData("","","",mafaresh,"مفارش لترابيزة الصالون","","false");
+        insertData("","","",mafaresh,"","","false");
+        insertData("","","",mafaresh,"","","false");
+        insertData("","","",mafaresh,"","","false");
+        insertData("","","",mafaresh,"","","false");
+        insertData("","","",mafaresh,"","","false");
+        insertData("","","",mafaresh,"","","false");
+
+
+        loadData();
         /*
         //number of Main topics
         int numberOfMain = getCountHeaders();

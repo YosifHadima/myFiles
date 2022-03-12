@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 
 public class MainActivity extends AppCompatActivity {
 LinearLayout CheckList;
+LinearLayout GuestList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,5 +22,16 @@ LinearLayout CheckList;
                 startActivity(intent);
             }
         });
+
+        GuestList=findViewById(R.id.guest_id);
+        GuestList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(MainActivity.this,MyGuestActivity.class);
+               startActivity(intent);
+            }
+        });
+
+
     }
 }

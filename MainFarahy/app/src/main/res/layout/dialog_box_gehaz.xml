@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,7 +18,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
         <EditText
-            android:id="@+id/edit_box_id"
+            android:id="@+id/guest_edit_box_id"
             android:layout_width="match_parent"
             android:layout_height="84dp"
             android:layout_marginTop="10dp"
@@ -34,13 +35,12 @@
 
 
         <Button
-            android:id="@+id/buttonOk_id"
+            android:id="@+id/guest_buttonOk_id"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="15dp"
-            android:background="@color/cardview_dark_background"
-            android:text="Ok"
+            android:text="اضافة"
             android:clickable="true"
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground"

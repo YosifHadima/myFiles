@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -92,7 +93,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                 //getIDNumber(header,Child) and return the ID
                 dbID=getIDNumber(header,SupTopic);
                 //DataBaseHelper myDb;
-                 Log.d(TAG, "Yoooosif: checkbox number is  = okkkkk" +_listDataHeader.get(groupPosition));
+                 //Log.d(TAG, "Yoooosif: checkbox number is  = okkkkk" +_listDataHeader.get(groupPosition));
 
                 updateData(dbID,"yoooo","Gamal","¨1/1/2022",header,SupTopic,comment,checkBoxString);
 
@@ -209,4 +210,6 @@ String comment=_listDataChild.get(this._listDataHeader.get(groupPosition))
     public boolean areAllItemsEnabled() {
         return super.areAllItemsEnabled();
     }
+
+
 }
