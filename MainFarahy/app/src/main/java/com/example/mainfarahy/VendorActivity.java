@@ -6,13 +6,16 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
@@ -30,7 +33,7 @@ public class VendorActivity extends AppCompatActivity {
     ExpandableListAdapterVendor listAdapter;
     ExpandableListView expListView;
     List<String> listDataHeader;
-    HashMap<String, List<GehazList>> listDataChild;
+    HashMap<String, List<VendorList>> listDataChild;
     DataBaseHelperVendor myDb;
     FloatingActionButton floatingActionButton;
 boolean weddingPlanner_clicked,weedingVen_clicked ,videoGrapher_clicked, athlie_Button_clicked,veil_clicked,makeupArtist_clicked,photographer_clicked,hairStylest_clicked =false;
@@ -50,13 +53,13 @@ boolean weddingPlanner_clicked,weedingVen_clicked ,videoGrapher_clicked, athlie_
 
         }else{
             listDataHeader = new ArrayList<String>();
-            listDataChild = new HashMap<String, List<GehazList>>();
+            listDataChild = new HashMap<String, List<VendorList>>();
            // loadData();
 
         }
         // prepareListData();
 
-        listAdapter = new ExpandableListAdapterVendor(this, listDataHeader, listDataChild);
+        listAdapter = new ExpandableListAdapterVendor(this, listDataHeader, listDataChild,this);
 
         // setting list adapter
         expListView.setAdapter(listAdapter);
@@ -129,20 +132,20 @@ boolean weddingPlanner_clicked,weedingVen_clicked ,videoGrapher_clicked, athlie_
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
                 EditText commentEdit= (EditText) dialogView.findViewById(R.id.guest_edit_box_id) ;
-                commentEdit.setText(listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).GehazComment);
+                commentEdit.setText(listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).VendorComment);
                 Button okButtonDialog= (Button) dialogView.findViewById(R.id.guest_buttonOk_id);
                 okButtonDialog.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         String header=listDataHeader.get(groupPosition);
-                        GehazList child;
+                        VendorList child;
                         String SupTopic;
                         String dbID;
                         child=listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition);
                         String comment= String.valueOf(commentEdit.getText());
-                        SupTopic=child.GehazName;
-                        child.GehazComment=comment;
-                        List<GehazList> mylist=new ArrayList<GehazList>();
+                        SupTopic=child.VendorName;
+                        child.VendorComment=comment;
+                        List<VendorList> mylist=new ArrayList<VendorList>();
                         mylist=listDataChild.get(header);
                         mylist.set(childPosition,child);
                         // Log.d(TAG, "Yoooosif: child number is  = "+String.valueOf(childPosition)+" with ID = "+String.valueOf(id));
@@ -165,6 +168,9 @@ boolean weddingPlanner_clicked,weedingVen_clicked ,videoGrapher_clicked, athlie_
                 return false;
             }
         });
+
+
+
 
 
 
@@ -223,9 +229,9 @@ weedingVen_Button.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
         listDataHeader.add("Wedding Venue");
-        List<GehazList> weedingVen = new ArrayList<GehazList>();
+        List<VendorList> weedingVen = new ArrayList<VendorList>();
         listDataChild.put(listDataHeader.get(listDataHeader.size()-1), weedingVen); // Header, Child data
-        listAdapter = new ExpandableListAdapterVendor(getApplicationContext(), listDataHeader, listDataChild);
+        listAdapter = new ExpandableListAdapterVendor(getApplicationContext(), listDataHeader, listDataChild,VendorActivity.this);
         // setting list adapter
         expListView.setAdapter(listAdapter);
         weedingVen_clicked=true;
@@ -238,9 +244,9 @@ weedingVen_Button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         listDataHeader.add("Wedding Planner");
-                        List<GehazList> weedingVen = new ArrayList<GehazList>();
+                        List<VendorList> weedingVen = new ArrayList<VendorList>();
                         listDataChild.put(listDataHeader.get(listDataHeader.size()-1), weedingVen); // Header, Child data
-                        listAdapter = new ExpandableListAdapterVendor(getApplicationContext(), listDataHeader, listDataChild);
+                        listAdapter = new ExpandableListAdapterVendor(getApplicationContext(), listDataHeader, listDataChild,VendorActivity.this);
                         // setting list adapter
                         expListView.setAdapter(listAdapter);
                         weddingPlanner_clicked=true;
@@ -253,9 +259,9 @@ weedingVen_Button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         listDataHeader.add("Athelier");
-                        List<GehazList> weedingVen = new ArrayList<GehazList>();
+                        List<VendorList> weedingVen = new ArrayList<VendorList>();
                         listDataChild.put(listDataHeader.get(listDataHeader.size()-1), weedingVen); // Header, Child data
-                        listAdapter = new ExpandableListAdapterVendor(getApplicationContext(), listDataHeader, listDataChild);
+                        listAdapter = new ExpandableListAdapterVendor(getApplicationContext(), listDataHeader, listDataChild,VendorActivity.this);
                         // setting list adapter
                         expListView.setAdapter(listAdapter);
                         athlie_Button_clicked=true;
@@ -266,9 +272,9 @@ weedingVen_Button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         listDataHeader.add("Photographer");
-                        List<GehazList> weedingVen = new ArrayList<GehazList>();
+                        List<VendorList> weedingVen = new ArrayList<VendorList>();
                         listDataChild.put(listDataHeader.get(listDataHeader.size()-1), weedingVen); // Header, Child data
-                        listAdapter = new ExpandableListAdapterVendor(getApplicationContext(), listDataHeader, listDataChild);
+                        listAdapter = new ExpandableListAdapterVendor(getApplicationContext(), listDataHeader, listDataChild,VendorActivity.this);
                         // setting list adapter
                         expListView.setAdapter(listAdapter);
                         photographer_clicked=true;
@@ -279,9 +285,9 @@ weedingVen_Button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         listDataHeader.add("Hair Stylest");
-                        List<GehazList> weedingVen = new ArrayList<GehazList>();
+                        List<VendorList> weedingVen = new ArrayList<VendorList>();
                         listDataChild.put(listDataHeader.get(listDataHeader.size()-1), weedingVen); // Header, Child data
-                        listAdapter = new ExpandableListAdapterVendor(getApplicationContext(), listDataHeader, listDataChild);
+                        listAdapter = new ExpandableListAdapterVendor(getApplicationContext(), listDataHeader, listDataChild,VendorActivity.this);
                         // setting list adapter
                         expListView.setAdapter(listAdapter);
                         hairStylest_clicked=true;
@@ -292,9 +298,9 @@ weedingVen_Button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         listDataHeader.add("Makeup Artist");
-                        List<GehazList> weedingVen = new ArrayList<GehazList>();
+                        List<VendorList> weedingVen = new ArrayList<VendorList>();
                         listDataChild.put(listDataHeader.get(listDataHeader.size()-1), weedingVen); // Header, Child data
-                        listAdapter = new ExpandableListAdapterVendor(getApplicationContext(), listDataHeader, listDataChild);
+                        listAdapter = new ExpandableListAdapterVendor(getApplicationContext(), listDataHeader, listDataChild,VendorActivity.this);
                         // setting list adapter
                         expListView.setAdapter(listAdapter);
                         makeupArtist_clicked=true;
@@ -305,9 +311,9 @@ weedingVen_Button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         listDataHeader.add("Veil Designer");
-                        List<GehazList> weedingVen = new ArrayList<GehazList>();
+                        List<VendorList> weedingVen = new ArrayList<VendorList>();
                         listDataChild.put(listDataHeader.get(listDataHeader.size()-1), weedingVen); // Header, Child data
-                        listAdapter = new ExpandableListAdapterVendor(getApplicationContext(), listDataHeader, listDataChild);
+                        listAdapter = new ExpandableListAdapterVendor(getApplicationContext(), listDataHeader, listDataChild,VendorActivity.this);
                         // setting list adapter
                         expListView.setAdapter(listAdapter);
                         veil_clicked=true;
@@ -318,9 +324,9 @@ weedingVen_Button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         listDataHeader.add("Video Grapher");
-                        List<GehazList> weedingVen = new ArrayList<GehazList>();
+                        List<VendorList> weedingVen = new ArrayList<VendorList>();
                         listDataChild.put(listDataHeader.get(listDataHeader.size()-1) ,weedingVen); // Header, Child data
-                        listAdapter = new ExpandableListAdapterVendor(getApplicationContext(), listDataHeader, listDataChild);
+                        listAdapter = new ExpandableListAdapterVendor(getApplicationContext(), listDataHeader, listDataChild,VendorActivity.this);
                         // setting list adapter
                         expListView.setAdapter(listAdapter);
                         videoGrapher_clicked=true;
@@ -508,7 +514,7 @@ weedingVen_Button.setOnClickListener(new View.OnClickListener() {
     }
     private void loadData(){
         listDataHeader = new ArrayList<String>();
-        listDataChild = new HashMap<String, List<GehazList>>();
+        listDataChild = new HashMap<String, List<VendorList>>();
         int numberOfMain = getCountHeaders();
         //Get all topics
         List<String> Headers = new ArrayList<>();
@@ -528,7 +534,7 @@ weedingVen_Button.setOnClickListener(new View.OnClickListener() {
             List<String> CheckBox=new ArrayList<>();
             CheckBox=getDataOfChildCheckBox(Topic);
             Log.d(TAG, "Yoooosif: children are  = "+Children );
-            List<GehazList> TopicList = new ArrayList<GehazList>();
+            List<VendorList> TopicList = new ArrayList<VendorList>();
 
             // for (String Suptopic : Children) {
             //   TopicList.add(new GehazList(Suptopic));
@@ -540,7 +546,7 @@ weedingVen_Button.setOnClickListener(new View.OnClickListener() {
                 if (CheckBox.get(i).equals("True")){
                     check=true;
                 }else {check=false;}
-                TopicList.add(new GehazList(Children.get(i),Comments.get(i),check));
+                TopicList.add(new VendorList(Children.get(i),Comments.get(i)));
             }
             listDataChild.put(listDataHeader.get(index), TopicList); // Header, Child data
             index=index+1;

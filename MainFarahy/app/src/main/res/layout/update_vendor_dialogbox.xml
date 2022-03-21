@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="اضيفي تعليقك"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+
+        <EditText
+            android:id="@+id/guest_edit_box_id"
+            android:layout_width="match_parent"
+            android:layout_height="84dp"
+            android:layout_marginTop="10dp"
+            android:cursorVisible="true"
+            android:gravity="top"
+            android:hint="تعليقك"
+            android:background="#f7f7f7"
+            android:paddingLeft="7dip"
+            android:paddingRight="7dip"
+            android:text=""
+            android:textAlignment="textStart"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            tools:ignore="RtlCompat" />
+
+
+        <Button
+            android:id="@+id/guest_buttonOk_id"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:text="اضافة"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:textColor="#FFF" />
+    </LinearLayout>
+</LinearLayout>

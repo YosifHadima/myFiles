@@ -1,15 +1,29 @@
 package com.example.mainfarahy;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
+
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Typeface;
+
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,13 +34,15 @@ public class ExpandableListAdapterVendor extends BaseExpandableListAdapter {
     private Context _context;
     private List<String> _listDataHeader; // header titles
     // child data in format of header title, child title
-    private HashMap<String, List<GehazList>> _listDataChild;
-    List<GehazList> selectedHeader= new ArrayList<GehazList>();;
+    private HashMap<String, List<VendorList>> _listDataChild;
+    List<VendorList> selectedHeader= new ArrayList<VendorList>();;
+    Activity activity;
     public ExpandableListAdapterVendor(Context context, List<String> listDataHeader,
-                                 HashMap<String, List<GehazList>> listChildData) {
+                                 HashMap<String, List<VendorList>> listChildData, Activity activity) {
         this._context = context;
         this._listDataHeader = listDataHeader;
         this._listDataChild = listChildData;
+        this.activity = activity;
     }
 
     @Override
@@ -53,60 +69,49 @@ public class ExpandableListAdapterVendor extends BaseExpandableListAdapter {
         }
 
         TextView txtListChild = (TextView) convertView.findViewById(R.id.lblListItem);
-        CheckBox checkBoxChild= (CheckBox) convertView.findViewById(R.id.GehazcheckBox_id);
-        checkBoxChild.setOnClickListener(new View.OnClickListener() {
+        TextView priceText=  convertView.findViewById(R.id.price_id);
+priceText.setText(_listDataChild.get(this._listDataHeader.get(groupPosition))
+        .get(childPosition).VendorPrice);
+
+        TextView txtCommentChild = (TextView) convertView.findViewById(R.id.GehazComment_id);
+        String comment=_listDataChild.get(this._listDataHeader.get(groupPosition))
+                .get(childPosition).VendorComment;
+        txtListChild.setText(_listDataChild.get(this._listDataHeader.get(groupPosition))
+                .get(childPosition).VendorName);
+//priceText.setText(_listDataChild.get(this._listDataHeader.get(groupPosition))
+      //  .get(childPosition).);
+        //priceText.setText("اضافة سعر");
+String phoneNumber =_listDataChild.get(this._listDataHeader.get(groupPosition)).get(childPosition).VendorPhonenumber;
+
+
+        ImageView imageView_call=convertView.findViewById(R.id.imageView_call_id);
+        if (!phoneNumber.equals("")){
+            imageView_call.setImageResource(R.drawable.ic_call_on);
+
+        }else {
+            imageView_call.setImageResource(R.drawable.ic_call);
+        }
+
+        imageView_call.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                String header=_listDataHeader.get(groupPosition);
-                GehazList child;
-                String checkBoxString;
-                boolean checkBox;
-                String SupTopic;
-                String dbID;
-                String comment;
-                child=_listDataChild.get(_listDataHeader.get(groupPosition)).get(childPosition);
-                //String comment= String.valueOf(commentEdit.getText());
-                SupTopic=child.GehazName;
-                //child.GehazComment=comment;
-                comment=child.GehazComment;
-                checkBox=child.GehazCheckBox;
+            public void onClick(View v) {
 
-                if (checkBoxChild.isChecked()){
-                    checkBox=true;
-                    checkBoxString="True";
-                }else {checkBox=false;
-                    checkBoxString="False";}
+                if (!phoneNumber.equals("")){
+                    Intent intent = new Intent(Intent.ACTION_DIAL);
+                    intent.setData(Uri.parse("tel:"+phoneNumber));
+                    activity.startActivity(intent);
+                }
 
-                child.GehazCheckBox=checkBox;
 
-                List<GehazList> mylist=new ArrayList<GehazList>();
-                mylist=_listDataChild.get(header);
-
-                mylist.set(childPosition,child);
-
-                _listDataChild.put(header,mylist);
-                //getIDNumber(header,Child) and return the ID
-                dbID=getIDNumber(header,SupTopic);
-                //DataBaseHelper myDb;
-                //Log.d(TAG, "Yoooosif: checkbox number is  = okkkkk" +_listDataHeader.get(groupPosition));
-
-                updateData(dbID,"yoooo","Gamal","¨1/1/2022",header,SupTopic,comment,checkBoxString);
-
-                //getGehazInfo(ID)
-
-                // insertData("ٍSamya","Gamal","¨1/1/2022","myess","shewak","No comment","false");
-                // Log.d(TAG, "Yoooosif: checkbox number is  = okkkkk");
+               // if(ActivityCompat.checkSelfPermission(v.getRootView().getContext(), Manifest.permission.CALL_PHONE)!= PackageManager.PERMISSION_GRANTED){
+//ActivityCompat.requestPermissions((Activity) v.getRootView().getContext(),new String[]{Manifest.permission.CALL_PHONE},1);
+              //  }else{
+                  //  v.getRootView().getContext().startActivity(intent);
+                //}
 
             }
         });
-        TextView txtCommentChild = (TextView) convertView.findViewById(R.id.GehazComment_id);
-        String comment=_listDataChild.get(this._listDataHeader.get(groupPosition))
-                .get(childPosition).GehazComment;
-        txtListChild.setText(_listDataChild.get(this._listDataHeader.get(groupPosition))
-                .get(childPosition).GehazName);
 
-        checkBoxChild.setChecked(_listDataChild.get(this._listDataHeader.get(groupPosition))
-                .get(childPosition).GehazCheckBox);
 
         txtCommentChild.setText(comment);
         if (comment.trim().equals(""))
@@ -190,9 +195,58 @@ public class ExpandableListAdapterVendor extends BaseExpandableListAdapter {
             @Override
             public void onClick(View v) {
                 //should updated this step
-                selectedHeader.add(new GehazList("ليلة سقوت بغداد"));
-                _listDataChild.put(_listDataHeader.get(groupPosition), selectedHeader);
-                notifyDataSetChanged();
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getRootView().getContext());
+                ViewGroup viewGroup = v.findViewById(android.R.id.content);
+                View dialogView = LayoutInflater.from(v.getContext()).inflate(R.layout.add_vendor_dialog, viewGroup, false);
+                builder.setView(dialogView);
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+
+                TextView textViewName=dialogView.findViewById(R.id.guest_edit_box_id);
+                textViewName.setHint(_listDataHeader.get(groupPosition) );
+
+                EditText phonenumber=dialogView.findViewById(R.id.addphone_id);
+
+
+                EditText editTextNumber=dialogView.findViewById(R.id.editTextNumber);
+                Button button =dialogView.findViewById(R.id.guest_buttonOk_id);
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String myName=String.valueOf(textViewName.getText());
+                        String price=String.valueOf(editTextNumber.getText());
+                        String phone=String.valueOf(phonenumber.getText());
+                        alertDialog.dismiss();
+                        if(price.trim().equals("")){
+                            price="اضافة سعر";
+                        }
+                        if (myName.trim().equals("")){
+                            Snackbar.make(view, "ضع اسم ", Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();
+                        }else {
+                          //  addMember(myName, Integer.parseInt(myNumber),getID(myGuest));
+                         //   updateData( myGuest);
+                            selectedHeader.add(new VendorList(myName,"",price,phone));
+                            _listDataChild.put(_listDataHeader.get(groupPosition), selectedHeader);
+                            notifyDataSetChanged();
+
+                        }
+
+
+                    }
+
+
+                });
+
+                Button buttonCancel =dialogView.findViewById(R.id.guest_buttoncancel_id);
+                buttonCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alertDialog.dismiss();
+                    }
+                });
+
             }
         });
 

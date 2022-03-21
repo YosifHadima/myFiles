@@ -10,20 +10,37 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="55dip"
-        android:gravity="right"
+        android:gravity="center|right"
         android:orientation="horizontal"
         android:paddingEnd="5dip"
-        android:weightSum="3"
+        android:weightSum="4"
         tools:ignore="RtlHardcoded,RtlSymmetry">
 
-        <CheckBox
-            android:id="@+id/GehazcheckBox_id"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imageView_call_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="16dip"
+                app:srcCompat="@drawable/ic_call" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/price_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:focusable="false"
 
 
-            android:layoutDirection="ltr" />
+            android:layoutDirection="ltr"
+            android:text="300"
+            android:textColor="@color/teal_700"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/lblListItem"
@@ -44,8 +61,7 @@
             android:layout_height="20dp"
             android:layout_gravity="center"
             android:layout_weight="0.2"
-            app:srcCompat="@drawable/reminder"
-            />
+            app:srcCompat="@drawable/reminder" />
 
     </LinearLayout>
     <!--android:foreground="?android:attr/selectableItemBackground"-->

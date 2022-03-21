@@ -1,24 +1,18 @@
 package com.example.mainfarahy;
 
-import static android.content.ContentValues.TAG;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Typeface;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
     DataBaseHelper myDb;
@@ -58,7 +52,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         }
 
         TextView txtListChild = (TextView) convertView.findViewById(R.id.lblListItem);
-        CheckBox checkBoxChild= (CheckBox) convertView.findViewById(R.id.GehazcheckBox_id);
+        CheckBox checkBoxChild= (CheckBox) convertView.findViewById(R.id.price_id);
         checkBoxChild.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
