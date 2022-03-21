@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+
+        <Button
+            android:id="@+id/weedingVen_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Wedding Venue" />
+
+        <Button
+            android:id="@+id/weddingPlanner_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Wedding Planner" />
+
+        <Button
+            android:id="@+id/athlie_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Athelier" />
+
+        <Button
+            android:id="@+id/photographer_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Photographer" />
+
+        <Button
+            android:id="@+id/hairStylest_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hair Stylest" />
+
+        <Button
+            android:id="@+id/makeupArtist_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Makeup Artist" />
+
+        <Button
+            android:id="@+id/veil_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Veil Designer" />
+
+        <Button
+            android:id="@+id/videoGrapher_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Video Grapher" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="right"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/guest_buttoncancel_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="16dip"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:text="الغاء"
+                android:textColor="#FFF"
+                app:rippleColor="@color/purple_500" />
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

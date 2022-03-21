@@ -322,15 +322,16 @@
             android:orientation="horizontal">
 
             <LinearLayout
+                android:id="@+id/vendor_id"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="1"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
                 android:orientation="vertical"
                 android:paddingLeft="70dp"
-                android:paddingRight="35dp"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:clickable="true">
+                android:paddingRight="35dp">
 
                 <ImageView
                     android:id="@+id/imageView6"
@@ -359,15 +360,16 @@
                 android:text="TextView" />
 
             <LinearLayout
+                android:id="@+id/Appointment_id"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="1"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
                 android:orientation="vertical"
                 android:paddingLeft="35dp"
-                android:paddingRight="70dp"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:clickable="true">
+                android:paddingRight="70dp">
 
                 <ImageView
                     android:id="@+id/imageView5"
