@@ -1,5 +1,7 @@
 package com.example.mainfarahy;
 
+import static android.content.ContentValues.TAG;
+
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
@@ -7,9 +9,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.graphics.Typeface;
 
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,23 +30,28 @@ import androidx.core.app.ActivityCompat;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
 public class ExpandableListAdapterVendor extends BaseExpandableListAdapter {
     DataBaseHelperVendor myDb;
-    private Context _context;
+
+    private final Context _context;
     private List<String> _listDataHeader; // header titles
     // child data in format of header title, child title
     private HashMap<String, List<VendorList>> _listDataChild;
-    List<VendorList> selectedHeader= new ArrayList<VendorList>();;
+   List<VendorList> selectedHeader= new ArrayList<VendorList>();
+    //List<VendorList> selectedHeader;
     Activity activity;
-    public ExpandableListAdapterVendor(Context context, List<String> listDataHeader,
-                                 HashMap<String, List<VendorList>> listChildData, Activity activity) {
+    public ExpandableListAdapterVendor(Context context, List<String> listDataHeader, HashMap<String, List<VendorList>> listChildData, Activity activity) {
         this._context = context;
         this._listDataHeader = listDataHeader;
         this._listDataChild = listChildData;
         this.activity = activity;
+        myDb=new DataBaseHelperVendor(activity);
+        //Log.d(TAG, "onCreate yyyy: ");
+
     }
 
     @Override
@@ -70,9 +79,17 @@ public class ExpandableListAdapterVendor extends BaseExpandableListAdapter {
 
         TextView txtListChild = (TextView) convertView.findViewById(R.id.lblListItem);
         TextView priceText=  convertView.findViewById(R.id.price_id);
-priceText.setText(_listDataChild.get(this._listDataHeader.get(groupPosition))
-        .get(childPosition).VendorPrice);
 
+
+String myPrice=_listDataChild.get(this._listDataHeader.get(groupPosition))
+        .get(childPosition).VendorPrice;
+if (myPrice.isEmpty()){
+    //priceText.setText(_listDataChild.get(this._listDataHeader.get(groupPosition)).get(childPosition).);
+    priceText.setText("اضافة سعر");
+}else {
+    priceText.setText(_listDataChild.get(this._listDataHeader.get(groupPosition))
+            .get(childPosition).VendorPrice);
+}
         TextView txtCommentChild = (TextView) convertView.findViewById(R.id.GehazComment_id);
         String comment=_listDataChild.get(this._listDataHeader.get(groupPosition))
                 .get(childPosition).VendorComment;
@@ -125,9 +142,10 @@ String phoneNumber =_listDataChild.get(this._listDataHeader.get(groupPosition)).
         notifyDataSetChanged();
         return convertView;
     }
-    private void updateData(String ID,String Femalename,String MaleName,String MargeDate,String MainTopic,String SupTopic,String CommentTopic,String checkbox){
-        Boolean result = myDb.updateData(ID,Femalename,MaleName,MargeDate,MainTopic,SupTopic,CommentTopic,checkbox);
-        if (result== true){
+
+    private void updateData(String ID,String MAIN_TOPIC,String NAME_VENDOR,String VENDOR_COMMENT,String VENDOR_PRICE,String VENDOR_PHONE,String MY_ID){
+        Boolean result = myDb.updateData(ID,MAIN_TOPIC,NAME_VENDOR,VENDOR_COMMENT,VENDOR_PRICE,VENDOR_PHONE,MY_ID);
+        if (result){
             //  Toast.makeText(this,"Data updated susccfully",Toast.LENGTH_SHORT).show();
         }else {
             //  Toast.makeText(this,"Data  updated Faille",Toast.LENGTH_SHORT).show();
@@ -149,7 +167,16 @@ String phoneNumber =_listDataChild.get(this._listDataHeader.get(groupPosition)).
     public int getGroupCount() {
         return this._listDataHeader.size();
     }
+    private void insertData(String MAIN_TOPIC,String NAME_VENDOR,String VENDOR_COMMENT,String VENDOR_PRICE,String VENDOR_PHONE,String MY_ID){
 
+        Boolean result = myDb.insertData(MAIN_TOPIC,NAME_VENDOR,VENDOR_COMMENT,VENDOR_PRICE,VENDOR_PHONE,MY_ID);
+        if (result== true){
+            // Toast.makeText(this,"Data inserted susccfully",Toast.LENGTH_SHORT).show();
+        }else {
+            //Toast.makeText(this,"Data  insertion Faille",Toast.LENGTH_SHORT).show();
+        }
+
+    }
     @Override
     public long getGroupId(int groupPosition) {
         return groupPosition;
@@ -202,15 +229,19 @@ String phoneNumber =_listDataChild.get(this._listDataHeader.get(groupPosition)).
                 builder.setView(dialogView);
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
-
+                ///////////
+                //CheckEmpty();
+                ////////
+                notifyDataSetChanged();
                 TextView textViewName=dialogView.findViewById(R.id.guest_edit_box_id);
                 textViewName.setHint(_listDataHeader.get(groupPosition) );
-
+                String MainTopic=_listDataHeader.get(groupPosition);
                 EditText phonenumber=dialogView.findViewById(R.id.addphone_id);
 
-
+                Log.d(TAG, "Yoooosif: MainTopic is");
                 EditText editTextNumber=dialogView.findViewById(R.id.editTextNumber);
                 Button button =dialogView.findViewById(R.id.guest_buttonOk_id);
+                button.setBackgroundColor(Color.parseColor("#e3b04b"));
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -227,9 +258,38 @@ String phoneNumber =_listDataChild.get(this._listDataHeader.get(groupPosition)).
                         }else {
                           //  addMember(myName, Integer.parseInt(myNumber),getID(myGuest));
                          //   updateData( myGuest);
-                            selectedHeader.add(new VendorList(myName,"",price,phone));
+String myID=getID();
+                            Log.d(TAG, "Yoooosif: child number is  = "+myID);
+                            //selectedHeader.add(new VendorList(myName,"",price,phone,MainTopic,myID));
+
+
+
+                           // insertData(MainTopic,myName,"",price,phone);
+                           // myDb=new DataBaseHelperVendor(activity);
+                            //////////////////////////////
+                            //////////SAVE IN SQL/////////
+                            insertData(MainTopic,myName,"",price,phone,myID);
+                            //check that new ID same as lastID in SQL
+
+                                //Log.d(TAG, "onClick: ");
+                                int lastID = Integer.parseInt(getLastIDSQL());
+
+                                if (String.valueOf(lastID).equals(myID))
+                                {
+                                    selectedHeader.add(new VendorList(myName,"",price,phone,MainTopic,String.valueOf(lastID)));
+
+                                }else {
+                                    updateData(String.valueOf(lastID),MainTopic,myName,"",price,phone,String.valueOf(lastID));
+                                    selectedHeader.add(new VendorList(myName,"",price,phone,MainTopic,String.valueOf(lastID)));
+
+                                    // selectedHeader.set(selectedHeader.size(),new VendorList(myName,"",price,phone,MainTopic,String.valueOf(lastID)));
+                                }
+
+
                             _listDataChild.put(_listDataHeader.get(groupPosition), selectedHeader);
+                            //Refresh();
                             notifyDataSetChanged();
+
 
                         }
 
@@ -240,6 +300,7 @@ String phoneNumber =_listDataChild.get(this._listDataHeader.get(groupPosition)).
                 });
 
                 Button buttonCancel =dialogView.findViewById(R.id.guest_buttoncancel_id);
+                buttonCancel.setBackgroundColor(Color.parseColor("#e3b04b"));
                 buttonCancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -252,7 +313,7 @@ String phoneNumber =_listDataChild.get(this._listDataHeader.get(groupPosition)).
 
         lblListHeader.setTypeface(null, Typeface.BOLD);
         lblListHeader.setText(headerTitle);
-
+notifyDataSetChanged();
         return convertView;
     }
 
@@ -270,6 +331,90 @@ String phoneNumber =_listDataChild.get(this._listDataHeader.get(groupPosition)).
     public boolean areAllItemsEnabled() {
         return super.areAllItemsEnabled();
     }
+    private boolean CheckEmpty(){
+        List<Integer> intValues = new ArrayList<>();
+        for (int i = 0; i < _listDataHeader.size(); i++) {
+            //System.out.println(i);
+            // adding values
+            for(int x=0;x<_listDataChild.get(this._listDataHeader.get(i)).size();x++){
+                intValues.add(Integer.valueOf(_listDataChild.get(this._listDataHeader.get(i)).get(x).myID));
+                //Log.d(TAG, "Yoooosif: MainTopic is "+_listDataChild.get(this._listDataHeader.get(i)).get(x).VendorName);
+            }
 
+           // Log.d(TAG, "Yoooosif: child number is empty: ");
+        }
+
+
+        double sum = 0;
+        for(int i = 0; i < intValues.size(); i++)
+            sum += intValues.get(i);
+
+        if (sum>0){
+            Log.d(TAG, "Yoooosif: child number is Not empty: "+sum);
+            return false;
+
+        }else {
+            Log.d(TAG, "Yoooosif: child number is empty: "+sum);
+            return true;}
+    }
+
+
+    private String  getID(){
+        List<Integer> intValues = new ArrayList<>();
+       // Log.d(TAG, "possss saved getID: "+String.valueOf(_listDataChild.size()));
+        if (CheckEmpty()) {
+            Log.d(TAG, "Yoooosif: child number and last id :"+getLastIDSQL());
+            if (getLastIDSQL() != null) {
+                return getLastIDSQL();
+            } else {
+                return "1";
+            }
+        }else {
+            Log.d(TAG, "possss saved getID: its not empty");
+            for (int i = 0; i < _listDataHeader.size(); i++) {
+                //System.out.println(i);
+                // adding values
+                for(int x=0;x<_listDataChild.get(this._listDataHeader.get(i)).size();x++){
+                    intValues.add(Integer.valueOf(_listDataChild.get(this._listDataHeader.get(i)).get(x).myID));
+
+                }
+
+                //Log.d(TAG, "possss saved bbbb: "+String.valueOf(max));
+            }
+
+
+            Integer max = Collections.max(intValues);
+            max=max+1;
+
+
+            return String.valueOf(max);
+
+        }
+
+
+
+    }
+
+    private String  getLastIDSQL(){
+        //  ArrayList<GuestClass> Headers = new ArrayList<>();
+        Cursor res = myDb.getALData();
+        // StringBuffer stringBuffer=new StringBuffer();
+        //Log.d(TAG, "onClick possss last SQL: " );
+        String myid =null;
+        if(res !=null && res.getCount()>0){
+            //Log.d(TAG, "onClick possss last SQL: not nulll");
+            while (res.moveToNext()){
+               // Log.d(TAG, "onClick possss last SQL: "+String.valueOf(myid));
+                myid = res.getString(0);
+
+                //Log.d(TAG, "Yoooosif: yeson : "+String.valueOf(myid));
+            }
+
+        }
+      //  Log.d(TAG, "Yoooosif: yeson : "+String.valueOf(myid));
+         //Log.d(TAG, "onClick possss last SQL: "+String.valueOf(myid)  );
+
+        return myid;
+    }
 
 }

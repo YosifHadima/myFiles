@@ -6,10 +6,14 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -26,14 +30,15 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
 public class VendorActivity extends AppCompatActivity {
     ExpandableListAdapterVendor listAdapter;
     ExpandableListView expListView;
-    List<String> listDataHeader;
-    HashMap<String, List<VendorList>> listDataChild;
+    List<String> listDataHeader=new ArrayList<String>();
+    HashMap<String, List<VendorList>> listDataChild= new HashMap<String, List<VendorList>>();
     DataBaseHelperVendor myDb;
     FloatingActionButton floatingActionButton;
 boolean weddingPlanner_clicked,weedingVen_clicked ,videoGrapher_clicked, athlie_Button_clicked,veil_clicked,makeupArtist_clicked,photographer_clicked,hairStylest_clicked =false;
@@ -43,25 +48,21 @@ boolean weddingPlanner_clicked,weedingVen_clicked ,videoGrapher_clicked, athlie_
         setContentView(R.layout.activity_vendor);
         myDb=new DataBaseHelperVendor(this);
         // get the listview
-        expListView = (ExpandableListView) findViewById(R.id.lvExp);
+        expListView =  findViewById(R.id.lvExp);
 
 
         // preparing list data
-        int count=getCountHeaders();
-        if(count == 0){
-            prepareListData();
+        //int count=getCountHeaders();
+      //  listDataHeader = new ArrayList<String>();
+        //listDataChild = new HashMap<String, List<VendorList>>();
 
-        }else{
-            listDataHeader = new ArrayList<String>();
-            listDataChild = new HashMap<String, List<VendorList>>();
-           // loadData();
-
-        }
         // prepareListData();
-
-        listAdapter = new ExpandableListAdapterVendor(this, listDataHeader, listDataChild,this);
-
+        loadData();
+        //Log.d(TAG, "onCreate yyyy: "+listDataChild.size());
+        listAdapter = new ExpandableListAdapterVendor(getApplicationContext(), listDataHeader, listDataChild,this);
+     // listAdapter=new ExpandableListAdapterVendor(this,listDataHeader,listDataChild, this);
         // setting list adapter
+
         expListView.setAdapter(listAdapter);
 
         // Listview Group click listener
@@ -127,44 +128,104 @@ boolean weddingPlanner_clicked,weedingVen_clicked ,videoGrapher_clicked, athlie_
                 //.show();
                 AlertDialog.Builder builder = new AlertDialog.Builder(VendorActivity.this);
                 ViewGroup viewGroup = findViewById(android.R.id.content);
-                View dialogView = LayoutInflater.from(v.getContext()).inflate(R.layout.dialog_box_gehaz, viewGroup, false);
+                View dialogView = LayoutInflater.from(v.getContext()).inflate(R.layout.update_vendor_dialogbox, viewGroup, false);
                 builder.setView(dialogView);
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
+                //link to comment
                 EditText commentEdit= (EditText) dialogView.findViewById(R.id.guest_edit_box_id) ;
+                //link to name
+                EditText nameVendor= (EditText) dialogView.findViewById(R.id.name_edit_box_id) ;
+                //link to phone number
+                EditText phoneVendor= (EditText) dialogView.findViewById(R.id.addphone_id) ;
+                //link to price
+                EditText priceVendor=  dialogView.findViewById(R.id.editTextNumber) ;
+
+
                 commentEdit.setText(listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).VendorComment);
+                nameVendor.setText(listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).VendorName);
+                phoneVendor.setText(listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).VendorPhonenumber);
+                String price=listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).VendorPrice;
+                if (TextUtils.isDigitsOnly(price)){
+                    priceVendor.setText(listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).VendorPrice);
+                }
+String ID =listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).myID;
+                Log.d(TAG, "Yoooosif: child number is dele not = "+ID);
+                ////////////////////////////////////////////////////////////////////////////////
+                ///////UPDATE BUTTON////////////////////////////////////////////////////////////
                 Button okButtonDialog= (Button) dialogView.findViewById(R.id.guest_buttonOk_id);
+                okButtonDialog.setBackgroundColor(Color.parseColor("#e3b04b"));
                 okButtonDialog.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         String header=listDataHeader.get(groupPosition);
                         VendorList child;
-                        String SupTopic;
-                        String dbID;
                         child=listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition);
                         String comment= String.valueOf(commentEdit.getText());
-                        SupTopic=child.VendorName;
+                        String mynameVendor=String.valueOf(nameVendor.getText());
+                        String myphoneVendor=String.valueOf(phoneVendor.getText());
+                        String mypriceVendor=String.valueOf(priceVendor.getText());
+                        if (TextUtils.isDigitsOnly(mypriceVendor)){
+
+                        }else {
+                            mypriceVendor="اضافة سعر";
+                        }
+                        if (myphoneVendor.isEmpty()){
+                            myphoneVendor="";
+                        }
+
+                        //SupTopic=child.VendorName;
                         child.VendorComment=comment;
+                        child.VendorName=mynameVendor;
+                        child.VendorPrice=mypriceVendor;
+                        child.VendorPhonenumber=myphoneVendor;
+                        //Log.d(TAG, "Yoooosif: price   = "+price);
+                        if (TextUtils.isDigitsOnly(price)){
+                            priceVendor.setText(price);
+                        }
+                        priceVendor.setText(price);
                         List<VendorList> mylist=new ArrayList<VendorList>();
                         mylist=listDataChild.get(header);
                         mylist.set(childPosition,child);
-                        // Log.d(TAG, "Yoooosif: child number is  = "+String.valueOf(childPosition)+" with ID = "+String.valueOf(id));
+                         //Log.d(TAG, "Yoooosif: child number is  = "+child.myID);
                         listDataChild.put(header,mylist);
-                        //getIDNumber(header,Child) and return the ID
-                        dbID=getIDNumber(header,SupTopic);
 
+                        //getIDNumber(header,Child) and return the ID
+                        //dbID=getIDNumber(header,child);
+                        updateData(child.myID,header,mynameVendor,comment,mypriceVendor,myphoneVendor,child.myID);
                         //getGehazInfo(ID)
 
-                        // insertData("ٍSamya","Gamal","¨1/1/2022","myess","shewak","No comment","false");
-                        updateData(dbID,"yoooo","Gamal","¨1/1/2022",header,SupTopic,comment,"false");
-                        // expListView.setAdapter(listAdapter);
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        //////////UPDATE TO SQL DATABASE/////////////////////////////////////////////////////
+                       //updateData(getID(),header,mynameVendor,comment,mypriceVendor,myphoneVendor,getID());
+                        ///////////////////////////////////////////////////////////////////////////////////
+                        listAdapter.notifyDataSetChanged();
                         alertDialog.dismiss();
                     }
                 });
-                // int index = parent.getFlatListPosition(ExpandableListView.getPackedPositionForChild(groupPosition, childPosition));
-                //ImageView noteButton = (ImageView) v.findViewById(R.id.note_id);
 
 
+                ////////////////////////////////////////////////////////////////////////////////
+                ///////DELETE BUTTON////////////////////////////////////////////////////////////
+                Button cancelButtonDialog= (Button) dialogView.findViewById(R.id.guest_buttoncancel_id);
+                cancelButtonDialog.setBackgroundColor(Color.parseColor("#e3b04b"));
+                cancelButtonDialog.setText("حذف");
+                cancelButtonDialog.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+
+
+        //delete subVendor
+        listDataChild.get(listDataHeader.get(groupPosition)).remove(childPosition);
+        //update the adabter
+        Log.d(TAG, "Yoooosif: child number is dele = "+ID);
+        Delete(ID);
+        listAdapter.notifyDataSetChanged();
+       // close the dialog;
+        alertDialog.dismiss();
+    }
+});
+/////////////////////////////////////////////////////////////////////////////////////////////////
                 return false;
             }
         });
@@ -199,7 +260,38 @@ boolean weddingPlanner_clicked,weedingVen_clicked ,videoGrapher_clicked, athlie_
                 Button makeupArtist_Button=dialogView.findViewById(R.id.makeupArtist_id);
                 Button veil_Button=dialogView.findViewById(R.id.veil_id);
                 Button videoGrapher_Button=dialogView.findViewById(R.id.videoGrapher_id);
+                List<String> Headers = new ArrayList<>();
+                Headers=getallHeaders();
 
+
+                for (String Topic : Headers) {
+                    if (Topic.equals("Wedding Venue")){
+                        weedingVen_Button.setVisibility(View.GONE);
+                    }
+
+                    if (Topic.equals("Wedding Planner")){
+                        weddingPlanner_Button.setVisibility(View.GONE);
+                    }
+                    if (Topic.equals("Athelier")){
+                        athlie_Button.setVisibility(View.GONE);
+                    }
+                    if (Topic.equals("Photographer")){
+                        photographer_Button.setVisibility(View.GONE);
+                    }
+                    if (Topic.equals("Hair Stylist")){
+                        hairStylest_Button.setVisibility(View.GONE);
+                    }
+                    if (Topic.equals("Makeup Artist")){
+                        makeupArtist_Button.setVisibility(View.GONE);
+                    }
+                    if (Topic.equals("Veil Designer")){
+                        veil_Button.setVisibility(View.GONE);
+                    }
+                    if (Topic.equals("Video Grapher")){
+                        videoGrapher_Button.setVisibility(View.GONE);
+                    }
+
+                }
                 if (weedingVen_clicked){
                     weedingVen_Button.setVisibility(View.GONE);
                 }
@@ -225,16 +317,17 @@ boolean weddingPlanner_clicked,weedingVen_clicked ,videoGrapher_clicked, athlie_
                     videoGrapher_Button.setVisibility(View.GONE);
                 }
 
-weedingVen_Button.setOnClickListener(new View.OnClickListener() {
+                weedingVen_Button.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
         listDataHeader.add("Wedding Venue");
         List<VendorList> weedingVen = new ArrayList<VendorList>();
         listDataChild.put(listDataHeader.get(listDataHeader.size()-1), weedingVen); // Header, Child data
-        listAdapter = new ExpandableListAdapterVendor(getApplicationContext(), listDataHeader, listDataChild,VendorActivity.this);
+        listAdapter = new ExpandableListAdapterVendor(getApplicationContext(),  listDataHeader, listDataChild,VendorActivity.this);
         // setting list adapter
         expListView.setAdapter(listAdapter);
         weedingVen_clicked=true;
+        listAdapter.notifyDataSetChanged();
         alertDialog.dismiss();
     }
 });
@@ -250,6 +343,7 @@ weedingVen_Button.setOnClickListener(new View.OnClickListener() {
                         // setting list adapter
                         expListView.setAdapter(listAdapter);
                         weddingPlanner_clicked=true;
+                        listAdapter.notifyDataSetChanged();
                         alertDialog.dismiss();
                     }
                 });
@@ -284,7 +378,7 @@ weedingVen_Button.setOnClickListener(new View.OnClickListener() {
                 hairStylest_Button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        listDataHeader.add("Hair Stylest");
+                        listDataHeader.add("Hair Stylist");
                         List<VendorList> weedingVen = new ArrayList<VendorList>();
                         listDataChild.put(listDataHeader.get(listDataHeader.size()-1), weedingVen); // Header, Child data
                         listAdapter = new ExpandableListAdapterVendor(getApplicationContext(), listDataHeader, listDataChild,VendorActivity.this);
@@ -349,14 +443,24 @@ weedingVen_Button.setOnClickListener(new View.OnClickListener() {
         });
 
     }
-
-    private void insertData(String Femalename,String MaleName,String MargeDate,String MainTopic,String SupTopic,String CommentTopic,String checkbox){
-
-        Boolean result = myDb.insertData(Femalename,MaleName,MargeDate,MainTopic,SupTopic,CommentTopic,checkbox);
-        if (result== true){
-            //  Toast.makeText(this,"Data inserted susccfully",Toast.LENGTH_SHORT).show();
+    private void Delete(String ID){
+        Boolean result= myDb.deleteData(ID);
+        if (result){
+           // Log.d(TAG, "onClick possss delete: "+String.valueOf(result)+" for ID "+ID);
+            //  Toast.makeText(this,"Data updated susccfully",Toast.LENGTH_SHORT).show();
         }else {
-            //  Toast.makeText(this,"Data  insertion Faille",Toast.LENGTH_SHORT).show();
+          //  Log.d(TAG, "onClick possss delete: "+String.valueOf(result)+" for ID "+ID);
+            //  Toast.makeText(this,"Data  updated Faille",Toast.LENGTH_SHORT).show();
+        }
+
+    }
+    private void insertData(String MAIN_TOPIC,String NAME_VENDOR,String VENDOR_COMMENT,String VENDOR_PRICE,String VENDOR_PHONE,String MY_ID){
+
+        Boolean result = myDb.insertData(MAIN_TOPIC,NAME_VENDOR,VENDOR_COMMENT,VENDOR_PRICE,VENDOR_PHONE,MY_ID);
+        if (result== true){
+             // Toast.makeText(this,"Data inserted susccfully",Toast.LENGTH_SHORT).show();
+        }else {
+              //Toast.makeText(this,"Data  insertion Faille",Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -380,8 +484,8 @@ weedingVen_Button.setOnClickListener(new View.OnClickListener() {
         Toast.makeText(this,stringBuffer.toString(),Toast.LENGTH_SHORT).show();
     }
 
-    private void updateData(String ID,String Femalename,String MaleName,String MargeDate,String MainTopic,String SupTopic,String CommentTopic,String checkbox){
-        Boolean result = myDb.updateData(ID,Femalename,MaleName,MargeDate,MainTopic,SupTopic,CommentTopic,checkbox);
+    private void updateData(String ID,String MAIN_TOPIC,String NAME_VENDOR,String VENDOR_COMMENT,String VENDOR_PRICE,String VENDOR_PHONE,String MY_ID){
+        Boolean result = myDb.updateData(ID,MAIN_TOPIC,NAME_VENDOR,VENDOR_COMMENT,VENDOR_PRICE,VENDOR_PHONE,MY_ID);
         if (result== true){
             //  Toast.makeText(this,"Data updated susccfully",Toast.LENGTH_SHORT).show();
         }else {
@@ -392,6 +496,37 @@ weedingVen_Button.setOnClickListener(new View.OnClickListener() {
     /*
      * Preparing the list data
      */
+    private String  getID(){
+
+        if(getLastIDSQL()!=null){
+            return getLastIDSQL();
+        }else {
+            return "1";
+        }
+
+
+
+    }
+
+    private String  getLastIDSQL(){
+        //  ArrayList<GuestClass> Headers = new ArrayList<>();
+        Cursor res = myDb.getALData();
+        // StringBuffer stringBuffer=new StringBuffer();
+        Log.d(TAG, "onClick possss last SQL: " );
+        String myid =null;
+        if(res !=null && res.getCount()>0){
+            //Log.d(TAG, "onClick possss last SQL: not nulll");
+            while (res.moveToNext()){
+                // Log.d(TAG, "onClick possss last SQL: "+String.valueOf(myid));
+                myid = res.getString(0);
+                //   Log.d(TAG, "onClick possss last SQL: "+String.valueOf(myid));
+            }
+
+        }
+        Log.d(TAG, "onClick possss last SQL: "+String.valueOf(myid)  );
+
+        return myid;
+    }
     private List getallHeaders(){
         List<String> Headers = new ArrayList<>();
         Cursor res = myDb.getALData();
@@ -399,24 +534,25 @@ weedingVen_Button.setOnClickListener(new View.OnClickListener() {
 
         if(res !=null && res.getCount()>0){
             while (res.moveToNext()){
-                stringBuffer.append(res.getString(0));
-                stringBuffer.append(res.getString(1));
-                stringBuffer.append(res.getString(2));
-                stringBuffer.append(res.getString(3));
-                stringBuffer.append(res.getString(4));
+                String ID = res.getString(0);
+                String MainTopic=res.getString(1);
+                String VendorName=res.getString(2);
+               String Comment=res.getString(3);
+               String Price=res.getString(4);
+               String PhoneNumber=res.getString(5);
+
                 if (Headers.isEmpty()){
-                    Headers.add(res.getString(4));
-                    //Log.d(TAG, "Yoooosif: empty and added = "+res.getString(3));
+                    Headers.add(MainTopic);
+                   // Log.d(TAG, "Yoooosif: empty and added = "+MainTopic);
                 }else {
-                    if (!(Headers.contains(res.getString(4)))) {
-                        Headers.add(res.getString(4));
-                        // Log.d(TAG, "Yoooosif: not same and added = "+res.getString(3));
+                    if (!(Headers.contains(MainTopic))) {
+                        Headers.add(MainTopic);
+                     //    Log.d(TAG, "Yoooosif: not same and added = "+MainTopic);
 
                     }
 
                 }
-                stringBuffer.append(res.getString(5));
-                stringBuffer.append(res.getString(6));
+
             }
 
         }
@@ -427,18 +563,30 @@ weedingVen_Button.setOnClickListener(new View.OnClickListener() {
         return getallHeaders().size();
     }
     private List getDataOfChildheader(String MainTopic){
-        List<String> Headers = new ArrayList<>();
+        List<VendorList> Headers = new ArrayList<>();
         Cursor res = myDb.getALData();
         StringBuffer stringBuffer=new StringBuffer();
-        String Topic;
-        String Sup;
+
         if(res !=null && res.getCount()>0){
             while (res.moveToNext()){
-                Topic=res.getString(4);
-                Sup=res.getString(5);
-                Log.d(TAG, "Yoooosif: MainTopic is  = "+MainTopic+ "search for "+Topic +" with "+Sup);
-                if (MainTopic.equals(Topic)){
-                    Headers.add(Sup);
+                String ID = res.getString(0);
+                String myMainTopic=res.getString(1);
+                String VendorName=res.getString(2);
+                String Comment=res.getString(3);
+                String Price=res.getString(4);
+                String PhoneNumber=res.getString(5);
+                String myID=res.getString(6);
+              //  Log.d(TAG, "Yoooosif: MainTopic is  = "+MainTopic+ "search for "+myMainTopic);
+                if (MainTopic.equals(myMainTopic)){
+                    VendorList vendorList =new VendorList();
+                    vendorList.VendorPhonenumber=PhoneNumber;
+                    vendorList.VendorPrice=Price;
+                    vendorList.VendorComment=Comment;
+                    vendorList.VendorName=VendorName;
+                    vendorList.MainTopicName=myMainTopic;
+                    vendorList.myID=myID;
+                   // Log.d(TAG, "Yoooosif: yeson is  = "+myID+ "search for "+vendorList.myID);
+                    Headers.add(vendorList);
                 }
 
 
@@ -489,7 +637,7 @@ weedingVen_Button.setOnClickListener(new View.OnClickListener() {
         return Headers;
 
     }
-    private String getIDNumber(String MainTopic,String SupTopic){
+    private String getIDNumber(String MainTopic,VendorList SupTopic){
         String ID="1" ;
         Cursor res = myDb.getALData();
         StringBuffer stringBuffer=new StringBuffer();
@@ -498,11 +646,20 @@ weedingVen_Button.setOnClickListener(new View.OnClickListener() {
         String Comment;
         if(res !=null && res.getCount()>0){
             while (res.moveToNext()){
-                Topic=res.getString(4);
+               // String ID = res.getString(0);
+                String myMainTopic=res.getString(1);
+                String VendorName=res.getString(2);
+              //  String Comment=res.getString(3);
+                String Price=res.getString(4);
+                String PhoneNumber=res.getString(5);
+
+
+
+
                 Sup=res.getString(5);
-                Comment=res.getString(6);
+
                 //Log.d(TAG, "Yoooosif: MainTopic is  = "+MainTopic+ "search for "+Topic +" with "+Sup);
-                if (MainTopic.equals(Topic) && SupTopic.equals(Sup) ){
+                if (MainTopic.equals(myMainTopic) && SupTopic.equals(Sup) ){
                     ID= res.getString(0);
                     return ID;
                 }
@@ -512,9 +669,10 @@ weedingVen_Button.setOnClickListener(new View.OnClickListener() {
         }
         return ID;
     }
+
     private void loadData(){
-        listDataHeader = new ArrayList<String>();
-        listDataChild = new HashMap<String, List<VendorList>>();
+      //  listDataHeader = new ArrayList<String>();
+        //listDataChild = new HashMap<String, List<VendorList>>();
         int numberOfMain = getCountHeaders();
         //Get all topics
         List<String> Headers = new ArrayList<>();
@@ -525,15 +683,16 @@ weedingVen_Button.setOnClickListener(new View.OnClickListener() {
             listDataHeader.add(Topic);
             //Log.d(TAG, "Yoooosif: not same and added = "+temp);
             //get all children
-            List<String> Children = new ArrayList<>();
+
+            List<VendorList> Children = new ArrayList<>();
             Children=getDataOfChildheader(Topic);
 
-            List<String> Comments=new ArrayList<>();
-            Comments=getDataOfChildComment(Topic);
+            //List<String> Comments=new ArrayList<>();
+            //Comments=getDataOfChildComment(Topic);
 
-            List<String> CheckBox=new ArrayList<>();
-            CheckBox=getDataOfChildCheckBox(Topic);
-            Log.d(TAG, "Yoooosif: children are  = "+Children );
+            //List<String> CheckBox=new ArrayList<>();
+            //CheckBox=getDataOfChildCheckBox(Topic);
+            //Log.d(TAG, "Yoooosif: children are  = "+Children );
             List<VendorList> TopicList = new ArrayList<VendorList>();
 
             // for (String Suptopic : Children) {
@@ -542,15 +701,15 @@ weedingVen_Button.setOnClickListener(new View.OnClickListener() {
             // }
             for (int i = 0; i < Children.size(); i++) {
                 // System.out.println(Children.get(i));
-                boolean check;
-                if (CheckBox.get(i).equals("True")){
-                    check=true;
-                }else {check=false;}
-                TopicList.add(new VendorList(Children.get(i),Comments.get(i)));
+
+                TopicList.add(new VendorList(Children.get(i).VendorName,Children.get(i).VendorComment,Children.get(i).VendorPrice,Children.get(i).VendorPhonenumber,Children.get(i).MainTopicName,Children.get(i).myID));
+              //  Log.d(TAG, "Yoooosif: child number is dele load = "+Children.get(i).myID);
             }
+
             listDataChild.put(listDataHeader.get(index), TopicList); // Header, Child data
             index=index+1;
         }
+
 
     }
 
@@ -558,132 +717,9 @@ weedingVen_Button.setOnClickListener(new View.OnClickListener() {
 
         // listDataHeader = new ArrayList<String>();
         //listDataChild = new HashMap<String, List<GehazList>>();
-        String Matbakh="مطبخ";
-        String hamam="مستلزمات حمام";
-        String mafaresh="المفروشات";
 
-        insertData("","","",Matbakh,"طقم صيني","","false");
-        insertData("","","",Matbakh,"طقم ملاعق و شوك","","false");
-        insertData("","","",Matbakh,"اطباق بلاستيك","","false");
-        insertData("","","",Matbakh,"طقم سكاكين","","false");
-        insertData("","","",Matbakh,"طقم معالق توزيع","","false");
-        insertData("","","",Matbakh,"طقم توابل","","false");
-        insertData("","","",Matbakh,"علب ثلاجة","","false");
-        insertData("","","",Matbakh,"طقم بايركس","","false");
-        insertData("","","",Matbakh,"طقم حلل","","false");
-        insertData("","","",Matbakh,"طقم صواني فرن","","false");
-        insertData("","","",Matbakh,"طواجن فرن","","false");
-        insertData("","","",Matbakh,"طقم جيلي","","false");
-        insertData("","","",Matbakh,"طقم شاي/قهوة","","false");
-        insertData("","","",Matbakh,"طاسات للقلي","","false");
-        insertData("","","",Matbakh,"ملاعق خشب/سيليكون","","false");
-        insertData("","","",Matbakh,"مبشرة","","false");
-        insertData("","","",Matbakh,"مقورة","","false");
-        insertData("","","",Matbakh,"لبانة","","false");
-        insertData("","","",Matbakh,"كبة","","false");
-        insertData("","","",Matbakh,"طقم صواني تقديم","","false");
-        insertData("","","",Matbakh,"مصفاة ستانلس","","false");
-        insertData("","","",Matbakh,"مصفاة بلاستيك","","false");
-        insertData("","","",Matbakh,"زجاجة مياه و اكواب","","false");
-        insertData("","","",Matbakh,"براد شاي","","false");
-        insertData("","","",Matbakh,"طبق كبير للسلطة","","false");
-        insertData("","","",Matbakh,"سلة مهملات","","false");
-        insertData("","","",Matbakh,"مقص مطبخ","","false");
-        insertData("","","",Matbakh,"شياطة الارز","","false");
-        insertData("","","",Matbakh,"مساكات للحاجات السخنة","","false");
-        insertData("","","",Matbakh,"حامل مناديل مطبخ","","false");
-        insertData("","","",Matbakh,"مريلة مطبخ","","false");
-        insertData("","","",Matbakh,"مصفاة صغيرة للسوائل","","false");
-        insertData("","","",Matbakh,"لوح تقطيع","","false");
-        insertData("","","",Matbakh,"صفاية ملاعق للحوض","","false");
-        insertData("","","",Matbakh,"كيتشن ماشين","","false");
-        insertData("","","",Matbakh,"مفرمة ثوم","","false");
-        insertData("","","",Matbakh,"عصارة ليمون","","false");
-        insertData("","","",Matbakh,"عصارة برتقال","","false");
-        insertData("","","",Matbakh,"ميزان مطبخ","","false");
-        insertData("","","",Matbakh,"فوط مطبخ","","false");
-        insertData("","","",Matbakh,"سلاطين صغيرة","","false");
-        insertData("","","",Matbakh,"كنكة قهوة","","false");
-        insertData("","","",Matbakh,"شفشق عصير","","false");
-        insertData("","","",Matbakh,"ولاعة بوتجاز","","false");
-        insertData("","","",Matbakh,"مدق للبتيك","","false");
-        insertData("","","",Matbakh,"نشابة عجين","","false");
-        insertData("","","",Matbakh,"اطباق ميكروويف","","false");
-        insertData("","","",Matbakh,"قطاعة بيتزا","","false");
-        insertData("","","",Matbakh,"معلقة ايس كريم","","false");
-        insertData("","","",Matbakh,"قوالب كيك","","false");
-        insertData("","","",Matbakh,"مساكة جاتوه","","false");
-        insertData("","","",Matbakh,"شيالة بسكويت","","false");
-        insertData("","","",Matbakh,"صواني بيتزا","","false");
-        insertData("","","",Matbakh,"صينية فطار","","false");
-        insertData("","","",Matbakh,"طقم خشاف","","false");
-        insertData("","","",Matbakh,"قوالب ثلج","","false");
-        insertData("","","",Matbakh,"فتاحة علب","","false");
-        insertData("","","",Matbakh,"اقماع","","false");
-        insertData("","","",Matbakh,"مضرب بيض يدوي","","false");
-        insertData("","","",Matbakh,"فرشاة بيض","","false");
-        insertData("","","",Matbakh,"هراسة بطاطس","","false");
-        insertData("","","",Matbakh,"بونبونيرة","","false");
-        insertData("","","",Matbakh,"كاسات","","false");
-        insertData("","","",Matbakh,"طفاية","","false");
-        insertData("","","",Matbakh,"منخل دقيق","","false");
-        insertData("","","",Matbakh,"برطمانات تخزين","","false");
-        insertData("","","",Matbakh,"قشارة بطاطس","","false");
-        insertData("","","",Matbakh,"قطاعة تفاح","","false");
-        insertData("","","",Matbakh,"مجات نسكافيه","","false");
-        insertData("","","",Matbakh,"جوانتي حرارة","","false");
-        insertData("","","",Matbakh,"طاسة جريل","","false");
-        insertData("","","",Matbakh,"خلاط","","false");
-        insertData("","","",Matbakh,"طبق تسالي","","false");
-        insertData("","","",Matbakh,"طقم عشاء للاستخدام اليومي","","false");
 
-        insertData("","","",hamam,"طقم دواسات","","false");
-        insertData("","","",hamam,"مساحة زجاج","","false");
-        insertData("","","",hamam,"سلة مهملات صفيرة","","false");
-        insertData("","","",hamam,"سبت غسيل","","false");
-        insertData("","","",hamam,"طبق بلاستيك للغسيل","","false");
-        insertData("","","",hamam,"مشابك","","false");
-        insertData("","","",hamam,"منشر غسيل داخلي","","false");
-        insertData("","","",hamam,"مشمع غسيل","","false");
-        insertData("","","",hamam,"شماعات للدولاب","","false");
-        insertData("","","",hamam,"مقشة و جاروف","","false");
-        insertData("","","",hamam,"مساحة ارضيات","","false");
-        insertData("","","",hamam,"جردل مسح","","false");
-        insertData("","","",hamam,"زعافة","","false");
-        insertData("","","",hamam,"فرشاة اسنان","","false");
-        insertData("","","",hamam,"سلاكة بلاعات","","false");
-        insertData("","","",hamam,"فرشاة الوبر للملابس","","false");
-        insertData("","","",hamam,"فرشاة تواليت","","false");
-        insertData("","","",hamam,"ليفة تنضيف الحوض","","false");
-        insertData("","","",hamam,"شموع","","false");
-        insertData("","","",hamam,"ورد مجفف","","false");
-        insertData("","","",hamam,"معطر حمام","","false");
-        insertData("","","",hamam,"منظف ارضيات","","false");
-        insertData("","","",hamam,"مبخرة","","false");
-        insertData("","","",hamam,"ملمع زجاج","","false");
-        insertData("","","",hamam,"ملمع خشب","","false");
-        insertData("","","",hamam,"طقم اكسسوارات الحمام","","false");
-
-        insertData("","","",mafaresh,"بطاطين","","false");
-        insertData("","","",mafaresh,"لحاف","","false");
-        insertData("","","",mafaresh,"اغطية لحاف","","false");
-        insertData("","","",mafaresh,"كوفرتة","","false");
-        insertData("","","",mafaresh,"مفرش سرسر دفاية","","false");
-        insertData("","","",mafaresh,"غطاء مرتبة","","false");
-        insertData("","","",mafaresh,"طقم ملايات","","false");
-        insertData("","","",mafaresh,"بشاكير قطن","","false");
-        insertData("","","",mafaresh,"طقم فوط قطن","","false");
-        insertData("","","",mafaresh,"برنس حمام","","false");
-        insertData("","","",mafaresh,"شبشب حمام","","false");
-        insertData("","","",mafaresh,"مفرش سفرة","","false");
-        insertData("","","",mafaresh,"مفارش نيش","","false");
-        insertData("","","",mafaresh,"مفارش لترابيزة الصالون","","false");
-        insertData("","","",mafaresh,"","","false");
-        insertData("","","",mafaresh,"","","false");
-        insertData("","","",mafaresh,"","","false");
-        insertData("","","",mafaresh,"","","false");
-        insertData("","","",mafaresh,"","","false");
-        insertData("","","",mafaresh,"","","false");
+        insertData("yessss","oooooom","","500","011111","1");
 
 
         loadData();

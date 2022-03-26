@@ -10,9 +10,10 @@
         <entry key="..\:/Users/Yosif Hadima/AndroidStudioProjects/MainFarahy/app/src/main/res/layout/activity_gehaz_check_list_new.xml" value="0.1213768115942029" />
         <entry key="..\:/Users/Yosif Hadima/AndroidStudioProjects/MainFarahy/app/src/main/res/layout/activity_gehaz_checklist.xml" value="0.1213768115942029" />
         <entry key="..\:/Users/Yosif Hadima/AndroidStudioProjects/MainFarahy/app/src/main/res/layout/activity_guest.xml" value="0.14" />
+        <entry key="..\:/Users/Yosif Hadima/AndroidStudioProjects/MainFarahy/app/src/main/res/layout/activity_login.xml" value="0.22" />
         <entry key="..\:/Users/Yosif Hadima/AndroidStudioProjects/MainFarahy/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/Yosif Hadima/AndroidStudioProjects/MainFarahy/app/src/main/res/layout/activity_main2.xml" value="0.1" />
-        <entry key="..\:/Users/Yosif Hadima/AndroidStudioProjects/MainFarahy/app/src/main/res/layout/activity_main3.xml" value="0.15" />
+        <entry key="..\:/Users/Yosif Hadima/AndroidStudioProjects/MainFarahy/app/src/main/res/layout/activity_main3.xml" value="0.33" />
         <entry key="..\:/Users/Yosif Hadima/AndroidStudioProjects/MainFarahy/app/src/main/res/layout/activity_my_guest.xml" value="0.21" />
         <entry key="..\:/Users/Yosif Hadima/AndroidStudioProjects/MainFarahy/app/src/main/res/layout/activity_vendor.xml" value="0.14" />
         <entry key="..\:/Users/Yosif Hadima/AndroidStudioProjects/MainFarahy/app/src/main/res/layout/add_vendor_dialog.xml" value="0.22" />
@@ -26,7 +27,8 @@
         <entry key="..\:/Users/Yosif Hadima/AndroidStudioProjects/MainFarahy/app/src/main/res/layout/list_group_vendor.xml" value="0.22" />
         <entry key="..\:/Users/Yosif Hadima/AndroidStudioProjects/MainFarahy/app/src/main/res/layout/list_item.xml" value="0.22" />
         <entry key="..\:/Users/Yosif Hadima/AndroidStudioProjects/MainFarahy/app/src/main/res/layout/list_item_vendor.xml" value="0.25" />
-        <entry key="..\:/Users/Yosif Hadima/AndroidStudioProjects/MainFarahy/app/src/main/res/layout/update_vendor_dialogbox.xml" value="0.11911231884057971" />
+        <entry key="..\:/Users/Yosif Hadima/AndroidStudioProjects/MainFarahy/app/src/main/res/layout/love_dialog.xml" value="0.25" />
+        <entry key="..\:/Users/Yosif Hadima/AndroidStudioProjects/MainFarahy/app/src/main/res/layout/update_vendor_dialogbox.xml" value="0.18" />
         <entry key="..\:/Users/Yosif Hadima/AndroidStudioProjects/MainFarahy/app/src/main/res/layout/vendor_box_dialog.xml" value="0.25" />
       </map>
     </option>

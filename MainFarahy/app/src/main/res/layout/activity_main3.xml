@@ -35,7 +35,7 @@
                 android:paddingRight="90dp">
 
                 <ImageView
-                    android:id="@+id/imageView2"
+                    android:id="@+id/imageheart_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
@@ -48,14 +48,43 @@
                     android:layout_marginTop="35dp"
                     android:orientation="vertical">
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Yosif &amp; 5o5a"
-                        android:textColor="#FFFFFF"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/brideManName_id"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Yosif"
+                            android:gravity="center"
+                            android:textColor="#FFFFFF"
+                            android:textSize="20sp"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/textView9"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" &amp; "
+                            android:gravity="center"
+
+                            android:textColor="#FFFFFF"
+                            android:textSize="20sp"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/bridname"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="5o5a"
+                            android:textColor="#FFFFFF"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -72,7 +101,7 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/textView11"
+                                android:id="@+id/year_id"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="3dp"
@@ -88,7 +117,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="months"
+                                android:text="years"
                                 android:textColor="#E8E5E5"
                                 android:textSize="8sp" />
                         </LinearLayout>
@@ -113,7 +142,7 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/textView9"
+                                android:id="@+id/months_id"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="3dp"
@@ -129,7 +158,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="days"
+                                android:text="months"
                                 android:textColor="#E8E5E5"
                                 android:textSize="8sp" />
                         </LinearLayout>
@@ -154,7 +183,7 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/textView5"
+                                android:id="@+id/days_id"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="3dp"
@@ -170,7 +199,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="hours"
+                                android:text="days"
                                 android:textColor="#E8E5E5"
                                 android:textSize="8sp" />
                         </LinearLayout>
@@ -185,14 +214,16 @@
                             android:text=":"
                             android:textColor="#FFFFFF"
                             android:textSize="20sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:visibility="gone" />
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:visibility="gone">
 
                             <TextView
                                 android:id="@+id/textView6"
@@ -230,7 +261,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/textView17"
+                        android:id="@+id/weddingday"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
@@ -279,7 +310,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Checklist" />
+                    android:text="جهاز العروسة" />
             </LinearLayout>
 
             <LinearLayout
@@ -309,7 +340,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Guests" />
+                    android:text="المعازيم" />
 
             </LinearLayout>
 
@@ -331,7 +362,8 @@
                 android:foreground="?android:attr/selectableItemBackground"
                 android:orientation="vertical"
                 android:paddingLeft="70dp"
-                android:paddingRight="35dp">
+                android:paddingRight="35dp"
+                android:visibility="visible">
 
                 <ImageView
                     android:id="@+id/imageView6"
@@ -386,7 +418,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Appointments" />
+                    android:text="المواعيد" />
 
             </LinearLayout>
         </LinearLayout>

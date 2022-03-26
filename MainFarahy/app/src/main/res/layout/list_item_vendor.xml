@@ -26,7 +26,7 @@
                 android:id="@+id/imageView_call_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="0.8"
                 android:paddingLeft="16dip"
                 app:srcCompat="@drawable/ic_call" />
         </LinearLayout>
@@ -37,21 +37,24 @@
             android:layout_height="wrap_content"
 
 
-            android:layoutDirection="ltr"
+            android:layout_weight="0.3"
+            android:layoutDirection="rtl"
             android:text="300"
+            android:textAlignment="viewEnd"
             android:textColor="@color/teal_700"
             android:textSize="16sp" />
 
         <TextView
             android:id="@+id/lblListItem"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="2.7"
             android:paddingTop="5dp"
+            android:paddingRight="16dip"
             android:paddingBottom="5dp"
-            android:text="كتابه"
-            android:textAlignment="textStart"
+            android:text="yasser"
+            android:textAlignment="viewEnd"
             android:textSize="17sp"
             tools:ignore="RtlCompat" />
 
@@ -60,7 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:layout_gravity="center"
-            android:layout_weight="0.2"
+            android:visibility="gone"
             app:srcCompat="@drawable/reminder" />
 
     </LinearLayout>
