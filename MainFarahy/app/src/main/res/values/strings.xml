@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MainFarahy</string>
+    <string name="app_name">Farahy|فرحي</string>
     <string name="title_activity_guest">GuestActivity</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -9,8 +9,10 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-
-
+    <string name="ADS_1">ca-app-pub-8288510497847979/9751558862</string>
+    <string name="ADS_2">ca-app-pub-8288510497847979/8821604663</string>
+    <string name="ADS_3">ca-app-pub-8288510497847979/3114816563</string>
+    <string name="ADS_4">ca-app-pub-8288510497847979/2336103279</string>
     <string name="no_cardetails">Click on the button below to begin creating your reminder!</string>
     <string name="title_activity_add_reminder">Add Reminder</string>
     <string name="title_activity_edit_reminder">Edit Reminder</string>
