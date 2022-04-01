@@ -16,11 +16,11 @@
         android:roundIcon="@drawable/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.MainFarahy">
+
         <activity
-            android:name="com.foru.mainfarahy.LoginActivity"
+            android:name=".LoginActivity"
             android:exported="true"
-            android:screenOrientation="portrait"
-            >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,9 +28,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.foru.mainfarahy.AddReminderActivity"
+            android:name=".AddReminderActivity"
             android:label="@string/title_activity_add_reminder"
-            android:parentActivityName="com.foru.mainfarahy.AppointmentsActivity"
+            android:parentActivityName=".AppointmentsActivity"
             android:theme="@style/AppTheme">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
@@ -40,44 +40,40 @@
         </activity>
 
         <provider
-            android:name="com.foru.mainfarahy.data.AlarmReminderProvider"
+            android:name=".data.AlarmReminderProvider"
             android:authorities="com.foru.mainfarahy"
             android:exported="false" />
 
         <service
-            android:name="com.foru.mainfarahy.reminder.ReminderAlarmService"
+            android:name=".reminder.ReminderAlarmService"
             android:exported="false" />
 
         <activity
-            android:name="com.foru.mainfarahy.AppointmentsActivity"
+            android:name=".AppointmentsActivity"
             android:exported="false"
-
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
-            android:name="com.foru.mainfarahy.VendorActivity"
+            android:name=".VendorActivity"
             android:exported="false"
             android:label="استعدادات الفرح"
-
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
-            android:name="com.foru.mainfarahy.MyGuestActivity"
+            android:name=".MyGuestActivity"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
-            android:name="com.foru.mainfarahy.MainActivity"
+            android:name=".MainActivity"
             android:exported="false"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.foru.mainfarahy.GehazCheckListActivityNew"
+            android:name=".GehazCheckListActivityNew"
             android:exported="false"
             android:label="جهاز العروسة"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-8288510497847979~8394229257"/>
+            android:value="ca-app-pub-8288510497847979~8394229257" />
     </application>
 
 </manifest>

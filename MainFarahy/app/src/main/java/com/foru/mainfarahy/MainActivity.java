@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
@@ -29,6 +30,9 @@ import java.util.Date;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+
+import smartdevelop.ir.eram.showcaseviewlib.GuideView;
+
 public class MainActivity extends AppCompatActivity {
 LinearLayout CheckList;
 LinearLayout GuestList;
@@ -49,12 +53,18 @@ LinearLayout VendorLayout;
     TextView bridename;
     TextView bridManName;
     private AdView mAdView;
+    LottieAnimationView lottieAnimationView;
+    DataBaseHelper myDbGehaz;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
         myDb= new DataBaseHelperDate(this);
+        myDbGehaz= new DataBaseHelper(this);
+
         getSupportActionBar().hide();
+        lottieAnimationView=findViewById(R.id.animationView);
+
         AdView adView = new AdView(this);
 
         adView.setAdSize(AdSize.BANNER);
@@ -350,6 +360,13 @@ VendorLayout.setOnClickListener(new View.OnClickListener() {
             }
         });
      loadallData();
+     if (myDbGehaz.getALData().getCount()<=0)
+     {
+        ShowIntro("", "هنا يتم عرض العد التنازلي ليوم الفرح", R.id.infoheart_id, 1);
+
+
+     }
+
     }
 
 
@@ -420,7 +437,11 @@ VendorLayout.setOnClickListener(new View.OnClickListener() {
                 //Toast.makeText(getApplicationContext(),"Years : "+y+"Months : "+m+ "days : "+d,Toast.LENGTH_SHORT).show();
                 //abl el sana
 
-
+if (y<=0 && m<=0 && d<=0){
+    lottieAnimationView.setVisibility(View.VISIBLE);
+}else {
+    lottieAnimationView.setVisibility(View.GONE);
+}
                     yearText.setText(String.valueOf(y));
                     monthText.setText(String.valueOf(m));
                     daysText.setText(String.valueOf(d));
@@ -463,5 +484,34 @@ VendorLayout.setOnClickListener(new View.OnClickListener() {
 
     }
 
+
+    private void ShowIntro(String title, String text, int viewId, final int type) {
+
+        new GuideView.Builder(this)
+                .setTitle(title)
+                .setContentText(text)
+                .setTargetView((LinearLayout)findViewById(viewId))
+                .setContentTextSize(20)//optional
+                .setTitleTextSize(2)//optional
+                .setDismissType(GuideView.DismissType.anywhere) //optional - default dismissible by TargetView
+                .setGuideListener(new GuideView.GuideListener() {
+                    @Override
+                    public void onDismiss(View view) {
+                        if (type == 1) {
+                            ShowIntro("", "يمكنك تعديل موعد الفرح", R.id.infoheart_id, 6);
+                        } else if (type == 6) {
+                            ShowIntro("", "هنا يوجد جميع قائمة طلبات جهاز العروسة", R.id.CheckList_id, 2);
+                        } else if (type == 2) {
+                            ShowIntro("", "هنا يمكنك تحديد منبه او اشعار لتنبيهك بها لاحقا ", R.id.Appointment_id, 4);
+                        } else if (type == 4) {
+                            ShowIntro("", "هنا يمكنك كتابة قائمة المدعوين و تحديد من تم دعوته", R.id.guest_id, 3);
+                        } else if (type == 3) {
+                            ShowIntro("", "هنا مخصص لعمل المقارنات بالاسعار", R.id.vendor_id, 5);
+                        }
+                    }
+                })
+                .build()
+                .show();
+    }
 
 }
