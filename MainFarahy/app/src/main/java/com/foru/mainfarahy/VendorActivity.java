@@ -338,7 +338,9 @@ String ID =listDataChild.get(listDataHeader.get(groupPosition)).get(childPositio
         listDataHeader.add("Wedding Venue");
         List<VendorList> weedingVen = new ArrayList<VendorList>();
         listDataChild.put(listDataHeader.get(listDataHeader.size()-1), weedingVen); // Header, Child data
+      //  listAdapter = new ExpandableListAdapterVendor(getApplicationContext(),  listDataHeader, listDataChild,VendorActivity.this);
         listAdapter = new ExpandableListAdapterVendor(getApplicationContext(),  listDataHeader, listDataChild,VendorActivity.this);
+
         // setting list adapter
         expListView.setAdapter(listAdapter);
         weedingVen_clicked=true;
@@ -702,18 +704,8 @@ String ID =listDataChild.get(listDataHeader.get(groupPosition)).get(childPositio
             List<VendorList> Children = new ArrayList<>();
             Children=getDataOfChildheader(Topic);
 
-            //List<String> Comments=new ArrayList<>();
-            //Comments=getDataOfChildComment(Topic);
-
-            //List<String> CheckBox=new ArrayList<>();
-            //CheckBox=getDataOfChildCheckBox(Topic);
-            //Log.d(TAG, "Yoooosif: children are  = "+Children );
             List<VendorList> TopicList = new ArrayList<VendorList>();
 
-            // for (String Suptopic : Children) {
-            //   TopicList.add(new GehazList(Suptopic));
-            //     Log.d(TAG, "Yoooosif: Topic is  = "+Topic +" with "+Suptopic);
-            // }
             for (int i = 0; i < Children.size(); i++) {
                 // System.out.println(Children.get(i));
 

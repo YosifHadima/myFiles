@@ -218,6 +218,7 @@ String phoneNumber =_listDataChild.get(this._listDataHeader.get(groupPosition)).
             @Override
             public void onClick(View v) {
                 //should updated this step
+                //loadData();
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(v.getRootView().getContext());
                 ViewGroup viewGroup = v.findViewById(android.R.id.content);
@@ -272,9 +273,11 @@ String myID=getID();
 
                                 if (String.valueOf(lastID).equals(myID))
                                 {
+
                                     selectedHeader.add(new VendorList(myName,"",price,phone,MainTopic,String.valueOf(lastID)));
 
                                 }else {
+
                                     updateData(String.valueOf(lastID),MainTopic,myName,"",price,phone,String.valueOf(lastID));
                                     selectedHeader.add(new VendorList(myName,"",price,phone,MainTopic,String.valueOf(lastID)));
 
@@ -283,6 +286,7 @@ String myID=getID();
 
 
                             _listDataChild.put(_listDataHeader.get(groupPosition), selectedHeader);
+                            loadData();
                             //Refresh();
                             notifyDataSetChanged();
 
@@ -411,6 +415,105 @@ notifyDataSetChanged();
          //Log.d(TAG, "onClick possss last SQL: "+String.valueOf(myid)  );
 
         return myid;
+    }
+    private List getDataOfChildheader(String MainTopic){
+        List<VendorList> Headers = new ArrayList<>();
+        Cursor res = myDb.getALData();
+        StringBuffer stringBuffer=new StringBuffer();
+
+        if(res !=null && res.getCount()>0){
+            while (res.moveToNext()){
+                String ID = res.getString(0);
+                String myMainTopic=res.getString(1);
+                String VendorName=res.getString(2);
+                String Comment=res.getString(3);
+                String Price=res.getString(4);
+                String PhoneNumber=res.getString(5);
+                String myID=res.getString(6);
+                //  Log.d(TAG, "Yoooosif: MainTopic is  = "+MainTopic+ "search for "+myMainTopic);
+                if (MainTopic.equals(myMainTopic)){
+                    VendorList vendorList =new VendorList();
+                    vendorList.VendorPhonenumber=PhoneNumber;
+                    vendorList.VendorPrice=Price;
+                    vendorList.VendorComment=Comment;
+                    vendorList.VendorName=VendorName;
+                    vendorList.MainTopicName=myMainTopic;
+                    vendorList.myID=myID;
+                    // Log.d(TAG, "Yoooosif: yeson is  = "+myID+ "search for "+vendorList.myID);
+                    Headers.add(vendorList);
+                }
+
+
+            }
+        }
+        return Headers;
+
+    }
+    private List getallHeaders(){
+        List<String> Headers = new ArrayList<>();
+        Cursor res = myDb.getALData();
+        StringBuffer stringBuffer=new StringBuffer();
+
+        if(res !=null && res.getCount()>0){
+            while (res.moveToNext()){
+                String ID = res.getString(0);
+                String MainTopic=res.getString(1);
+                String VendorName=res.getString(2);
+                String Comment=res.getString(3);
+                String Price=res.getString(4);
+                String PhoneNumber=res.getString(5);
+
+                if (Headers.isEmpty()){
+                    Headers.add(MainTopic);
+                    // Log.d(TAG, "Yoooosif: empty and added = "+MainTopic);
+                }else {
+                    if (!(Headers.contains(MainTopic))) {
+                        Headers.add(MainTopic);
+                        //    Log.d(TAG, "Yoooosif: not same and added = "+MainTopic);
+
+                    }
+
+                }
+
+            }
+
+        }
+        return Headers;
+    }
+    private void loadData(){
+        //  listDataHeader = new ArrayList<String>();
+        //listDataChild = new HashMap<String, List<VendorList>>();
+       // int numberOfMain = getCountHeaders();
+        //Get all topics
+
+        List<String> Headers = new ArrayList<>();
+
+        _listDataHeader = new ArrayList<String>();
+        Headers=getallHeaders();
+
+        int index=0;
+        for (String Topic : Headers) {
+            _listDataHeader.add(Topic);
+            //Log.d(TAG, "Yoooosif: not same and added = "+temp);
+            //get all children
+
+            List<VendorList> Children = new ArrayList<>();
+            Children=getDataOfChildheader(Topic);
+
+            List<VendorList> TopicList = new ArrayList<VendorList>();
+
+            for (int i = 0; i < Children.size(); i++) {
+                // System.out.println(Children.get(i));
+
+                TopicList.add(new VendorList(Children.get(i).VendorName,Children.get(i).VendorComment,Children.get(i).VendorPrice,Children.get(i).VendorPhonenumber,Children.get(i).MainTopicName,Children.get(i).myID));
+                //  Log.d(TAG, "Yoooosif: child number is dele load = "+Children.get(i).myID);
+            }
+
+            _listDataChild.put(_listDataHeader.get(index), TopicList); // Header, Child data
+            index=index+1;
+        }
+
+
     }
 
 }
