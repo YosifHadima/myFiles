@@ -2,15 +2,16 @@ package com.foru.mainfarahy;
 
 import static android.content.ContentValues.TAG;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
-
 import android.net.Uri;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,8 +21,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -32,7 +36,7 @@ import java.util.List;
 
 public class ExpandableListAdapterVendor extends BaseExpandableListAdapter {
     DataBaseHelperVendor myDb;
-
+    static final int PICK_CONTACT=2;
     private final Context _context;
     private List<String> _listDataHeader; // header titles
     // child data in format of header title, child title
@@ -40,6 +44,8 @@ public class ExpandableListAdapterVendor extends BaseExpandableListAdapter {
    List<VendorList> selectedHeader= new ArrayList<VendorList>();
     //List<VendorList> selectedHeader;
     Activity activity;
+    TextView textViewName;
+    EditText phonenumber;
     public ExpandableListAdapterVendor(Context context, List<String> listDataHeader, HashMap<String, List<VendorList>> listChildData, Activity activity) {
         this._context = context;
         this._listDataHeader = listDataHeader;
@@ -230,10 +236,10 @@ String phoneNumber =_listDataChild.get(this._listDataHeader.get(groupPosition)).
                 //CheckEmpty();
                 ////////
                 notifyDataSetChanged();
-                TextView textViewName=dialogView.findViewById(R.id.guest_edit_box_id);
+                 textViewName=dialogView.findViewById(R.id.guest_edit_box_id);
                 textViewName.setHint(_listDataHeader.get(groupPosition) );
                 String MainTopic=_listDataHeader.get(groupPosition);
-                EditText phonenumber=dialogView.findViewById(R.id.addphone_id);
+                 phonenumber=dialogView.findViewById(R.id.addphone_id);
 
                 Log.d(TAG, "Yoooosif: MainTopic is");
                 EditText editTextNumber=dialogView.findViewById(R.id.editTextNumber);
@@ -308,6 +314,15 @@ String myID=getID();
                     }
                 });
 
+
+                ImageView contactImage=dialogView.findViewById(R.id.contact_id);
+                contactImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+                        activity.startActivityForResult(intent, PICK_CONTACT);
+                    }
+                });
             }
         });
 
@@ -514,6 +529,13 @@ notifyDataSetChanged();
         }
 
 
+    }
+
+    public  void onActivityResult(String name, String num) {
+        Log.d("MyAdapter", "onActivityResult");
+       // Toast.makeText(activity, name,Toast.LENGTH_SHORT).show();
+        textViewName.setText(name);
+        phonenumber.setText(num);
     }
 
 }

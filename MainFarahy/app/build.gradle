@@ -10,8 +10,8 @@ android {
         applicationId "com.foru.mainfarahy"
         minSdk 21
         targetSdk 31
-        versionCode 3
-        versionName "1.2"
+        versionCode 7
+        versionName "1.6"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -67,4 +67,6 @@ dependencies {
   // implementation 'com.github.scottyab:HeartBeatView:0.0.1'
     implementation 'com.github.amlcurran.showcaseview:library:5.4.3'
     implementation 'com.github.mreram:ShowCaseView:1.0.5'
+
+
 }

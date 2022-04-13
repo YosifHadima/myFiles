@@ -1,49 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="8dip"
+
     android:weightSum="3"
     tools:ignore="UselessParent">
 
-    <CheckBox
-        android:id="@+id/checkBox_guest_id"
-        android:layout_width="wrap_content"
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.05"
-        android:focusable="false"
-        android:buttonTint="@color/purple_500"
-        android:layoutDirection="rtl" />
+        android:layout_marginStart="4dp"
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="right"
-        android:text=" X "
-        android:textColor="#FB636F"
-        android:textSize="20sp" />
+        android:layout_marginEnd="4dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="1dp"
+        app:cardMaxElevation="1dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true"
+        app:contentPadding="14dip">
 
-    <TextView
-        android:id="@+id/guestTotal_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="0"
-        android:gravity="right"
-        android:text="4"
-        android:textColor="#FB636F"
-        android:textSize="20sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3">
 
-    <TextView
-        android:id="@+id/guestName_id"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1.95"
-        android:text="أحمد سمير"
-        android:textColor="@color/black"
-        android:textSize="24sp" />
+            <CheckBox
+                android:id="@+id/checkBox_guest_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.05"
+                android:buttonTint="@color/purple_500"
+                android:focusable="false"
+                android:layoutDirection="rtl" />
 
-</LinearLayout>
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text=" X "
+                android:textColor="#FB636F"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/guestTotal_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:gravity="right"
+                android:text="4"
+                android:textColor="#FB636F"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/guestName_id"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.95"
+                android:text="احمد"
+                android:textAlignment="viewEnd"
+                android:textColor="@color/black"
+                android:textSize="24sp" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

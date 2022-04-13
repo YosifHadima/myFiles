@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Yosif Hadima/AndroidStudioProjects/MainFarahy/app/src/main/res/drawable/main_header_selector.xml" value="0.2203125" />
+        <entry key="..\:/Users/Yosif Hadima/AndroidStudioProjects/MainFarahy/app/src/main/res/drawable/shadow.xml" value="0.2203125" />
         <entry key="..\:/Users/Yosif Hadima/AndroidStudioProjects/MainFarahy/app/src/main/res/layout-v23/list_item.xml" value="0.1" />
         <entry key="..\:/Users/Yosif Hadima/AndroidStudioProjects/MainFarahy/app/src/main/res/layout/activity_add_reminder.xml" value="0.14" />
         <entry key="..\:/Users/Yosif Hadima/AndroidStudioProjects/MainFarahy/app/src/main/res/layout/activity_add_reminder2.xml" value="0.1" />
@@ -15,7 +17,8 @@
         <entry key="..\:/Users/Yosif Hadima/AndroidStudioProjects/MainFarahy/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/Yosif Hadima/AndroidStudioProjects/MainFarahy/app/src/main/res/layout/activity_main2.xml" value="0.1" />
         <entry key="..\:/Users/Yosif Hadima/AndroidStudioProjects/MainFarahy/app/src/main/res/layout/activity_main3.xml" value="0.25434439178515006" />
-        <entry key="..\:/Users/Yosif Hadima/AndroidStudioProjects/MainFarahy/app/src/main/res/layout/activity_my_guest.xml" value="0.15" />
+        <entry key="..\:/Users/Yosif Hadima/AndroidStudioProjects/MainFarahy/app/src/main/res/layout/activity_my_guest.xml" value="0.22" />
+        <entry key="..\:/Users/Yosif Hadima/AndroidStudioProjects/MainFarahy/app/src/main/res/layout/activity_splash.xml" value="0.15" />
         <entry key="..\:/Users/Yosif Hadima/AndroidStudioProjects/MainFarahy/app/src/main/res/layout/activity_vendor.xml" value="0.14" />
         <entry key="..\:/Users/Yosif Hadima/AndroidStudioProjects/MainFarahy/app/src/main/res/layout/add_vendor_dialog.xml" value="0.22" />
         <entry key="..\:/Users/Yosif Hadima/AndroidStudioProjects/MainFarahy/app/src/main/res/layout/alarm_items.xml" value="0.1" />

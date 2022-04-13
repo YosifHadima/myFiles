@@ -6,67 +6,98 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     >
-
-    <LinearLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="55dip"
-        android:gravity="center|right"
-        android:orientation="horizontal"
-        android:paddingEnd="5dip"
-        android:weightSum="4"
-        tools:ignore="RtlHardcoded,RtlSymmetry">
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+
+        android:layout_marginEnd="4dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="1dp"
+        app:cardMaxElevation="1dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true"
+        app:contentPadding="14dip">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:layout_width="match_parent"
+            android:layout_height="55dip"
+            android:gravity="center|right"
+            android:orientation="horizontal"
+            android:paddingEnd="5dip"
+            android:weightSum="4"
+            tools:ignore="RtlHardcoded,RtlSymmetry">
 
-            <ImageView
-                android:id="@+id/imageView_call_id"
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imageView_call_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.8"
+                    android:paddingLeft="16dip"
+                    app:srcCompat="@drawable/ic_call" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.8"
-                android:paddingLeft="16dip"
-                app:srcCompat="@drawable/ic_call" />
+                android:layout_weight="0.3"
+                android:gravity="center|left"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView29"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:layoutDirection="ltr"
+                    android:text="£  " />
+
+                <TextView
+                    android:id="@+id/price_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+
+                    android:layout_weight="0.2"
+                    android:layoutDirection="rtl"
+                    android:text="300"
+                    android:textAlignment="viewEnd"
+                    android:textColor="@color/teal_700"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/lblListItem"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="2.7"
+                android:paddingTop="5dp"
+                android:paddingRight="16dip"
+                android:paddingBottom="5dp"
+                android:text="yasser"
+                android:textAlignment="viewEnd"
+                android:textColor="#000000"
+                android:textSize="17sp"
+                tools:ignore="RtlCompat" />
+
+            <ImageView
+                android:id="@+id/note_id"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                app:srcCompat="@drawable/reminder" />
+
         </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
-        <TextView
-            android:id="@+id/price_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-
-            android:layout_weight="0.3"
-            android:layoutDirection="rtl"
-            android:text="300"
-            android:textAlignment="viewEnd"
-            android:textColor="@color/teal_700"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/lblListItem"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="2.7"
-            android:paddingTop="5dp"
-            android:paddingRight="16dip"
-            android:paddingBottom="5dp"
-            android:text="yasser"
-            android:textAlignment="viewEnd"
-            android:textSize="17sp"
-            tools:ignore="RtlCompat" />
-
-        <ImageView
-            android:id="@+id/note_id"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:layout_gravity="center"
-            android:visibility="gone"
-            app:srcCompat="@drawable/reminder" />
-
-    </LinearLayout>
     <!--android:foreground="?android:attr/selectableItemBackground"-->
 
     <TextView

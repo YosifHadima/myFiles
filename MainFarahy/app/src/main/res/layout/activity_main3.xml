@@ -290,7 +290,16 @@
             </RelativeLayout>
 
         </RelativeLayout>
-
+        <TextView
+            android:id="@+id/textView28"
+            android:layout_width="match_parent"
+            android:layout_height="16dip"
+            android:background="@drawable/shadow"
+            android:paddingLeft="5dip"
+            android:paddingTop="4dip"
+            android:paddingRight="5dip"
+            android:paddingBottom="4dip"
+            android:visibility="visible" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -363,8 +372,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="64dip">
 
             <LinearLayout
                 android:id="@+id/vendor_id"
@@ -396,6 +406,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0"
                     android:gravity="center"
+                    android:paddingTop="16dip"
                     android:text="استعدادات الفرح" />
 
             </LinearLayout>
@@ -436,6 +447,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0"
                     android:gravity="center"
+                    android:paddingTop="16dip"
                     android:text="المواعيد" />
 
             </LinearLayout>

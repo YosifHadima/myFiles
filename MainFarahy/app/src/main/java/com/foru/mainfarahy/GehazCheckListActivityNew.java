@@ -398,6 +398,7 @@ DataBaseHelper myDb;
         String hamam="مستلزمات حمام";
         String mafaresh="المفروشات";
         String honeymoon="شهر العسل";
+        String aghza="اجهزة كهربائية";
 
         insertData("","","",Matbakh,"طقم صيني","","false");
         insertData("","","",Matbakh,"طقم ملاعق و شوك","","false");
@@ -573,6 +574,29 @@ DataBaseHelper myDb;
         insertData("","","",honeymoon,"كاميرا","","false");
         insertData("","","",honeymoon,"شواحن","","false");
         insertData("","","",honeymoon,"باور بانك","","false");
+
+        insertData("","","",aghza,"ثلاجة","","false");
+        insertData("","","",aghza,"بوتجاز","","false");
+        insertData("","","",aghza,"غسالة ملابس","","false");
+        insertData("","","",aghza,"سخان(غاز او كهرباء)","","false");
+        insertData("","","",aghza,"مروحة","","false");
+        insertData("","","",aghza,"مكيفات","","false");
+        insertData("","","",aghza,"شاشة تلفيزيون","","false");
+        insertData("","","",aghza,"شفاط مطبخ","","false");
+        insertData("","","",aghza,"فرن كهرباء","","false");
+        insertData("","","",aghza,"مكنسة كهربائية","","false");
+        insertData("","","",aghza,"مايكروويف","","false");
+        insertData("","","",aghza,"غسالة اطباق","","false");
+        insertData("","","",aghza,"ديب فريزر","","false");
+        insertData("","","",aghza,"مجفف ملابس","","false");
+        insertData("","","",aghza,"مبرد مياه","","false");
+        insertData("","","",aghza,"غسالة اطفال","","false");
+        insertData("","","",aghza,"مكواه بخار","","false");
+        insertData("","","",aghza,"كشاف نور","","false");
+        insertData("","","",aghza,"صاعق ناموس","","false");
+        insertData("","","",aghza,"شفاط حمام","","false");
+        insertData("","","",aghza,"ميكروويف","","false");
+        insertData("","","",aghza,"خلاط","","false");
 
 
         loadData();

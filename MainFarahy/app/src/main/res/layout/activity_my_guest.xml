@@ -32,93 +32,140 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@id/adView"
+
             android:orientation="vertical">
 
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginBottom="4dp"
-                android:orientation="horizontal"
-                android:padding="8dip">
+                android:layout_width="match_parent"
+                android:layout_height="150dip"
+                android:layout_above="@id/adView"
+                android:background="@drawable/main_header_selector"
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/totalGust_id"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="0"
-                    android:textColor="#FB636F"
-                    android:textSize="16sp" />
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="4dp"
+                    android:orientation="horizontal"
+                    android:paddingTop="32dip">
+
+                    <TextView
+                        android:id="@+id/totalGust_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/alfont"
+                        android:shadowColor="#F8F8F8"
+                        android:text="0"
+                        android:textColor="#FFFFFF"
+                        android:textSize="28sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/alfont"
+                        android:includeFontPadding="false"
+                        android:shadowColor="#F8F8F8"
+                        android:text="عدد المدعوين "
+                        android:textColor="#FFFFFF"
+                        android:textSize="28sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
 
                 <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="عدد المدعوين "
-                    android:textSize="16sp" />
+                    android:id="@+id/textView23"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dip"
+                    android:background="#DFDDDD"
+                    android:paddingLeft="5dip"
+                    android:paddingTop="4dip"
+                    android:paddingRight="5dip"
+                    android:paddingBottom="4dip"
+                    android:visibility="invisible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="bottom"
+                    android:orientation="horizontal"
+                    android:paddingLeft="16dip"
+                    android:paddingRight="16dip"
+                    android:paddingBottom="8dip">
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/alfont"
+                        android:gravity="left"
+                        android:shadowColor="#F8F8F8"
+                        android:text="تم الدعوة"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/alfont"
+                        android:gravity="center|left"
+                        android:shadowColor="#F8F8F8"
+                        android:text="عدد التابعين"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/alfont"
+                        android:shadowColor="#F8F8F8"
+                        android:text="اسم المدعو"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textView21"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dip"
+                    android:background="#DFDDDD"
+                    android:paddingLeft="5dip"
+                    android:paddingTop="4dip"
+                    android:paddingRight="5dip"
+                    android:paddingBottom="4dip" />
 
             </LinearLayout>
 
             <TextView
-                android:id="@+id/textView23"
+                android:id="@+id/textView28"
                 android:layout_width="match_parent"
-                android:layout_height="1dip"
-                android:background="#DFDDDD"
+                android:layout_height="16dip"
+                android:background="@drawable/shadow"
                 android:paddingLeft="5dip"
                 android:paddingTop="4dip"
                 android:paddingRight="5dip"
-                android:paddingBottom="4dip" />
+                android:paddingBottom="4dip"
+                android:visibility="visible" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#f7f7f7"
-                android:orientation="horizontal"
-                android:paddingLeft="16dip"
-                android:paddingRight="16dip">
-
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="left"
-                    android:text="تم الدعوة"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center|left"
-                    android:text="عدد التابعين"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="اسم المدعو"
-                    android:textSize="14sp" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/textView21"
-                android:layout_width="match_parent"
-                android:layout_height="1dip"
-                android:background="#DFDDDD"
-                android:paddingLeft="5dip"
-                android:paddingTop="4dip"
-                android:paddingRight="5dip"
-                android:paddingBottom="4dip" />
 
             <ListView
                 android:id="@+id/listView_id"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:divider="@null"
+                android:dividerHeight="0dp">
 
 
             </ListView>

@@ -2,12 +2,22 @@ package com.foru.mainfarahy;
 
 import static android.content.ContentValues.TAG;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +26,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
@@ -32,7 +43,10 @@ import java.util.List;
 
 public class VendorActivity extends AppCompatActivity {
     ExpandableListAdapterVendor listAdapter;
+    static final int PICK_CONTACT=1;
     ExpandableListView expListView;
+    EditText nameVendor;
+    EditText phoneVendor;
     List<String> listDataHeader=new ArrayList<String>();
     HashMap<String, List<VendorList>> listDataChild= new HashMap<String, List<VendorList>>();
     DataBaseHelperVendor myDb;
@@ -46,6 +60,7 @@ boolean weddingPlanner_clicked,weedingVen_clicked ,videoGrapher_clicked, athlie_
         myDb=new DataBaseHelperVendor(this);
         //getSupportActionBar().hide();
         // get the listview
+
         AdView adView = new AdView(this);
 
         adView.setAdSize(AdSize.BANNER);
@@ -62,7 +77,7 @@ boolean weddingPlanner_clicked,weedingVen_clicked ,videoGrapher_clicked, athlie_
             }
         });
 
-
+        requestContactsPermission();
         expListView =  findViewById(R.id.lvExp);
 
 
@@ -150,13 +165,23 @@ boolean weddingPlanner_clicked,weedingVen_clicked ,videoGrapher_clicked, athlie_
                 //link to comment
                 EditText commentEdit= (EditText) dialogView.findViewById(R.id.guest_edit_box_id) ;
                 //link to name
-                EditText nameVendor= (EditText) dialogView.findViewById(R.id.name_edit_box_id) ;
+                 nameVendor= (EditText) dialogView.findViewById(R.id.name_edit_box_id) ;
                 //link to phone number
-                EditText phoneVendor= (EditText) dialogView.findViewById(R.id.addphone_id) ;
+                 phoneVendor= (EditText) dialogView.findViewById(R.id.addphone_id) ;
                 //link to price
                 EditText priceVendor=  dialogView.findViewById(R.id.editTextNumber) ;
 
 
+                //in case import from contacts
+                ImageView ContactImage= dialogView.findViewById(R.id.contact_id);
+                ContactImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+                        startActivityForResult(intent, PICK_CONTACT);
+
+                    }
+                });
                 commentEdit.setText(listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).VendorComment);
                 nameVendor.setText(listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).VendorName);
                 phoneVendor.setText(listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).VendorPhonenumber);
@@ -818,5 +843,102 @@ String ID =listDataChild.get(listDataHeader.get(groupPosition)).get(childPositio
         listDataChild.put(listDataHeader.get(2), comingSoon);
 
  */
+    }
+    @SuppressLint("Range")
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+       // listAdapter.onActivityResult("requestCode", "resultCode");
+String cNumber = "";
+        switch (requestCode) {
+            case (PICK_CONTACT) :
+                if (resultCode == Activity.RESULT_OK) {
+
+                    Uri contactData = data.getData();
+                    Cursor c =  managedQuery(contactData, null, null, null, null);
+                    if (c.moveToFirst()) {
+
+
+                        String id =c.getString(c.getColumnIndexOrThrow(ContactsContract.Contacts._ID));
+
+                        String hasPhone =c.getString(c.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
+
+                        if (hasPhone.equalsIgnoreCase("1")) {
+                            Cursor phones = getContentResolver().query(
+                                    ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null,
+                                    ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = "+ id,
+                                    null, null);
+                            phones.moveToFirst();
+                            cNumber = phones.getString(phones.getColumnIndex("data1"));
+                            System.out.println("number is:"+cNumber);
+                        }
+                        @SuppressLint("Range") String name = c.getString(c.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+//Toast.makeText(getApplicationContext(),name + " "+cNumber,Toast.LENGTH_SHORT).show();
+                        phoneVendor.setText(cNumber);
+                        nameVendor.setText(name);
+                       // listAdapter.onActivityResult(name, cNumber);
+                    }
+                }
+                break;
+            case (2) :
+                if (resultCode == Activity.RESULT_OK) {
+
+                    Uri contactData = data.getData();
+                    Cursor c =  managedQuery(contactData, null, null, null, null);
+                    if (c.moveToFirst()) {
+
+
+                        String id =c.getString(c.getColumnIndexOrThrow(ContactsContract.Contacts._ID));
+
+                        String hasPhone =c.getString(c.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
+
+                        if (hasPhone.equalsIgnoreCase("1")) {
+                            Cursor phones = getContentResolver().query(
+                                    ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null,
+                                    ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = "+ id,
+                                    null, null);
+                            phones.moveToFirst();
+                            cNumber = phones.getString(phones.getColumnIndex("data1"));
+                            System.out.println("number is:"+cNumber);
+                        }
+                        @SuppressLint("Range") String name = c.getString(c.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+                        //Toast.makeText(getApplicationContext(),name + " "+cNumber,Toast.LENGTH_SHORT).show();
+
+
+                         listAdapter.onActivityResult(name, cNumber);
+                    }
+                }
+                break;
+        }
+    }
+
+    private boolean hasContactsPermission()
+    {
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) ==
+                PackageManager.PERMISSION_GRANTED;
+    }
+    private static final int REQUEST_READ_CONTACTS_PERMISSION = 0;
+    // Request contact permission if it
+    // has not been granted already
+    private void requestContactsPermission()
+    {
+        if (!hasContactsPermission())
+        {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.READ_CONTACTS}, REQUEST_READ_CONTACTS_PERMISSION);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults)
+    {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == REQUEST_READ_CONTACTS_PERMISSION && grantResults.length > 0)
+        {
+          //  updateButton(grantResults[0] == PackageManager.PERMISSION_GRANTED);
+        }
     }
 }
