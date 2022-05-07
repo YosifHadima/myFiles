@@ -5,6 +5,7 @@ import static android.content.ContentValues.TAG;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -14,20 +15,28 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-
+/*
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+*/
+import com.facebook.ads.AdSize;
+import com.facebook.ads.AdView;
+import com.facebook.ads.AudienceNetworkAds;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -47,13 +56,38 @@ EditText searchView;
     DataBaseGehazHelper myDb;
     private AdView mAdView;
     MyAdapter adapter;
+    private AdView adView;
+    @Override
+    protected void onDestroy() {
+        if (adView != null) {
+            adView.destroy();
+        }
+        super.onDestroy();
+    }
+    public void loadadd(){
+        // Instantiate an AdView object.
+// NOTE: The placement ID from the Facebook Monetization Manager identifies your App.
+// To get test ads, add IMG_16_9_APP_INSTALL# to your placement id. Remove this when your app is ready to serve real ads.
+        AudienceNetworkAds.initialize(this);
+        adView = new AdView(this, "724060921940186_730003291345949", AdSize.BANNER_HEIGHT_50);
+
+// Find the Ad Container
+        LinearLayout adContainer = (LinearLayout) findViewById(R.id.banner_container);
+
+// Add the ad view to your activity layout
+        adContainer.addView(adView);
+
+// Request an ad
+        adView.loadAd();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_guest);
        // getActionBar().hide();
+        loadadd();
         getSupportActionBar().hide();
-
+/*
         AdView adView = new AdView(this);
 
         adView.setAdSize(AdSize.BANNER);
@@ -69,7 +103,7 @@ EditText searchView;
                 mAdView.loadAd(adRequest);
             }
         });
-
+*/
         totalGustes=findViewById(R.id.totalGust_id);
         floatingActionButton=findViewById(R.id.floatingActionButton);
         listView=findViewById(R.id.listView_id);
@@ -135,10 +169,10 @@ EditText editTextNumber=dialogView.findViewById(R.id.editTextNumber);
 //in case of click on update guest item
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+            public void onItemClick(AdapterView<?> adapterView, View v, int position, long l) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MyGuestActivity.this);
                 ViewGroup viewGroup = findViewById(android.R.id.content);
-                View dialogView = LayoutInflater.from(view.getContext()).inflate(R.layout.dialog_box_guest, viewGroup, false);
+                View dialogView = LayoutInflater.from(v.getContext()).inflate(R.layout.dialog_box_guest, viewGroup, false);
                 builder.setView(dialogView);
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
@@ -150,7 +184,9 @@ EditText editTextNumber=dialogView.findViewById(R.id.editTextNumber);
                 Button buttonCancel =dialogView.findViewById(R.id.guest_buttoncancel_id);
                 buttonCancel.setText("حذف");
                 button.setBackgroundColor(Color.parseColor("#e3b04b"));
+                button.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.main_button_design));
                 buttonCancel.setBackgroundColor(Color.parseColor("#e3b04b"));
+                buttonCancel.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.main_button_delete));
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -186,19 +222,42 @@ EditText editTextNumber=dialogView.findViewById(R.id.editTextNumber);
                     }
                 });
 
+
+                //////////////// Delete feature
+
+                Animation animation= AnimationUtils.loadAnimation(getApplicationContext(),R.anim.slide_out);
+                animation.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                         v.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.main_button_delete));
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        Delete(myGuest.get(position).GuestID);
+                        myGuest.remove(position);
+
+adapter.notifyDataSetChanged();
+                        totalGustes.setText(totalGuests(myGuest));
+                        //updateData(myGuest);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
                 buttonCancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        int x;
 
-                        x=position+1;
-                       // Log.d(TAG, "onClick possss delete:my "+myGuest.get(position).);
+                        v.startAnimation(animation);
+                       // Delete(myGuest.get(position).GuestID);
+                        //myGuest.remove(position);
 
-                        Delete(myGuest.get(position).GuestID);
-                        myGuest.remove(position);
-                        //adapter.notifyDataSetChanged();
 
-                        updateData(myGuest);
+                        //updateData(myGuest);
                         alertDialog.dismiss();
                     }
                 });
@@ -208,6 +267,21 @@ EditText editTextNumber=dialogView.findViewById(R.id.editTextNumber);
             }
         });
 
+        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                if (scrollState == 0) {
+                    floatingActionButton.show();
+                }else {
+                    floatingActionButton.hide();
+                }
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+            }
+        });
     }
 //load Data
 private void LoadData(){
@@ -267,7 +341,7 @@ private void updateData(String ID,String name,String total,String CheckBox,Strin
         }
 
     }
-    private String  getLastIDSQL(){
+private String  getLastIDSQL(){
       //  ArrayList<GuestClass> Headers = new ArrayList<>();
         Cursor res = myDb.getALData();
         // StringBuffer stringBuffer=new StringBuffer();

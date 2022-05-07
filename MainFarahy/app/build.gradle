@@ -10,8 +10,8 @@ android {
         applicationId "com.foru.mainfarahy"
         minSdk 21
         targetSdk 31
-        versionCode 7
-        versionName "1.6"
+        versionCode 10
+        versionName "1.9"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -67,6 +67,10 @@ dependencies {
   // implementation 'com.github.scottyab:HeartBeatView:0.0.1'
     implementation 'com.github.amlcurran.showcaseview:library:5.4.3'
     implementation 'com.github.mreram:ShowCaseView:1.0.5'
-
-
+    implementation 'com.intuit.sdp:sdp-android:1.0.6'
+    implementation 'com.github.gayanvoice:android-animations:1.0.2'
+    implementation 'com.facebook.android:audience-network-sdk:6.+'
+    implementation 'com.facebook.android:facebook-login:latest.release'
+    implementation 'com.facebook.android:facebook-android-sdk:latest.release'
+    implementation 'com.facebook.android:facebook-android-sdk:[8,9)'
 }

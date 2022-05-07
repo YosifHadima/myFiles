@@ -2,4 +2,9 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="activity_margin">16dp</dimen>
     <dimen name="slug_padding">20dp</dimen>
+    <dimen name="name">13dp</dimen>//20
+    <dimen name="counter">7dp</dimen>//10
+    <dimen name="dayes">5dp</dimen>//8
+    <dimen name="until">8dp</dimen>//12
+    <dimen name="date">7dp</dimen>//10
 </resources>

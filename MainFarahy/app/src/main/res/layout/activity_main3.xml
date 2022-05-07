@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     tools:context=".MainActivity">
 
     <com.airbnb.lottie.LottieAnimationView
@@ -15,6 +16,7 @@
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/mabrook"
         tools:ignore="MissingConstraints" />
+
     <LinearLayout
         android:id="@+id/allview"
         android:layout_width="match_parent"
@@ -39,14 +41,15 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/pink_background2" />
 
-            <RelativeLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/gra"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:paddingLeft="90dp"
-                android:paddingTop="30dp"
-                android:paddingRight="90dp">
+                android:paddingLeft="@dimen/_75sdp"
+                android:paddingRight="@dimen/_75sdp"
+
+               >
 
                 <ImageView
                     android:id="@+id/imageheart_id"
@@ -54,14 +57,21 @@
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
                     android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/heart4" />
+                    app:srcCompat="@drawable/heart4"
+                    tools:ignore="MissingConstraints" />
 
                 <LinearLayout
+
                     android:id="@+id/infoheart_id"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="35dp"
-                    android:orientation="vertical">
+                    android:layout_height="0dp"
+
+                    android:layout_marginTop="@dimen/_25sdp"
+                    android:gravity="fill"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/imageheart_id">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -76,19 +86,21 @@
                             android:gravity="center"
                             android:text="Yosif"
                             android:textColor="#FFFFFF"
-                            android:textSize="20sp"
-                            android:textStyle="bold" />
+                            android:textSize="@dimen/_15sdp"
+                            android:textStyle="bold"
+                            app:autoSizeTextType="none" />
 
                         <TextView
-                            android:id="@+id/textView9"
+                            android:id="@+id/anding_id"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:text=" &amp; "
 
                             android:textColor="#FFFFFF"
-                            android:textSize="20sp"
-                            android:textStyle="bold" />
+                            android:textSize="@dimen/_15sdp"
+                            android:textStyle="bold"
+                            app:autoSizeTextType="none" />
 
                         <TextView
                             android:id="@+id/bridname"
@@ -97,8 +109,9 @@
                             android:gravity="center"
                             android:text="5o5a"
                             android:textColor="#FFFFFF"
-                            android:textSize="20sp"
-                            android:textStyle="bold" />
+                            android:textSize="@dimen/_15sdp"
+                            android:textStyle="bold"
+                            app:autoSizeTextType="none" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -124,21 +137,23 @@
                                 android:gravity="center"
                                 android:text="1"
                                 android:textColor="#FFFFFF"
-                                android:textSize="20sp"
-                                android:textStyle="bold" />
+                                android:textSize="@dimen/_13sdp"
+                                android:textStyle="bold"
+                                app:autoSizeTextType="none" />
 
                             <TextView
-                                android:id="@+id/textView12"
+                                android:id="@+id/date_1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:text="years"
                                 android:textColor="#E8E5E5"
-                                android:textSize="8sp" />
+                                android:textSize="@dimen/_6sdp"
+                                app:autoSizeTextType="none" />
                         </LinearLayout>
 
                         <TextView
-                            android:id="@+id/textView10"
+                            android:id="@+id/dot_1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="3dp"
@@ -146,8 +161,9 @@
                             android:gravity="center"
                             android:text=":"
                             android:textColor="#FFFFFF"
-                            android:textSize="20sp"
-                            android:textStyle="bold" />
+                            android:textSize="@dimen/_13sdp"
+                            android:textStyle="bold"
+                            app:autoSizeTextType="none" />
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -165,21 +181,23 @@
                                 android:gravity="center"
                                 android:text="22"
                                 android:textColor="#FFFFFF"
-                                android:textSize="20sp"
-                                android:textStyle="bold" />
+                                android:textSize="@dimen/_13sdp"
+                                android:textStyle="bold"
+                                app:autoSizeTextType="none" />
 
                             <TextView
-                                android:id="@+id/textView13"
+                                android:id="@+id/date_2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:text="months"
                                 android:textColor="#E8E5E5"
-                                android:textSize="8sp" />
+                                android:textSize="@dimen/_6sdp"
+                                app:autoSizeTextType="none" />
                         </LinearLayout>
 
                         <TextView
-                            android:id="@+id/textView8"
+                            android:id="@+id/dot_2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="3dp"
@@ -187,8 +205,9 @@
                             android:gravity="center"
                             android:text=":"
                             android:textColor="#FFFFFF"
-                            android:textSize="20sp"
-                            android:textStyle="bold" />
+                            android:textSize="@dimen/_13sdp"
+                            android:textStyle="bold"
+                            app:autoSizeTextType="none" />
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -206,17 +225,19 @@
                                 android:gravity="center"
                                 android:text="10"
                                 android:textColor="#FFFFFF"
-                                android:textSize="20sp"
-                                android:textStyle="bold" />
+                                android:textSize="@dimen/_13sdp"
+                                android:textStyle="bold"
+                                app:autoSizeTextType="none" />
 
                             <TextView
-                                android:id="@+id/textView14"
+                                android:id="@+id/date_3"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:text="days"
                                 android:textColor="#E8E5E5"
-                                android:textSize="8sp" />
+                                android:textSize="@dimen/_6sdp"
+                                app:autoSizeTextType="none" />
                         </LinearLayout>
 
                         <TextView
@@ -265,15 +286,16 @@
                     </LinearLayout>
 
                     <TextView
-                        android:id="@+id/textView16"
+                        android:id="@+id/until"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:paddingTop="10dp"
                         android:text="Until our wedding"
                         android:textColor="#FFFFFF"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
+                        android:textSize="@dimen/_8sdp"
+                        android:textStyle="bold"
+                        app:autoSizeTextType="none" />
 
                     <TextView
                         android:id="@+id/weddingday"
@@ -283,13 +305,15 @@
                         android:paddingTop="4dp"
                         android:text="23/5/2022"
                         android:textColor="#FFFFFF"
-                        android:textSize="10sp" />
+                        android:textSize="@dimen/_8sdp"
+                        app:autoSizeTextType="none" />
 
                 </LinearLayout>
 
-            </RelativeLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </RelativeLayout>
+
         <TextView
             android:id="@+id/textView28"
             android:layout_width="match_parent"
@@ -300,158 +324,190 @@
             android:paddingRight="5dip"
             android:paddingBottom="4dip"
             android:visibility="visible" />
-        <LinearLayout
+
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-
-            >
+            android:layout_height="match_parent">
 
             <LinearLayout
-                android:id="@+id/CheckList_id"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:orientation="vertical"
-                android:paddingLeft="70dp"
-                android:paddingRight="35dp">
+                android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/imageView3"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="false"
-                    android:cropToPadding="false"
-                    android:scaleType="fitCenter"
-                    android:visibility="visible"
-                    app:srcCompat="@drawable/checklist_1" />
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
 
-                <TextView
-                    android:id="@+id/textView18"
+                    >
+
+                    <LinearLayout
+                        android:id="@+id/CheckList_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:orientation="vertical"
+                        android:paddingLeft="@dimen/_50sdp"
+                        android:paddingRight="@dimen/_35sdp">
+
+                        <ImageView
+                            android:id="@+id/imageView3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.8"
+                            android:adjustViewBounds="false"
+                            android:cropToPadding="false"
+                            android:scaleType="fitCenter"
+                            android:visibility="visible"
+                            app:srcCompat="@drawable/checklist_1" />
+
+                        <TextView
+                            android:id="@+id/textView18"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.2"
+                            android:fontFamily="@font/alfont"
+                            android:gravity="center"
+                            android:text="جهاز العروسة"
+                            android:textColor="#575555"
+                            android:textSize="@dimen/_11sdp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/guest_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:orientation="vertical"
+                        android:paddingLeft="@dimen/_35sdp"
+                        android:paddingRight="@dimen/_50sdp">
+
+                        <ImageView
+                            android:id="@+id/imageView4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.8"
+                            android:adjustViewBounds="false"
+                            android:cropToPadding="false"
+                            android:scaleType="fitCenter"
+                            android:visibility="visible"
+                            app:srcCompat="@drawable/contacts_1" />
+
+                        <TextView
+                            android:id="@+id/textView19"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.2"
+                            android:fontFamily="@font/alfont"
+                            android:gravity="center"
+                            android:text="المعازيم"
+                            android:textColor="#575555"
+                            android:textSize="@dimen/_11sdp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="جهاز العروسة" />
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/_20sdp">
+
+                    <LinearLayout
+                        android:id="@+id/vendor_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:orientation="vertical"
+                        android:paddingLeft="@dimen/_50sdp"
+                        android:paddingRight="@dimen/_35sdp"
+                        android:visibility="visible">
+
+                        <ImageView
+                            android:id="@+id/imageView6"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.8"
+                            android:adjustViewBounds="false"
+                            android:cropToPadding="false"
+                            android:scaleType="fitCenter"
+                            android:visibility="visible"
+                            app:srcCompat="@drawable/wedding_1" />
+
+                        <TextView
+                            android:id="@+id/textView20"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0"
+                            android:fontFamily="@font/alfont"
+                            android:gravity="center"
+                            android:paddingTop="16dip"
+                            android:text="استعدادات الفرح"
+                            android:textColor="#575555"
+                            android:textSize="@dimen/_11sdp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/textView24"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="TextView" />
+
+                    <LinearLayout
+                        android:id="@+id/Appointment_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:orientation="vertical"
+                        android:paddingLeft="@dimen/_35sdp"
+                        android:paddingRight="@dimen/_50sdp">
+
+                        <ImageView
+                            android:id="@+id/imageView5"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.8"
+                            android:adjustViewBounds="false"
+                            android:cropToPadding="false"
+                            android:scaleType="fitCenter"
+                            android:visibility="visible"
+                            app:srcCompat="@drawable/appointments_1" />
+
+                        <TextView
+                            android:id="@+id/textView22"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/alfont"
+                            android:gravity="center"
+                            android:paddingTop="@dimen/_16sdp"
+                            android:text="المواعيد"
+                            android:textColor="#575555"
+                            android:textSize="@dimen/_11sdp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
             </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/guest_id"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:orientation="vertical"
-                android:paddingLeft="35dp"
-                android:paddingRight="70dp">
-
-                <ImageView
-                    android:id="@+id/imageView4"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="false"
-                    android:cropToPadding="false"
-                    android:scaleType="fitCenter"
-                    android:visibility="visible"
-                    app:srcCompat="@drawable/contacts_1" />
-
-                <TextView
-                    android:id="@+id/textView19"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="المعازيم" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="64dip">
-
-            <LinearLayout
-                android:id="@+id/vendor_id"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:orientation="vertical"
-                android:paddingLeft="70dp"
-                android:paddingRight="35dp"
-                android:visibility="visible">
-
-                <ImageView
-                    android:id="@+id/imageView6"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.8"
-                    android:adjustViewBounds="false"
-                    android:cropToPadding="false"
-                    android:scaleType="fitCenter"
-                    android:visibility="visible"
-                    app:srcCompat="@drawable/wedding_1" />
-
-                <TextView
-                    android:id="@+id/textView20"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0"
-                    android:gravity="center"
-                    android:paddingTop="16dip"
-                    android:text="استعدادات الفرح" />
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/textView24"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="TextView" />
-
-            <LinearLayout
-                android:id="@+id/Appointment_id"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:orientation="vertical"
-                android:paddingLeft="35dp"
-                android:paddingRight="70dp">
-
-                <ImageView
-                    android:id="@+id/imageView5"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.8"
-                    android:adjustViewBounds="false"
-                    android:cropToPadding="false"
-                    android:scaleType="fitCenter"
-                    android:visibility="visible"
-                    app:srcCompat="@drawable/appointments_1" />
-
-                <TextView
-                    android:id="@+id/textView22"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0"
-                    android:gravity="center"
-                    android:paddingTop="16dip"
-                    android:text="المواعيد" />
-
-            </LinearLayout>
-        </LinearLayout>
+        </ScrollView>
 
     </LinearLayout>
 
@@ -463,6 +519,15 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="2dp"
         app:adSize="BANNER"
-        app:adUnitId="@string/ADS_1" />
+        app:adUnitId="@string/ADS_1"
+        android:visibility="gone"/>
+    <LinearLayout
+        android:id="@+id/banner_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
 
 </RelativeLayout>

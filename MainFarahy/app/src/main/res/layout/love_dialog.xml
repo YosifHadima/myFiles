@@ -42,7 +42,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="اسم العروسة" />
+                android:fontFamily="@font/alfont"
+                android:text="اسم العروسة"
+                android:textColor="#555555" />
 
         </LinearLayout>
 
@@ -70,7 +72,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="اسم العريس" />
+                android:fontFamily="@font/alfont"
+                android:text="اسم العريس"
+                android:textColor="#555555" />
 
         </LinearLayout>
 
@@ -79,6 +83,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0"
+            android:fontFamily="@font/alfont"
             android:text="تعديل" />
 
     </LinearLayout>

@@ -4,17 +4,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="#FFFFFF"
 
+    android:orientation="vertical"
     tools:context=".GehazCheckListActivityNew">
 
 
     <ExpandableListView
         android:id="@+id/lvExp"
-        android:layout_height="match_parent"
+        android:layout_below="@id/banner_container"
+android:animateLayoutChanges="true"
         android:layout_width="match_parent"
-        android:layout_above="@id/adView"/>
+        android:layout_height="match_parent" />
 
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="@dimen/_16sdp"
+        android:layout_marginBottom="10dip"
+        android:clickable="true"
+        android:paddingRight="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_8sdp"
+        app:backgroundTint="@color/purple_700"
+        app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintHorizontal_bias="0.92"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_add"
+        tools:visibility="visible" />
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
         android:layout_width="wrap_content"
@@ -22,5 +45,16 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         app:adSize="BANNER"
-        app:adUnitId="@string/ADS_2" />
+        app:adUnitId="@string/ADS_2"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:id="@+id/banner_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="false"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/_10sdp"
+        app:layout_constraintBottom_toBottomOf="parent" />
 </RelativeLayout>

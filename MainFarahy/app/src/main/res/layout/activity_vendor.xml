@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     tools:context=".VendorActivity">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -24,13 +25,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <LinearLayout
+            android:id="@+id/banner_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="false"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:paddingTop="@dimen/_5sdp"/>
+
         <ExpandableListView
             android:id="@+id/lvExp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_above="@id/adView"
+            android:layout_below="@id/banner_container"
             android:divider="@null"
-            android:dividerHeight="0dp"
-            android:layout_above="@id/adView" />
+            android:dividerHeight="0dp" />
 
         <com.google.android.gms.ads.AdView
             android:id="@+id/adView"
@@ -39,7 +51,8 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             app:adSize="BANNER"
-            app:adUnitId="@string/ADS_4" />
+            app:adUnitId="@string/ADS_4"
+            android:visibility="gone"/>
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

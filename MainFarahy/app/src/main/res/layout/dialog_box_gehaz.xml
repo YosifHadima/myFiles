@@ -1,24 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
 
+    android:background="#FFFFFF"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="@dimen/_16sdp">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/alfont"
             android:text="اضيفي تعليقك"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/animation_view"
             android:layout_width="match_parent"
@@ -26,33 +29,92 @@
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
             app:lottie_rawRes="@raw/note" />
+
+        <EditText
+            android:id="@+id/editTextTextGehazName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="#f7f7f7"
+            android:cursorVisible="true"
+            android:ems="10"
+
+            android:fontFamily="@font/alfont"
+            android:gravity="top"
+            android:hint="اسم الجهاز"
+            android:inputType="textPersonName"
+            android:paddingLeft="@dimen/_7sdp"
+            android:paddingTop="@dimen/_3sdp"
+
+            android:paddingRight="@dimen/_7sdp"
+            android:paddingBottom="@dimen/_3sdp"
+            android:shadowColor="#616161"
+
+            android:textAlignment="textStart"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="#3A3A3A"
+            android:visibility="gone"
+            tools:ignore="RtlCompat" />
+
         <EditText
             android:id="@+id/guest_edit_box_id"
             android:layout_width="match_parent"
-            android:layout_height="84dp"
-            android:layout_marginTop="10dp"
+            android:layout_height="@dimen/_74sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="#f7f7f7"
             android:cursorVisible="true"
+            android:fontFamily="@font/alfont"
             android:gravity="top"
             android:hint="تعليقك"
-            android:background="#f7f7f7"
-            android:paddingLeft="7dip"
-            android:paddingRight="7dip"
+            android:paddingLeft="@dimen/_7sdp"
+            android:paddingRight="@dimen/_7sdp"
+            android:shadowColor="#616161"
             android:text=""
             android:textAlignment="textStart"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="#3A3A3A"
+            android:textColorHint="#878585"
             tools:ignore="RtlCompat" />
 
 
-        <Button
-            android:id="@+id/guest_buttonOk_id"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="15dp"
-            android:text="اضافة"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:textColor="#FFF" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/deleteButton_id"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:background="@drawable/main_button_delete"
+
+                android:layout_weight="0.3"
+                android:clickable="true"
+                android:focusable="true"
+
+                android:fontFamily="@font/alfont"
+                android:text="حذف"
+                android:textColor="#FFF"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/guest_buttonOk_id"
+android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1.7"
+                android:background="@drawable/main_button_design"
+                android:clickable="true"
+                android:focusable="true"
+                android:fontFamily="@font/alfont"
+                android:layout_marginLeft="@dimen/_16sdp"
+                android:text="اضافة"
+                android:textColor="#FFF" />
+        </LinearLayout>
+
     </LinearLayout>
 </LinearLayout>

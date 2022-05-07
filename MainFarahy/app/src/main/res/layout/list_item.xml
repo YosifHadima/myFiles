@@ -2,14 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/allitem_id"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="55dip"
+        android:background="#FFFFFF"
         android:gravity="right"
         android:orientation="horizontal"
         android:paddingEnd="5dip"
@@ -20,9 +21,10 @@
             android:id="@+id/price_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:buttonTint="@color/purple_700"
+
+
             android:focusable="false"
-
-
             android:layoutDirection="ltr" />
 
         <TextView
@@ -31,10 +33,12 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="2.7"
+            android:fontFamily="@font/alfont"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
             android:text="كتابه"
-            android:textAlignment="textStart"
+            android:textAlignment="viewEnd"
+            android:textColor="#5E5D5D"
             android:textSize="17sp"
             tools:ignore="RtlCompat" />
 
@@ -44,8 +48,7 @@
             android:layout_height="20dp"
             android:layout_gravity="center"
             android:layout_weight="0.2"
-            app:srcCompat="@drawable/reminder"
-             />
+            app:srcCompat="@drawable/reminder" />
 
     </LinearLayout>
     <!--android:foreground="?android:attr/selectableItemBackground"-->
@@ -59,6 +62,7 @@
         android:layout_weight="1"
         android:background="#f7f7f7"
         android:paddingEnd="20dip"
-        android:textAlignment="textStart" />
+        android:textAlignment="textStart"
+        android:textColor="#6C6C6C" />
 
 </LinearLayout>

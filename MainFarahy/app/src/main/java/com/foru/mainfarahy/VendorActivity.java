@@ -3,6 +3,7 @@ package com.foru.mainfarahy;
 import static android.content.ContentValues.TAG;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -15,6 +16,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -23,18 +25,24 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
-
+/*
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+*/
+import com.facebook.ads.AdSize;
+import com.facebook.ads.AdView;
+import com.facebook.ads.AudienceNetworkAds;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -53,14 +61,51 @@ public class VendorActivity extends AppCompatActivity {
     FloatingActionButton floatingActionButton;
 boolean weddingPlanner_clicked,weedingVen_clicked ,videoGrapher_clicked, athlie_Button_clicked,veil_clicked,makeupArtist_clicked,photographer_clicked,hairStylest_clicked =false;
     private AdView mAdView;
+    private AdView adView;
+    public void loadadd(){
+        // Instantiate an AdView object.
+// NOTE: The placement ID from the Facebook Monetization Manager identifies your App.
+// To get test ads, add IMG_16_9_APP_INSTALL# to your placement id. Remove this when your app is ready to serve real ads.
+        AudienceNetworkAds.initialize(this);
+        adView = new AdView(this, "724060921940186_730003488012596", AdSize.BANNER_HEIGHT_50);
+
+// Find the Ad Container
+        LinearLayout adContainer = (LinearLayout) findViewById(R.id.banner_container);
+
+// Add the ad view to your activity layout
+        adContainer.addView(adView);
+
+// Request an ad
+        adView.loadAd();
+    }
+    @Override
+    protected void onDestroy() {
+        if (adView != null) {
+            adView.destroy();
+        }
+        super.onDestroy();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vendor);
+        loadadd();
         myDb=new DataBaseHelperVendor(this);
         //getSupportActionBar().hide();
         // get the listview
+// Define ActionBar object
+        ActionBar actionBar;
+        actionBar = getSupportActionBar();
 
+        // Define ColorDrawable object and parse color
+        // using parseColor method
+        // with color hash code as its parameter
+        ColorDrawable colorDrawable
+                = new ColorDrawable(Color.parseColor("#e3b04b"));
+
+        // Set BackgroundDrawable
+        actionBar.setBackgroundDrawable(colorDrawable);
+      /*
         AdView adView = new AdView(this);
 
         adView.setAdSize(AdSize.BANNER);
@@ -76,7 +121,7 @@ boolean weddingPlanner_clicked,weedingVen_clicked ,videoGrapher_clicked, athlie_
                 mAdView.loadAd(adRequest);
             }
         });
-
+*/
         requestContactsPermission();
         expListView =  findViewById(R.id.lvExp);
 
@@ -195,6 +240,7 @@ String ID =listDataChild.get(listDataHeader.get(groupPosition)).get(childPositio
                 ///////UPDATE BUTTON////////////////////////////////////////////////////////////
                 Button okButtonDialog= (Button) dialogView.findViewById(R.id.guest_buttonOk_id);
                 okButtonDialog.setBackgroundColor(Color.parseColor("#e3b04b"));
+                okButtonDialog.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.main_button_design));
                 okButtonDialog.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -249,16 +295,18 @@ String ID =listDataChild.get(listDataHeader.get(groupPosition)).get(childPositio
                 ///////DELETE BUTTON////////////////////////////////////////////////////////////
                 Button cancelButtonDialog= (Button) dialogView.findViewById(R.id.guest_buttoncancel_id);
                 cancelButtonDialog.setBackgroundColor(Color.parseColor("#e3b04b"));
+                cancelButtonDialog.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.main_button_delete));
                 cancelButtonDialog.setText("حذف");
                 cancelButtonDialog.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
-
+//Toast.makeText(getApplicationContext(),"تم الحذف",Toast.LENGTH_SHORT).show();
 
         //delete subVendor
+
         listDataChild.get(listDataHeader.get(groupPosition)).remove(childPosition);
         //update the adabter
-        Log.d(TAG, "Yoooosif: child number is dele = "+ID);
+        //Log.d(TAG, "Yoooosif: child number is dele = "+ID);
         Delete(ID);
         listAdapter.notifyDataSetChanged();
        // close the dialog;
@@ -293,13 +341,21 @@ String ID =listDataChild.get(listDataHeader.get(groupPosition)).get(childPositio
                 alertDialog.show();
 
                 Button weedingVen_Button =dialogView.findViewById(R.id.weedingVen_id);
+                weedingVen_Button.setBackgroundColor(Color.parseColor("#e3b04b"));
                 Button weddingPlanner_Button=dialogView.findViewById(R.id.weddingPlanner_id);
+                weddingPlanner_Button.setBackgroundColor(Color.parseColor("#e3b04b"));
                 Button athlie_Button=dialogView.findViewById(R.id.athlie_id);
+                athlie_Button.setBackgroundColor(Color.parseColor("#e3b04b"));
                 Button photographer_Button=dialogView.findViewById(R.id.photographer_id);
+                photographer_Button.setBackgroundColor(Color.parseColor("#e3b04b"));
                 Button hairStylest_Button=dialogView.findViewById(R.id.hairStylest_id);
+                hairStylest_Button.setBackgroundColor(Color.parseColor("#e3b04b"));
                 Button makeupArtist_Button=dialogView.findViewById(R.id.makeupArtist_id);
+                makeupArtist_Button.setBackgroundColor(Color.parseColor("#e3b04b"));
                 Button veil_Button=dialogView.findViewById(R.id.veil_id);
+                veil_Button.setBackgroundColor(Color.parseColor("#e3b04b"));
                 Button videoGrapher_Button=dialogView.findViewById(R.id.videoGrapher_id);
+                videoGrapher_Button.setBackgroundColor(Color.parseColor("#e3b04b"));
                 List<String> Headers = new ArrayList<>();
                 Headers=getallHeaders();
 
@@ -484,6 +540,22 @@ String ID =listDataChild.get(listDataHeader.get(groupPosition)).get(childPositio
 
         });
 
+expListView.setOnScrollListener(new AbsListView.OnScrollListener() {
+    @Override
+    public void onScrollStateChanged(AbsListView view, int scrollState) {
+        if (scrollState == 0) {
+            floatingActionButton.show();
+        }else {
+            floatingActionButton.hide();
+        }
+    }
+
+    @Override
+    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+    }
+});
+
     }
     private void Delete(String ID){
         Boolean result= myDb.deleteData(ID);
@@ -523,7 +595,7 @@ String ID =listDataChild.get(listDataHeader.get(groupPosition)).get(childPositio
             }
 
         }
-        Toast.makeText(this,stringBuffer.toString(),Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this,stringBuffer.toString(),Toast.LENGTH_SHORT).show();
     }
 
     private void updateData(String ID,String MAIN_TOPIC,String NAME_VENDOR,String VENDOR_COMMENT,String VENDOR_PRICE,String VENDOR_PHONE,String MY_ID){

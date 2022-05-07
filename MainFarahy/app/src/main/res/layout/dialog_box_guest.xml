@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
 
+    android:background="#FFFFFF"
     android:orientation="vertical">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/alfont"
         android:text="اضافة مدعو"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
@@ -22,6 +24,7 @@
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/animation1" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -40,11 +43,12 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:layout_weight="0.25"
+                android:background="#f7f7f7"
                 android:ems="10"
                 android:gravity="center"
                 android:hint="1"
-                android:background="#f7f7f7"
                 android:inputType="number"
+                android:textColor="#737272"
                 android:textSize="18sp" />
 
             <TextView
@@ -65,12 +69,14 @@
                 android:layout_weight="2.5"
                 android:background="#f7f7f7"
                 android:cursorVisible="true"
+                android:fontFamily="@font/alfont"
                 android:hint="أسم المدعو"
                 android:paddingLeft="7dip"
                 android:paddingRight="7dip"
                 android:text=""
                 android:textAlignment="textStart"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="#686868"
                 tools:ignore="RtlCompat" />
         </LinearLayout>
 
@@ -79,17 +85,19 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="right"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/_14sdp">
 
             <Button
                 android:id="@+id/guest_buttoncancel_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="15dp"
                 android:layout_marginRight="16dip"
+                android:background="@drawable/main_button_design"
                 android:clickable="true"
                 android:focusable="true"
+                android:fontFamily="@font/alfont"
                 android:foreground="?android:attr/selectableItemBackground"
                 android:text="الغاء"
                 android:textColor="#FFF"
@@ -100,9 +108,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="15dp"
+                android:background="@drawable/main_button_design"
                 android:clickable="true"
                 android:focusable="true"
+                android:fontFamily="@font/alfont"
                 android:foreground="?android:attr/selectableItemBackground"
                 android:text="اضافة"
                 android:textColor="#FFF"

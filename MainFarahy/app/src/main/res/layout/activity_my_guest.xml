@@ -4,23 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     tools:context=".MyGuestActivity">
 
 
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatingActionButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dip"
-            android:clickable="true"
-            android:paddingBottom="8dip"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.92"
-            app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/baseline_group_add_black_18"
-            tools:visibility="visible" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dip"
+        android:clickable="true"
+        android:paddingBottom="8dip"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.92"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/baseline_group_add_black_18"
+        tools:visibility="visible" />
 
 
     <RelativeLayout
@@ -33,12 +33,13 @@
             android:layout_height="match_parent"
             android:layout_above="@id/adView"
 
-            android:orientation="vertical">
+            android:orientation="vertical"
+            tools:ignore="NotSibling">
 
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="150dip"
+                android:layout_height="@dimen/_120sdp"
                 android:layout_above="@id/adView"
                 android:background="@drawable/main_header_selector"
                 android:orientation="vertical">
@@ -60,7 +61,7 @@
                         android:shadowColor="#F8F8F8"
                         android:text="0"
                         android:textColor="#FFFFFF"
-                        android:textSize="28sp"
+                        android:textSize="@dimen/_23sdp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -73,7 +74,7 @@
                         android:shadowColor="#F8F8F8"
                         android:text="عدد المدعوين "
                         android:textColor="#FFFFFF"
-                        android:textSize="28sp"
+                        android:textSize="@dimen/_23sdp"
                         android:textStyle="bold" />
 
                 </LinearLayout>
@@ -84,10 +85,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dip"
                     android:background="#DFDDDD"
-                    android:paddingLeft="5dip"
-                    android:paddingTop="4dip"
-                    android:paddingRight="5dip"
-                    android:paddingBottom="4dip"
+                    android:paddingLeft="@dimen/_5sdp"
+                    android:paddingTop="@dimen/_4sdp"
+                    android:paddingRight="@dimen/_5sdp"
+                    android:paddingBottom="@dimen/_4sdp"
                     android:visibility="invisible" />
 
                 <LinearLayout
@@ -109,7 +110,7 @@
                         android:shadowColor="#F8F8F8"
                         android:text="تم الدعوة"
                         android:textColor="#FFFFFF"
-                        android:textSize="20sp"
+                        android:textSize="@dimen/_16sdp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -121,7 +122,7 @@
                         android:shadowColor="#F8F8F8"
                         android:text="عدد التابعين"
                         android:textColor="#FFFFFF"
-                        android:textSize="20sp"
+                        android:textSize="@dimen/_16sdp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -132,7 +133,7 @@
                         android:shadowColor="#F8F8F8"
                         android:text="اسم المدعو"
                         android:textColor="#FFFFFF"
-                        android:textSize="20sp"
+                        android:textSize="@dimen/_16sdp"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -141,24 +142,41 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dip"
                     android:background="#DFDDDD"
-                    android:paddingLeft="5dip"
-                    android:paddingTop="4dip"
-                    android:paddingRight="5dip"
-                    android:paddingBottom="4dip" />
+                    android:paddingLeft="@dimen/_5sdp"
+                    android:paddingTop="@dimen/_4sdp"
+                    android:paddingRight="@dimen/_5sdp"
+                    android:paddingBottom="@dimen/_4sdp" />
 
             </LinearLayout>
 
             <TextView
                 android:id="@+id/textView28"
                 android:layout_width="match_parent"
-                android:layout_height="16dip"
+                android:layout_height="@dimen/_16sdp"
                 android:background="@drawable/shadow"
-                android:paddingLeft="5dip"
-                android:paddingTop="4dip"
-                android:paddingRight="5dip"
-                android:paddingBottom="4dip"
+                android:paddingLeft="@dimen/_5sdp"
+                android:paddingTop="@dimen/_4sdp"
+                android:paddingRight="@dimen/_5sdp"
+                android:paddingBottom="@dimen/_4sdp"
                 android:visibility="visible" />
 
+
+            <com.google.android.gms.ads.AdView
+                android:id="@+id/adView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:adSize="BANNER"
+                app:adUnitId="@string/ADS_3"
+                android:visibility="gone"/>
+            <LinearLayout
+                android:id="@+id/banner_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:paddingBottom="@dimen/_5sdp"
+                />
 
             <ListView
                 android:id="@+id/listView_id"
@@ -172,14 +190,6 @@
 
         </LinearLayout>
 
-        <com.google.android.gms.ads.AdView
-            android:id="@+id/adView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            app:adSize="BANNER"
-            app:adUnitId="@string/ADS_3" />
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

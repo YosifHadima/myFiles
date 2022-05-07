@@ -2,14 +2,28 @@ package com.foru.mainfarahy;
 
 import static android.content.ContentValues.TAG;
 
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.app.AppOpsManager;
+import android.content.Context;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
@@ -22,14 +36,20 @@ import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.ExpandableListView.OnGroupCollapseListener;
 import android.widget.ExpandableListView.OnGroupExpandListener;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.facebook.ads.AdSize;
+import com.facebook.ads.AdView;
+import com.facebook.ads.AudienceNetworkAds;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+//import com.google.android.gms.ads.AdRequest;
+//import com.google.android.gms.ads.AdSize;
+//import com.google.android.gms.ads.AdView;
+//import com.google.android.gms.ads.MobileAds;
+//import com.google.android.gms.ads.initialization.InitializationStatus;
+//import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 
 public class GehazCheckListActivityNew extends AppCompatActivity {
     ExpandableListAdapter listAdapter;
@@ -38,14 +58,115 @@ public class GehazCheckListActivityNew extends AppCompatActivity {
     HashMap<String, List<GehazList>> listDataChild;
 DataBaseHelper myDb;
     private AdView mAdView;
+    private AdView adView;
+    FloatingActionButton floatingActionButton;
+
+
+    ExpandableListView expListView_2;
+
+    @Override
+    protected void onDestroy() {
+        if (adView != null) {
+            adView.destroy();
+        }
+        super.onDestroy();
+    }
+    public void loadadd(){
+        // Instantiate an AdView object.
+// NOTE: The placement ID from the Facebook Monetization Manager identifies your App.
+// To get test ads, add IMG_16_9_APP_INSTALL# to your placement id. Remove this when your app is ready to serve real ads.
+        AudienceNetworkAds.initialize(this);
+        adView = new AdView(this, "724060921940186_730003151345963", AdSize.BANNER_HEIGHT_50);
+
+// Find the Ad Container
+        LinearLayout adContainer = (LinearLayout) findViewById(R.id.banner_container);
+
+// Add the ad view to your activity layout
+        adContainer.addView(adView);
+
+// Request an ad
+        adView.loadAd();
+    }
+    public void setStatusColor(){
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
+            getWindow().setStatusBarColor(getResources().getColor(R.color.purple_700,this.getTheme()));
+        }else if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
+            getWindow().setStatusBarColor(getResources().getColor(R.color.purple_700));
+        }
+    }
+
+    public void initilizeViews(){
+        floatingActionButton=findViewById(R.id.floatingActionButton_id);
+        expListView = (ExpandableListView) findViewById(R.id.lvExp);
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gehaz_check_list_new);
-        myDb=new DataBaseHelper(this);
-        //getSupportActionBar().hide();
-        // get the listview
+        loadadd();
+        setStatusColor();
+        initilizeViews();
 
+
+        ////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////
+        /////////////////CUSTOME ADDING /////////////////////////////////
+       /////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////
+
+
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(GehazCheckListActivityNew.this);
+                ViewGroup viewGroup = findViewById(android.R.id.content);
+                View dialogView = LayoutInflater.from(v.getContext()).inflate(R.layout.gehaz_header_dialog_box, viewGroup, false);
+                builder.setView(dialogView);
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+
+                //add new header
+EditText newHeader=dialogView.findViewById(R.id.newHeader_id);
+
+                Button addheader_button=dialogView.findViewById(R.id.addNewHeaderButton_id);
+                addheader_button.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.main_button_design));
+                addheader_button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        listDataHeader.add(String.valueOf(newHeader.getText()));
+                        List<GehazList> GehazListCustome = new ArrayList<GehazList>();
+                        listDataChild.put(listDataHeader.get(listDataHeader.size()-1), GehazListCustome); // Header, Child data
+                        //  listAdapter_2 = new ExpandableListAdapterVendor(getApplicationContext(),  listDataHeader, listDataChild,VendorActivity.this);
+                        listAdapter = new ExpandableListAdapter(getApplicationContext(), listDataHeader, listDataChild,GehazCheckListActivityNew.this);
+
+                        // setting list adapter
+
+                        expListView.setAdapter(listAdapter);
+
+                        listAdapter.notifyDataSetChanged();
+
+                   
+                        alertDialog.dismiss();
+                    }
+                });
+            }
+        });
+
+
+        ///////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////
+        myDb=new DataBaseHelper(this);
+
+      //  ColorDrawable colorDrawable
+        //        = new ColorDrawable(Color.parseColor("#e3b04b"));
+
+        // Set BackgroundDrawable
+       // actionBar.setBackgroundDrawable(colorDrawable);
+        /*
         AdView adView = new AdView(this);
 
         adView.setAdSize(AdSize.BANNER);
@@ -61,8 +182,27 @@ DataBaseHelper myDb;
                 mAdView.loadAd(adRequest);
             }
         });
+*/
 
-        expListView = (ExpandableListView) findViewById(R.id.lvExp);
+///////////////////////////////Hide the floating acction button feature////////////////////
+        expListView.setOnScrollListener(new AbsListView.OnScrollListener() {
+    @Override
+    public void onScrollStateChanged(AbsListView view, int scrollState) {
+       // Toast.makeText(getApplicationContext(),"scrollY : " +scrollState,Toast.LENGTH_SHORT).show();
+        if (scrollState == 0) {
+            floatingActionButton.show();
+        }else {
+            floatingActionButton.hide();
+        }
+    }
+
+    @Override
+    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+    }
+});
+///******************************************************************////////////////////////
+
 
         // preparing list data
         int count=getCountHeaders();
@@ -71,11 +211,10 @@ DataBaseHelper myDb;
 
         }else{
             loadData();
-
         }
-       // prepareListData();
 
-        listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
+
+        listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild,this);
 
         // setting list adapter
         expListView.setAdapter(listAdapter);
@@ -135,42 +274,160 @@ DataBaseHelper myDb;
                           //      listDataHeader.get(groupPosition)).get(
                             //    childPosition).GehazName, Toast.LENGTH_SHORT)
                         //.show();
+                LinearLayout alllist=v.findViewById(R.id.allitem_id);
+                String mycustomeID = listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).GehazID;
+//intilize dialog
                 AlertDialog.Builder builder = new AlertDialog.Builder(GehazCheckListActivityNew.this);
                 ViewGroup viewGroup = findViewById(android.R.id.content);
                 View dialogView = LayoutInflater.from(v.getContext()).inflate(R.layout.dialog_box_gehaz, viewGroup, false);
                 builder.setView(dialogView);
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
+     //initilize GUI
                 EditText commentEdit= (EditText) dialogView.findViewById(R.id.guest_edit_box_id) ;
-                commentEdit.setText(listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).GehazComment);
                 Button okButtonDialog= (Button) dialogView.findViewById(R.id.guest_buttonOk_id);
-               okButtonDialog.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    String header=listDataHeader.get(groupPosition);
-                    GehazList child;
-                    String SupTopic;
-                    String dbID;
-                    child=listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition);
-                    String comment= String.valueOf(commentEdit.getText());
-                    SupTopic=child.GehazName;
-                    child.GehazComment=comment;
-                    List<GehazList> mylist=new ArrayList<GehazList>();
-                    mylist=listDataChild.get(header);
-                    mylist.set(childPosition,child);
-                   // Log.d(TAG, "Yoooosif: child number is  = "+String.valueOf(childPosition)+" with ID = "+String.valueOf(id));
-                    listDataChild.put(header,mylist);
-                    //getIDNumber(header,Child) and return the ID
-                    dbID=getIDNumber(header,SupTopic);
+                EditText GehazName = dialogView.findViewById(R.id.editTextTextGehazName) ;
+                Button deleteButtonDialog= (Button) dialogView.findViewById(R.id.deleteButton_id);
+                ColorDrawable colorDrawable
+                        = new ColorDrawable(Color.parseColor("#FB636F"));
+                okButtonDialog.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.main_button_design));
 
-                    //getGehazInfo(ID)
+                deleteButtonDialog.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.main_button_delete));
+              // import data to GUI
+              //  deleteButtonDialog.setBackground(colorDrawable);
+                commentEdit.setText(listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).GehazComment);
+                okButtonDialog.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String header=listDataHeader.get(groupPosition);
+                        GehazList child;
+                        String SupTopic;
+                        String dbID;
+                        child=listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition);
+                        String comment= String.valueOf(commentEdit.getText());
+                        SupTopic=child.GehazName;
 
-                   // insertData("ٍSamya","Gamal","¨1/1/2022","myess","shewak","No comment","false");
-                    updateData(dbID,"yoooo","Gamal","¨1/1/2022",header,SupTopic,comment,"false");
+                        if(!mycustomeID.equals("")){
+                            // in case data is bilt in you can just add comment to data
+                            SupTopic=String.valueOf(GehazName.getText());
+child.GehazName=SupTopic;
+                        }
+
+
+                        child.GehazComment=comment;
+                        List<GehazList> mylist=new ArrayList<GehazList>();
+                        mylist=listDataChild.get(header);
+                        mylist.set(childPosition,child);
+                        String myID=child.GehazID;
+                        // Log.d(TAG, "Yoooosif: child number is  = "+String.valueOf(childPosition)+" with ID = "+String.valueOf(id));
+                        listDataChild.put(header,mylist);
+                        //getIDNumber(header,Child) and return the ID
+                        dbID=getIDNumber(header,SupTopic);
+
+                        //getGehazInfo(ID)
+                        // in case built in data memory
+                        if(mycustomeID.equals("")){
+if (child.GehazCheckBox){
+updateData(dbID,"","Gamal","¨1/1/2022",header,SupTopic,comment,"True");
+
+}else {
+    updateData(dbID,"","Gamal","¨1/1/2022",header,SupTopic,comment,"False");
+}
+                            // insertData("ٍSamya","Gamal","¨1/1/2022","myess","shewak","No comment","false");
+                         //   updateData(dbID,"yoooo","Gamal","¨1/1/2022",header,SupTopic,comment,"false");
+                        }else {
+                            // in case custome data
+                            if (child.GehazCheckBox){
+                                updateData(myID, myID, "", "", header, SupTopic, comment, "True");
+
+                            }else {
+                                updateData(myID, myID, "", "", header, SupTopic, comment, "False");
+                            }
+
+                        }
+                       // loadData();
+                      ////  listAdapter = new ExpandableListAdapter(getApplicationContext(), listDataHeader, listDataChild,GehazCheckListActivityNew.this);
+
+                        // setting list adapter
+
+                      //  expListView.setAdapter(listAdapter);
+
+                     //   listAdapter.notifyDataSetChanged();
                         // expListView.setAdapter(listAdapter);
-                    alertDialog.dismiss();
+                        listAdapter.notifyDataSetChanged();
+
+                        alertDialog.dismiss();
+                    }
+                });
+
+              //  Toast.makeText(getApplicationContext(),mycustomeID,Toast.LENGTH_SHORT).show();
+                if(mycustomeID.equals("")){
+                    // in case data is bilt in you can just add comment to data
+
+
+                }else {
+                    //in case its custome data you can do whaterver you wish
+                    GehazName.setVisibility(View.VISIBLE);
+
+                    deleteButtonDialog.setVisibility(View.VISIBLE);
+                    deleteButtonDialog.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.main_button_delete));
+
+                    GehazName.setText(listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).GehazName);
+
                 }
-            });
+
+                ///////**** Delete feature ***** //////
+
+                Animation animation= AnimationUtils.loadAnimation(getApplicationContext(),R.anim.slide_out);
+                animation.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                       // v.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.main_button_delete));
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        String myID = listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).GehazID;
+                        listDataChild.get(listDataHeader.get(groupPosition)).remove(childPosition);
+                        Delete(myID);
+                        listAdapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+deleteButtonDialog.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+
+
+      //  String myID = listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).GehazID;
+       // v.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.main_button_delete));
+
+        v.startAnimation(animation);
+      //  Toast.makeText(getApplicationContext(),"تم الحذف",Toast.LENGTH_SHORT).show();
+
+       // listDataChild.get(listDataHeader.get(groupPosition)).remove(childPosition);
+
+
+      //  Delete(myID);
+
+      //  listAdapter.notifyDataSetChanged();
+
+
+        // setting list adapter
+
+    //    expListView.setAdapter(listAdapter);
+
+       // listAdapter.notifyDataSetChanged();
+  //      listAdapter.notifyDataSetChanged();
+        alertDialog.dismiss();
+    }
+});
+
                // int index = parent.getFlatListPosition(ExpandableListView.getPackedPositionForChild(groupPosition, childPosition));
                 //ImageView noteButton = (ImageView) v.findViewById(R.id.note_id);
 
@@ -185,10 +442,20 @@ DataBaseHelper myDb;
 
 
     }
+    private void Delete(String ID){
+        Boolean result= myDb.deleteData(ID);
+        if (result){
+            // Log.d(TAG, "onClick possss delete: "+String.valueOf(result)+" for ID "+ID);
+            //  Toast.makeText(this,"Data updated susccfully",Toast.LENGTH_SHORT).show();
+        }else {
+            //  Log.d(TAG, "onClick possss delete: "+String.valueOf(result)+" for ID "+ID);
+            //  Toast.makeText(this,"Data  updated Faille",Toast.LENGTH_SHORT).show();
+        }
 
-    private void insertData(String Femalename,String MaleName,String MargeDate,String MainTopic,String SupTopic,String CommentTopic,String checkbox){
+    }
+    private void insertData(String myID,String MaleName,String MargeDate,String MainTopic,String SupTopic,String CommentTopic,String checkbox){
 
-        Boolean result = myDb.insertData(Femalename,MaleName,MargeDate,MainTopic,SupTopic,CommentTopic,checkbox);
+        Boolean result = myDb.insertData(myID,MaleName,MargeDate,MainTopic,SupTopic,CommentTopic,checkbox);
   if (result== true){
     //  Toast.makeText(this,"Data inserted susccfully",Toast.LENGTH_SHORT).show();
   }else {
@@ -216,8 +483,8 @@ DataBaseHelper myDb;
         Toast.makeText(this,stringBuffer.toString(),Toast.LENGTH_SHORT).show();
     }
 
-    private void updateData(String ID,String Femalename,String MaleName,String MargeDate,String MainTopic,String SupTopic,String CommentTopic,String checkbox){
-        Boolean result = myDb.updateData(ID,Femalename,MaleName,MargeDate,MainTopic,SupTopic,CommentTopic,checkbox);
+    private void updateData(String ID,String myID,String MaleName,String MargeDate,String MainTopic,String SupTopic,String CommentTopic,String checkbox){
+        Boolean result = myDb.updateData(ID,myID,MaleName,MargeDate,MainTopic,SupTopic,CommentTopic,checkbox);
         if (result== true){
           //  Toast.makeText(this,"Data updated susccfully",Toast.LENGTH_SHORT).show();
         }else {
@@ -325,6 +592,27 @@ DataBaseHelper myDb;
         return Headers;
 
     }
+    private List getDataOfChildMYID(String MainTopic){
+        List<String> Headers = new ArrayList<>();
+        Cursor res = myDb.getALData();
+        StringBuffer stringBuffer=new StringBuffer();
+        String Topic;
+        String myID;
+        if(res !=null && res.getCount()>0){
+            while (res.moveToNext()){
+                Topic=res.getString(4);
+                myID=res.getString(1);
+                //Log.d(TAG, "Yoooosif: MainTopic is  = "+MainTopic+ "search for "+Topic +" with "+Sup);
+                if (MainTopic.equals(Topic)){
+                    Headers.add(myID);
+                }
+
+
+            }
+        }
+        return Headers;
+
+    }
     private String getIDNumber(String MainTopic,String SupTopic){
         String ID="1" ;
         Cursor res = myDb.getALData();
@@ -337,6 +625,7 @@ DataBaseHelper myDb;
                 Topic=res.getString(4);
                 Sup=res.getString(5);
                 Comment=res.getString(6);
+
                 //Log.d(TAG, "Yoooosif: MainTopic is  = "+MainTopic+ "search for "+Topic +" with "+Sup);
                 if (MainTopic.equals(Topic) && SupTopic.equals(Sup) ){
                    ID= res.getString(0);
@@ -369,6 +658,10 @@ DataBaseHelper myDb;
 
             List<String> CheckBox=new ArrayList<>();
             CheckBox=getDataOfChildCheckBox(Topic);
+
+            List<String> myID = new ArrayList<>();
+            myID=getDataOfChildMYID(Topic);
+
             Log.d(TAG, "Yoooosif: children are  = "+Children );
             List<GehazList> TopicList = new ArrayList<GehazList>();
 
@@ -382,7 +675,7 @@ DataBaseHelper myDb;
                 if (CheckBox.get(i).equals("True")){
                     check=true;
                 }else {check=false;}
-                TopicList.add(new GehazList(Children.get(i),Comments.get(i),check));
+                TopicList.add(new GehazList(Children.get(i),Comments.get(i),check,myID.get(i)));
             }
             listDataChild.put(listDataHeader.get(index), TopicList); // Header, Child data
             index=index+1;

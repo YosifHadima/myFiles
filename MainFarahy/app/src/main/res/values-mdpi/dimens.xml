@@ -1,0 +1,11 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="activity_margin">16dp</dimen>
+    <dimen name="slug_padding">20dp</dimen>
+    <dimen name="name">20dp</dimen>//20
+    <dimen name="counter">20dp</dimen>//10
+    <dimen name="dayes">8dp</dimen>//8
+    <dimen name="until">12dp</dimen>//12
+    <dimen name="date">10dp</dimen>//10
+    <dimen name="heart_pad">33dp</dimen>//33
+</resources>

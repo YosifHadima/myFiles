@@ -26,6 +26,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -82,6 +83,8 @@ public class ExpandableListAdapterVendor extends BaseExpandableListAdapter {
         TextView txtListChild = (TextView) convertView.findViewById(R.id.lblListItem);
         TextView priceText=  convertView.findViewById(R.id.price_id);
 
+        ImageView moneyImage=convertView.findViewById(R.id.money_id);
+        moneyImage.setImageResource(R.drawable.money);
 
 String myPrice=_listDataChild.get(this._listDataHeader.get(groupPosition))
         .get(childPosition).VendorPrice;
@@ -245,6 +248,7 @@ String phoneNumber =_listDataChild.get(this._listDataHeader.get(groupPosition)).
                 EditText editTextNumber=dialogView.findViewById(R.id.editTextNumber);
                 Button button =dialogView.findViewById(R.id.guest_buttonOk_id);
                 button.setBackgroundColor(Color.parseColor("#e3b04b"));
+                button.setBackground(ContextCompat.getDrawable(_context.getApplicationContext(),R.drawable.main_button_design));
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -307,6 +311,7 @@ String myID=getID();
 
                 Button buttonCancel =dialogView.findViewById(R.id.guest_buttoncancel_id);
                 buttonCancel.setBackgroundColor(Color.parseColor("#e3b04b"));
+                buttonCancel.setBackground(ContextCompat.getDrawable(_context.getApplicationContext(),R.drawable.main_button_design));
                 buttonCancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -422,7 +427,7 @@ notifyDataSetChanged();
                // Log.d(TAG, "onClick possss last SQL: "+String.valueOf(myid));
                 myid = res.getString(0);
 
-                //Log.d(TAG, "Yoooosif: yeson : "+String.valueOf(myid));
+             //   Log.d(TAG, "Yoooosif: yeson : "+String.valueOf(myid));
             }
 
         }
@@ -531,6 +536,7 @@ notifyDataSetChanged();
 
     }
 
+    //for call import phone feature
     public  void onActivityResult(String name, String num) {
         Log.d("MyAdapter", "onActivityResult");
        // Toast.makeText(activity, name,Toast.LENGTH_SHORT).show();

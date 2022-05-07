@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
 
+    android:background="#FFFFFF"
     android:orientation="vertical">
 
     <LinearLayout
@@ -16,24 +17,28 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/alfont"
             android:text="اضيفي تعليقك"
             android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textColor="#333232" />
 
         <EditText
             android:id="@+id/guest_edit_box_id"
             android:layout_width="match_parent"
             android:layout_height="84dp"
             android:layout_marginTop="10dp"
+            android:background="#f7f7f7"
             android:cursorVisible="true"
+            android:fontFamily="@font/alfont"
             android:gravity="top"
             android:hint="تعليقك"
-            android:background="#f7f7f7"
             android:paddingLeft="7dip"
             android:paddingRight="7dip"
             android:text=""
             android:textAlignment="textStart"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="#8F8E8E"
             tools:ignore="RtlCompat" />
 
 
@@ -64,9 +69,11 @@
                 android:layout_gravity="bottom"
                 android:layout_weight="0.25"
                 android:ems="10"
-                android:gravity="center"
+                android:fontFamily="@font/alfont"
 
+                android:gravity="center"
                 android:text="السعر"
+                android:textColor="#333232"
                 android:textSize="18sp" />
 
             <TextView
@@ -111,9 +118,11 @@
                 android:layout_weight="0.25"
                 android:background="#f7f7f7"
                 android:ems="10"
+                android:fontFamily="sans-serif"
                 android:gravity="center"
                 android:hint="250"
                 android:inputType="number"
+                android:textColor="#8F8E8E"
                 android:textSize="18sp" />
 
             <TextView
@@ -135,12 +144,14 @@
                 android:layout_weight="2.5"
                 android:background="#f7f7f7"
                 android:cursorVisible="true"
+                android:fontFamily="@font/alfont"
                 android:hint="أسم "
                 android:paddingLeft="7dip"
                 android:paddingRight="7dip"
                 android:text=""
                 android:textAlignment="textStart"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="#8F8E8E"
                 tools:ignore="RtlCompat" />
         </LinearLayout>
 
@@ -157,12 +168,12 @@
                 android:layout_gravity="bottom"
                 android:layout_weight="0.25"
 
+                android:clickable="true"
                 android:ems="10"
-android:clickable="true"
-                android:gravity="center"
+                android:focusable="true"
 
-                android:src="@drawable/ic_contact"
-                android:focusable="true" />
+                android:gravity="center"
+                android:src="@drawable/ic_contact" />
 
             <TextView
                 android:layout_width="75dp"
@@ -182,13 +193,15 @@ android:clickable="true"
                 android:layout_weight="2.5"
                 android:background="#f7f7f7"
                 android:cursorVisible="true"
+                android:fontFamily="@font/alfont"
                 android:hint="رقم الموبيل"
+                android:inputType="number"
                 android:paddingLeft="7dip"
                 android:paddingRight="7dip"
-                android:inputType="number"
                 android:text=""
                 android:textAlignment="textStart"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="#8F8E8E"
                 tools:ignore="RtlCompat" />
         </LinearLayout>
 
@@ -196,17 +209,19 @@ android:clickable="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="right"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/_14sdp">
 
             <Button
                 android:id="@+id/guest_buttoncancel_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="15dp"
                 android:layout_marginRight="16dip"
+                android:background="@drawable/main_button_design"
                 android:clickable="true"
                 android:focusable="true"
+                android:fontFamily="@font/alfont"
                 android:foreground="?android:attr/selectableItemBackground"
                 android:text="الغاء"
                 android:textColor="#FFF"
@@ -217,9 +232,10 @@ android:clickable="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="15dp"
+                android:background="@drawable/main_button_design"
                 android:clickable="true"
                 android:focusable="true"
+                android:fontFamily="@font/alfont"
                 android:foreground="?android:attr/selectableItemBackground"
                 android:text="اضافة"
                 android:textColor="#FFF"

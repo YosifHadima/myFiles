@@ -1,15 +1,19 @@
 package com.foru.mainfarahy;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.Cursor;
+import android.graphics.Point;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -17,20 +21,30 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import com.airbnb.lottie.LottieAnimationView;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.AdView;
+//import com.google.android.gms.ads.AdRequest;
+//import com.google.android.gms.ads.AdSize;
+//import com.google.android.gms.ads.AdView;
+//import com.google.android.gms.ads.MobileAds;
+//import com.google.android.gms.ads.initialization.InitializationStatus;
+//import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+
+import com.facebook.ads.AdSize;
+import com.facebook.ads.AdView;
+import com.facebook.ads.AudienceNetworkAds;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 
+import render.animations.Attention;
+import render.animations.Render;
 import smartdevelop.ir.eram.showcaseviewlib.GuideView;
 
 public class MainActivity extends AppCompatActivity {
@@ -39,6 +53,9 @@ LinearLayout GuestList;
 LinearLayout VendorLayout;
     LinearLayout AppointmentLayout;
     ImageView LoveHeart;
+    TextView anding;
+    ConstraintLayout gra;
+    TextView dot_1,dot_2,date_1,date_2,date_3,until;
     int YearNow;
     int MonthNow;
     int DayNow;
@@ -55,16 +72,75 @@ LinearLayout VendorLayout;
     private AdView mAdView;
     LottieAnimationView lottieAnimationView;
     DataBaseHelper myDbGehaz;
+    LinearLayout LoveInfo;
+    private AdView adView;
+    Handler handler = new Handler();
+    Runnable runnable;
+    int delay = 1*1000; //Delay for 15 seconds.  One second = 1000 milliseconds.
+
+    @Override
+    protected void onResume() {
+        //start handler as activity become visible
+
+        handler.postDelayed( runnable = new Runnable() {
+            public void run() {
+                //do something
+                render.start();
+                handler.postDelayed(runnable, delay);
+            }
+        }, delay);
+
+        super.onResume();
+    }
+
+// If onPause() is not included the threads will double up when you
+// reload the activity
+
+    @Override
+    protected void onPause() {
+        handler.removeCallbacks(runnable); //stop handler when activity not visible
+        super.onPause();
+    }
+    @Override
+    protected void onDestroy() {
+        if (adView != null) {
+            adView.destroy();
+        }
+        super.onDestroy();
+    }
+    public void loadadd(){
+        // Instantiate an AdView object.
+// NOTE: The placement ID from the Facebook Monetization Manager identifies your App.
+// To get test ads, add IMG_16_9_APP_INSTALL# to your placement id. Remove this when your app is ready to serve real ads.
+AudienceNetworkAds.initialize(this);
+        adView = new AdView(this, "724060921940186_730002981345980", AdSize.BANNER_HEIGHT_50);
+
+// Find the Ad Container
+        LinearLayout adContainer = (LinearLayout) findViewById(R.id.banner_container);
+
+// Add the ad view to your activity layout
+        adContainer.addView(adView);
+
+// Request an ad
+        adView.loadAd();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
+        loadadd();
         myDb= new DataBaseHelperDate(this);
         myDbGehaz= new DataBaseHelper(this);
-
+        dot_1=findViewById(R.id.dot_1);
+        dot_2=findViewById(R.id.dot_2);
+        date_1=findViewById(R.id.date_1);
+        date_2=findViewById(R.id.date_2);
+        date_3=findViewById(R.id.date_3);
+        until=findViewById(R.id.until);
         getSupportActionBar().hide();
         lottieAnimationView=findViewById(R.id.animationView);
-
+/*
         AdView adView = new AdView(this);
 
         adView.setAdSize(AdSize.BANNER);
@@ -80,9 +156,12 @@ LinearLayout VendorLayout;
                 mAdView.loadAd(adRequest);
             }
         });
+        */
         yearText=findViewById(R.id.year_id);
         monthText=findViewById(R.id.months_id);
         daysText=findViewById(R.id.days_id);
+        anding=findViewById(R.id.anding_id);
+        gra=findViewById(R.id.gra);
 weddingday=findViewById(R.id.weddingday);
 bridename=findViewById(R.id.bridname);
 bridManName=findViewById(R.id.brideManName_id);
@@ -131,7 +210,7 @@ VendorLayout.setOnClickListener(new View.OnClickListener() {
                 startActivity(intent);
             }
         });
-
+LoveInfo=findViewById(R.id.infoheart_id);
         LoveHeart = findViewById(R.id.imageheart_id);
         LoveHeart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -359,16 +438,38 @@ VendorLayout.setOnClickListener(new View.OnClickListener() {
                 });
             }
         });
-     loadallData();
+        // get Hight and width
+        double di = Double.parseDouble(getScreenSize());
+        //Toast.makeText(getApplicationContext(),String.valueOf(getScreenSize()),Toast.LENGTH_SHORT).show();
+//Density = sqrt((wp * wp) + (hp * hp)) / di
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int hp = displayMetrics.heightPixels;
+        int wp = displayMetrics.widthPixels;
+
+        double Density = Math.sqrt((wp * wp) + (hp * hp)) / di;
+       // Toast.makeText(getApplicationContext(),String.valueOf(Density),Toast.LENGTH_SHORT).show();
+//372.49di
+
+
+
+        loadallData();
      if (myDbGehaz.getALData().getCount()<=0)
      {
         ShowIntro("", "هنا يتم عرض العد التنازلي ليوم الفرح", R.id.infoheart_id, 1);
 
 
      }
+       // setSize(Density);
+        // Create Render Class
+         render = new Render(MainActivity.this);
 
+// Set Animation
+        render.setAnimation(Attention.Pulse(gra));
+        render.setDuration(6000);
+        //render.start();
     }
-
+    Render render;
 
     private void   loadallData(){
         //ArrayList<GuestClass> Headers = new ArrayList<>();
@@ -513,5 +614,65 @@ if (y<=0 && m<=0 && d<=0){
                 .build()
                 .show();
     }
+    private String getScreenSize() {
+        Point point = new Point();
+        ((WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getRealSize(point);
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        int width=point.x;
+        int height=point.y;
+        double wi=(double)width/(double)displayMetrics.xdpi;
+        double hi=(double)height/(double)displayMetrics.ydpi;
+        double x = Math.pow(wi,2);
+        double y = Math.pow(hi,2);
+        return String.valueOf(Math.round((Math.sqrt(x+y)) * 10.0) / 10.0);
+    }
 
+    public void setSize(double di){
+        /*
+        //Yosif & Kho5a
+        bridManName.setTextSize(TypedValue.COMPLEX_UNIT_SP, (float) ((float) di*20/372.5));
+        bridename.setTextSize(TypedValue.COMPLEX_UNIT_SP, (float) ((float) di*20/372.5));
+        anding.setTextSize(TypedValue.COMPLEX_UNIT_SP, (float) ((float) di*20/372.5));
+        //1:5:20
+        yearText.setTextSize(TypedValue.COMPLEX_UNIT_SP, (float) ((float) di*20/372.5));
+        monthText.setTextSize(TypedValue.COMPLEX_UNIT_SP, (float) ((float) di*20/372.5));
+        daysText.setTextSize(TypedValue.COMPLEX_UNIT_SP, (float) ((float) di*20/372.5));
+        dot_1.setTextSize(TypedValue.COMPLEX_UNIT_SP, (float) ((float) di*20/372.5));
+        dot_2.setTextSize(TypedValue.COMPLEX_UNIT_SP, (float) ((float) di*20/372.5));
+
+        //years months days
+        date_1.setTextSize(TypedValue.COMPLEX_UNIT_SP, (float) ((float) di*8/372.5));
+        date_2.setTextSize(TypedValue.COMPLEX_UNIT_SP, (float) ((float) di*8/372.5));
+        date_3.setTextSize(TypedValue.COMPLEX_UNIT_SP, (float) ((float) di*8/372.5));
+
+        //until our wedding
+        until.setTextSize(TypedValue.COMPLEX_UNIT_SP, (float) ((float) di*12/372.5));
+
+        // 2/2/2022
+
+        weddingday.setTextSize(TypedValue.COMPLEX_UNIT_SP, (float) ((float) di*10/372.5));
+
+        LoveInfo.setPadding(0, (int) ((float) di*90/372.5), 0, 0);
+        //Toast.makeText(getApplicationContext(),String.valueOf( (float) ((float) di*20/372.5)),Toast.LENGTH_SHORT).show();
+        //LoveInfo.setm
+       //  Log.d("yosif", "onClick possss saved: "+String.valueOf((float) ((float) di*20/372.5)) );
+*/
+
+        Resources r = getResources();
+        float px = TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                (float) ((float) di*70/372.5),
+                r.getDisplayMetrics()
+        );
+
+
+        float px2 = TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                (float) ((float) di*30/372.5),
+                r.getDisplayMetrics()
+        );
+
+gra.setPadding((int) px, (int) px2, (int) px, 0);
+
+    }
 }

@@ -18,7 +18,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public  static final String TABLE_NAME="Farahy_table";
 
     public  static final String COL_1="ID";
-    public  static final String COL_2="NAME_FEMALE";
+    public  static final String COL_2="NAME_FEMALE";//ID will be thiere
     public  static final String COL_3="NAME_MALE";
     public  static final String COL_4="MARGE_DATE";
     public  static final String COL_5="MAIN_TOPIC";
@@ -53,7 +53,20 @@ db.execSQL("CREATE TABLE "+TABLE_NAME+" (ID INTEGER PRIMARY KEY AUTOINCREMENT ,N
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
 db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME);
     }
+    public boolean deleteData(String id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        int result=  db.delete(TABLE_NAME,"ID=?",new String[]{id});
+        // db.execSQL("DELETE FROM SQLITE_SEQUENCE WHERE NAME = '" + TABLE_NAME + "'");
 
+        //db.rawQuery("DBCC CHECKIDENT ("+TABLE_NAME+", RESEED, 0)");
+        db.close();
+        //DBCC CHECKIDENT (mytable, RESEED, 0)
+        if(result>0){
+            return true;
+        }else {
+            return false;
+        }
+    }
     public boolean insertData(String Femalename,String MaleName,String MargeDate,String MainTopic,String SupTopic,String CommentTopic,String checkbox){
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues contentValues=new ContentValues();
