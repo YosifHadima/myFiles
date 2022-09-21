@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -32,17 +33,19 @@ import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-/*
+
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
-*/
+
+/*
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
 import com.facebook.ads.AudienceNetworkAds;
+*/
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -62,6 +65,7 @@ public class VendorActivity extends AppCompatActivity {
 boolean weddingPlanner_clicked,weedingVen_clicked ,videoGrapher_clicked, athlie_Button_clicked,veil_clicked,makeupArtist_clicked,photographer_clicked,hairStylest_clicked =false;
     private AdView mAdView;
     private AdView adView;
+    /*
     public void loadadd(){
         // Instantiate an AdView object.
 // NOTE: The placement ID from the Facebook Monetization Manager identifies your App.
@@ -85,11 +89,14 @@ boolean weddingPlanner_clicked,weedingVen_clicked ,videoGrapher_clicked, athlie_
         }
         super.onDestroy();
     }
+    */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vendor);
-        loadadd();
+      //  loadadd();
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
         myDb=new DataBaseHelperVendor(this);
         //getSupportActionBar().hide();
         // get the listview
@@ -105,10 +112,10 @@ boolean weddingPlanner_clicked,weedingVen_clicked ,videoGrapher_clicked, athlie_
 
         // Set BackgroundDrawable
         actionBar.setBackgroundDrawable(colorDrawable);
-      /*
+
         AdView adView = new AdView(this);
 
-        adView.setAdSize(AdSize.BANNER);
+        adView.setAdSize(AdSize.LARGE_BANNER);
 
         adView.setAdUnitId(String.valueOf(R.string.ADS_4));
 
@@ -121,7 +128,7 @@ boolean weddingPlanner_clicked,weedingVen_clicked ,videoGrapher_clicked, athlie_
                 mAdView.loadAd(adRequest);
             }
         });
-*/
+
         requestContactsPermission();
         expListView =  findViewById(R.id.lvExp);
 

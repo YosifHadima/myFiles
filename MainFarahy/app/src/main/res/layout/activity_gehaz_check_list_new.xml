@@ -12,7 +12,7 @@
 
     <ExpandableListView
         android:id="@+id/lvExp"
-        android:layout_below="@id/banner_container"
+        android:layout_below="@id/adView"
 android:animateLayoutChanges="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
@@ -40,13 +40,15 @@ android:animateLayoutChanges="true"
         tools:visibility="visible" />
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
+        android:layout_alignParentTop="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_alignParentBottom="false"
         android:layout_centerHorizontal="true"
-        app:adSize="BANNER"
+        app:adSize="SMART_BANNER"
+        android:paddingBottom="@dimen/_10sdp"
         app:adUnitId="@string/ADS_2"
-        android:visibility="gone"/>
+        android:visibility="visible"/>
 
     <LinearLayout
         android:id="@+id/banner_container"

@@ -6,6 +6,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -18,7 +19,9 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -38,18 +41,24 @@ import android.widget.ExpandableListView.OnGroupCollapseListener;
 import android.widget.ExpandableListView.OnGroupExpandListener;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-
+/*
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
 import com.facebook.ads.AudienceNetworkAds;
+*/
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-//import com.google.android.gms.ads.AdRequest;
-//import com.google.android.gms.ads.AdSize;
-//import com.google.android.gms.ads.AdView;
-//import com.google.android.gms.ads.MobileAds;
-//import com.google.android.gms.ads.initialization.InitializationStatus;
-//import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 
 public class GehazCheckListActivityNew extends AppCompatActivity {
     ExpandableListAdapter listAdapter;
@@ -58,12 +67,12 @@ public class GehazCheckListActivityNew extends AppCompatActivity {
     HashMap<String, List<GehazList>> listDataChild;
 DataBaseHelper myDb;
     private AdView mAdView;
-    private AdView adView;
+    //private AdView adView;
     FloatingActionButton floatingActionButton;
 
 
     ExpandableListView expListView_2;
-
+/*
     @Override
     protected void onDestroy() {
         if (adView != null) {
@@ -87,6 +96,7 @@ DataBaseHelper myDb;
 // Request an ad
         adView.loadAd();
     }
+    */
     public void setStatusColor(){
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
             getWindow().setStatusBarColor(getResources().getColor(R.color.purple_700,this.getTheme()));
@@ -100,17 +110,41 @@ DataBaseHelper myDb;
         expListView = (ExpandableListView) findViewById(R.id.lvExp);
 
     }
+    private AdSize getAdSize() {
+        Display display = getWindowManager().getDefaultDisplay();
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        display.getMetrics(outMetrics);
+        float widthPixels = outMetrics.widthPixels;
+        float density = outMetrics.density; int adWidth = (int) (widthPixels / density);
 
+        return AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(this, adWidth); }
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gehaz_check_list_new);
-        loadadd();
+       // loadadd();
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
         setStatusColor();
         initilizeViews();
 
+        AdView adView = new AdView(this);
 
+       // adView.setAdSize(AdSize.FULL_BANNER);
+        AdSize adSize = getAdSize();
+        adView.setAdSize(adSize);
+        adView.setAdUnitId(String.valueOf(R.string.ADS_2));
+
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+                mAdView.loadAd(adRequest);
+            }
+        });
         ////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////
         /////////////////CUSTOME ADDING /////////////////////////////////
@@ -690,7 +724,7 @@ deleteButtonDialog.setOnClickListener(new View.OnClickListener() {
         String Matbakh="مطبخ";
         String hamam="مستلزمات حمام";
         String mafaresh="المفروشات";
-        String honeymoon="شهر العسل";
+        String honeymoon="احتياجات شهر العسل";
         String aghza="اجهزة كهربائية";
 
         insertData("","","",Matbakh,"طقم صيني","","false");

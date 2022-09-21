@@ -5,13 +5,16 @@ import static android.content.ContentValues.TAG;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.ContextCompat;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,20 +26,22 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-/*
+
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
-*/
+
+/*
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
 import com.facebook.ads.AudienceNetworkAds;
+*/
+//import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -54,9 +59,11 @@ FloatingActionButton floatingActionButton;
 EditText searchView;
 
     DataBaseGehazHelper myDb;
+
     private AdView mAdView;
     MyAdapter adapter;
     private AdView adView;
+    /*
     @Override
     protected void onDestroy() {
         if (adView != null) {
@@ -80,18 +87,30 @@ EditText searchView;
 // Request an ad
         adView.loadAd();
     }
+    */
+    private AdSize getAdSize() {
+        Display display = getWindowManager().getDefaultDisplay();
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        display.getMetrics(outMetrics);
+        float widthPixels = outMetrics.widthPixels;
+        float density = outMetrics.density; int adWidth = (int) (widthPixels / density);
+
+        return AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(this, adWidth); }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_guest);
        // getActionBar().hide();
-        loadadd();
+       // loadadd();
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
         getSupportActionBar().hide();
-/*
+
         AdView adView = new AdView(this);
 
-        adView.setAdSize(AdSize.BANNER);
-
+       // adView.setAdSize(AdSize.FULL_BANNER);
+        AdSize adSize = getAdSize();
+        adView.setAdSize(adSize);
         adView.setAdUnitId(String.valueOf(R.string.ADS_3));
 
         mAdView = findViewById(R.id.adView);
@@ -103,7 +122,7 @@ EditText searchView;
                 mAdView.loadAd(adRequest);
             }
         });
-*/
+
         totalGustes=findViewById(R.id.totalGust_id);
         floatingActionButton=findViewById(R.id.floatingActionButton);
         listView=findViewById(R.id.listView_id);

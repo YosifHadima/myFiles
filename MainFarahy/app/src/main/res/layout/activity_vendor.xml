@@ -39,8 +39,8 @@
             android:id="@+id/lvExp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@id/adView"
-            android:layout_below="@id/banner_container"
+
+            android:layout_below="@id/adView"
             android:divider="@null"
             android:dividerHeight="0dp" />
 
@@ -48,11 +48,11 @@
             android:id="@+id/adView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+
             android:layout_centerHorizontal="true"
-            app:adSize="BANNER"
-            app:adUnitId="@string/ADS_4"
-            android:visibility="gone"/>
+            android:visibility="visible"
+            app:adSize="LARGE_BANNER"
+            app:adUnitId="@string/ADS_4" />
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

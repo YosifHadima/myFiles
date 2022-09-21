@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_2sdp"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:layout_marginEnd="@dimen/_2sdp"
+        android:layout_marginBottom="@dimen/_2sdp">
+
+        <LinearLayout
+            android:id="@+id/song_linear_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_8sdp"
+            android:layout_marginRight="@dimen/_8sdp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_weight="1"
+                android:fontFamily="@font/alfont"
+                android:gravity="center"
+                android:text="Your infomation"
+                android:textAlignment="viewEnd"
+                android:textColor="@color/cardview_dark_background"
+                android:textSize="@dimen/_18sdp" />
+
+            <ImageView
+                android:id="@+id/iv_move"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="16"
+                android:src="@mipmap/ic_launcher"
+                app:srcCompat="@android:drawable/ic_menu_sort_by_size"
+                tools:srcCompat="@android:drawable/ic_menu_sort_by_size" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

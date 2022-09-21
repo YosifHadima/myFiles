@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,19 +24,21 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.airbnb.lottie.LottieAnimationView;
-//import com.google.android.gms.ads.AdRequest;
-//import com.google.android.gms.ads.AdSize;
-//import com.google.android.gms.ads.AdView;
-//import com.google.android.gms.ads.MobileAds;
-//import com.google.android.gms.ads.initialization.InitializationStatus;
-//import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 
-import com.facebook.ads.AdSize;
-import com.facebook.ads.AdView;
-import com.facebook.ads.AudienceNetworkAds;
+//import com.facebook.ads.AdSize;
+//import com.facebook.ads.AdView;
+//import com.facebook.ads.AudienceNetworkAds;
+
 import com.google.android.material.snackbar.Snackbar;
 
 import java.text.ParseException;
@@ -101,6 +104,7 @@ LinearLayout VendorLayout;
         handler.removeCallbacks(runnable); //stop handler when activity not visible
         super.onPause();
     }
+   /*
     @Override
     protected void onDestroy() {
         if (adView != null) {
@@ -108,6 +112,8 @@ LinearLayout VendorLayout;
         }
         super.onDestroy();
     }
+    */
+    /*
     public void loadadd(){
         // Instantiate an AdView object.
 // NOTE: The placement ID from the Facebook Monetization Manager identifies your App.
@@ -124,12 +130,23 @@ AudienceNetworkAds.initialize(this);
 // Request an ad
         adView.loadAd();
     }
+    */
+   private AdSize getAdSize() {
+       Display display = getWindowManager().getDefaultDisplay();
+       DisplayMetrics outMetrics = new DisplayMetrics();
+       display.getMetrics(outMetrics);
+       float widthPixels = outMetrics.widthPixels;
+       float density = outMetrics.density; int adWidth = (int) (widthPixels / density);
+
+       return AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(this, adWidth); }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
-        loadadd();
+    //    loadadd();
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
         myDb= new DataBaseHelperDate(this);
         myDbGehaz= new DataBaseHelper(this);
         dot_1=findViewById(R.id.dot_1);
@@ -140,23 +157,25 @@ AudienceNetworkAds.initialize(this);
         until=findViewById(R.id.until);
         getSupportActionBar().hide();
         lottieAnimationView=findViewById(R.id.animationView);
-/*
+
         AdView adView = new AdView(this);
 
-        adView.setAdSize(AdSize.BANNER);
-
+        //adView.setAdSize(AdSize.BANNER);
+        AdSize adSize = getAdSize();
+        adView.setAdSize(adSize);
+//ca-app-pub-3940256099942544/6300978111
         adView.setAdUnitId(String.valueOf(R.string.ADS_1));
 
         mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
-       // mAdView.loadAd(adRequest);
+        mAdView.loadAd(adRequest);
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {
                 mAdView.loadAd(adRequest);
             }
         });
-        */
+
         yearText=findViewById(R.id.year_id);
         monthText=findViewById(R.id.months_id);
         daysText=findViewById(R.id.days_id);
@@ -468,6 +487,16 @@ LoveInfo=findViewById(R.id.infoheart_id);
         render.setAnimation(Attention.Pulse(gra));
         render.setDuration(6000);
         //render.start();
+
+        LinearLayout HenaLayout;
+        HenaLayout=findViewById(R.id.hena_id);
+        HenaLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(MainActivity.this,HenaActivity.class);
+                startActivity(intent);
+            }
+        });
     }
     Render render;
 

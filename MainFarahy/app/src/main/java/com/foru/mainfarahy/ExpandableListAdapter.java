@@ -201,7 +201,8 @@ String comment=_listDataChild.get(this._listDataHeader.get(groupPosition))
         String Matbakh="مطبخ";
         String hamam="مستلزمات حمام";
         String mafaresh="المفروشات";
-        String honeymoon="شهر العسل";
+        String honeymoon="احتياجات شهر العسل";
+        String honeymoon_old="شهر العسل";
         String aghza="اجهزة كهربائية";
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this._context
@@ -217,7 +218,7 @@ String comment=_listDataChild.get(this._listDataHeader.get(groupPosition))
 
         addCutomeGehaze.setImageResource(R.drawable.myplus);
         //not show add putton if header is already implmented
-        if (headerTitle.equals(Matbakh) || headerTitle.equals(hamam) ||headerTitle.equals(mafaresh) ||headerTitle.equals(honeymoon) ||headerTitle.equals(aghza)  ){
+        if (headerTitle.equals(Matbakh) || headerTitle.equals(hamam) ||headerTitle.equals(mafaresh) ||headerTitle.equals(honeymoon) ||headerTitle.equals(aghza)||headerTitle.equals(honeymoon_old)  ){
             addCutomeGehaze.setVisibility(View.GONE);
 
         }else {

@@ -9,10 +9,14 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="ADS_1">ca-app-pub-8288510497847979/9751558862</string>
-    <string name="ADS_2">ca-app-pub-8288510497847979/8821604663</string>
-    <string name="ADS_3">ca-app-pub-8288510497847979/3114816563</string>
-    <string name="ADS_4">ca-app-pub-8288510497847979/2336103279</string>
+    <string name="ADS_1">ca-app-pub-8288510497847979/4168415881</string>
+    <string name="ADS_2">ca-app-pub-8288510497847979/6372456134</string>
+    <string name="ADS_3">ca-app-pub-8288510497847979/2241639439</string>
+    <string name="ADS_4">ca-app-pub-8288510497847979/7916637945</string>
+
+    <string name="ADS_5">ca-app-pub-8288510497847979/5983713321</string>
+    <string name="ADS_6">ca-app-pub-8288510497847979/7504941885</string>
+    <string name="ADS_7">ca-app-pub-8288510497847979/2743021051</string>
 
     <string name="ADS_1F">1176439483187246_1176544459843415</string>
     <string name="ADS_2F">ca-app-pub-8288510497847979/8821604663</string>
@@ -23,7 +27,8 @@
     <string name="fb_login_protocol_scheme">fb1151258675693880</string>
 
 
-    <string name="facebook_client_token">85b902a0f9e0a3e07c714806ba8dd287</string>//bb795571f22a9ca875b206de6a30cd31
+    <string name="facebook_client_token">85b902a0f9e0a3e07c714806ba8dd287</string>
+    //bb795571f22a9ca875b206de6a30cd31
 
     <string name="no_cardetails">Click on the button below to begin creating your reminder!</string>
     <string name="title_activity_add_reminder">Add Reminder</string>

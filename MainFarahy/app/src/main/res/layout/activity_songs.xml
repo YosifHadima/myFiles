@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".SongsActivity">
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButtonSongs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dip"
+        android:clickable="true"
+        android:focusable="true"
+        android:paddingBottom="8dip"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.92"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/myplus"
+        tools:ignore="ContentDescription"
+        tools:visibility="visible" />
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/hint_song_id"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="قومي بأضافة اغاني هنا"
+        android:textColor="#9C9B9B"
+        android:textSize="@dimen/_18sdp"
+        tools:ignore="MissingConstraints" />
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_centerHorizontal="true"
+        android:visibility="visible"
+        app:adSize="BANNER"
+        app:adUnitId="@string/ADS_5"
+        app:layout_constraintBottom_toTopOf="@+id/lv"
+
+        tools:ignore="MissingConstraints" />
+
+    <com.lunger.draglistview.DragListView
+        android:id="@+id/lv"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:divider="@null"
+android:layout_below="@id/adView"
+        android:dividerHeight="0dp"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="6dp" />
+
+</RelativeLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
