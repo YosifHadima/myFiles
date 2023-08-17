@@ -15,8 +15,9 @@ import androidx.core.app.TaskStackBuilder;
 
 
 import com.example.mainfarahy.AddReminderActivity;
-import com.example.mainfarahy.R;
+//import com.example.mainfarahy.R;
 import com.example.mainfarahy.data.AlarmReminderContract;
+import com.foru.mainfarahy.R;
 
 /**
  * Created by delaroy on 9/22/17.

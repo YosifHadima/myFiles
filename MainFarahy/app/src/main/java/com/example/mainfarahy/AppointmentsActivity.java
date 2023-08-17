@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import com.example.mainfarahy.data.AlarmReminderContract;
 import com.example.mainfarahy.data.AlarmReminderDbHelper;
+import com.foru.mainfarahy.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class AppointmentsActivity extends AppCompatActivity  implements LoaderManager.LoaderCallbacks<Cursor>  {

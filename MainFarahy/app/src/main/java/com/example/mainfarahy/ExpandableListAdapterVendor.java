@@ -27,6 +27,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 
+import com.foru.mainfarahy.R;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;

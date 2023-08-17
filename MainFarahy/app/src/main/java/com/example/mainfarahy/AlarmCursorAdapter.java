@@ -13,6 +13,7 @@ import androidx.cursoradapter.widget.CursorAdapter;
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.example.mainfarahy.data.AlarmReminderContract;
+import com.foru.mainfarahy.R;
 
 public class AlarmCursorAdapter extends CursorAdapter {
 

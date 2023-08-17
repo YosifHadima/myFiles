@@ -32,6 +32,7 @@ import android.widget.Toast;
 
 import com.example.mainfarahy.data.AlarmReminderContract;
 import com.example.mainfarahy.reminder.AlarmScheduler;
+import com.foru.mainfarahy.R;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;

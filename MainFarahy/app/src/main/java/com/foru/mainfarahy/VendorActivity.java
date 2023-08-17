@@ -47,6 +47,11 @@ import com.facebook.ads.AdView;
 import com.facebook.ads.AudienceNetworkAds;
 */
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -65,6 +70,7 @@ public class VendorActivity extends AppCompatActivity {
 boolean weddingPlanner_clicked,weedingVen_clicked ,videoGrapher_clicked, athlie_Button_clicked,veil_clicked,makeupArtist_clicked,photographer_clicked,hairStylest_clicked =false;
     private AdView mAdView;
     private AdView adView;
+    DatabaseReference databaseReference;
     /*
     public void loadadd(){
         // Instantiate an AdView object.
@@ -563,6 +569,28 @@ expListView.setOnScrollListener(new AbsListView.OnScrollListener() {
     }
 });
 
+
+
+
+
+                databaseReference = FirebaseDatabase.getInstance().getReference("uploads/b0NY3fsubZbWcItyWIY9a2TJvrg2");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                    String StoreName = userSnapshot.child("StoreName").getValue(String.class);
+                    String profileImageUrl = userSnapshot.child("profileImage").getValue(String.class);
+                    Log.d("joe FirebaseRead", "Name: " + StoreName + ", Email: " + profileImageUrl);
+                }
+            }
+
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("FirebaseRead", "Failed to read data.", databaseError.toException());
+            }
+        });
     }
     private void Delete(String ID){
         Boolean result= myDb.deleteData(ID);

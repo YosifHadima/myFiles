@@ -14,6 +14,8 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import com.foru.mainfarahy.R;
+
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
     DataBaseHelper myDb;
     private Context _context;
