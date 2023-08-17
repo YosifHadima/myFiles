@@ -207,7 +207,7 @@ VendorLayout=findViewById(R.id.vendor_id);
 VendorLayout.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View view) {
-        Intent intent=new Intent(MainActivity.this,VendorActivity.class);
+        Intent intent=new Intent(MainActivity.this,BottomNavigationActivity.class);
         startActivity(intent);
     }
 });

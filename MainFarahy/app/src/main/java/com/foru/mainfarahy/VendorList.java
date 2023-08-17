@@ -1,13 +1,13 @@
 package com.foru.mainfarahy;
 
 public class VendorList {
-    String VendorName;
-    String VendorComment="";
-    String VendorPrice="";
-    String VendorPhonenumber="";
-    String MainTopicName;
-String myID;
-    VendorList(String VendorName, String VendorComment, String VendorPrice,String VendorPhonenumber, String MainTopicName,String myID){
+    public String VendorName;
+    public String VendorComment="";
+    public String VendorPrice="";
+    public  String VendorPhonenumber="";
+    public String MainTopicName;
+public String myID;
+    public VendorList(String VendorName, String VendorComment, String VendorPrice, String VendorPhonenumber, String MainTopicName, String myID){
         this.VendorName=VendorName;
         this.VendorComment=VendorComment;
         this.VendorPrice=VendorPrice;
@@ -15,7 +15,7 @@ String myID;
         this.MainTopicName=MainTopicName;
         this.myID=myID;
     }
-    VendorList()
+    public VendorList()
     {
 
     }

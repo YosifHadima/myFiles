@@ -43,6 +43,10 @@
             android:exported="false"
             android:screenOrientation="portrait"/>
         <activity
+            android:name=".BottomNavigationActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".FoodHenaActivity"
             android:exported="false"
             android:screenOrientation="portrait"/>

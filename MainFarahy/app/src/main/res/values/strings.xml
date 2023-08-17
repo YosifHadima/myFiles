@@ -71,4 +71,7 @@
     <string name="editor_update_reminder_failed">Error with updating reminder</string>
 
     <string name="reminder_title">AlarmReminder</string>
+    <string name="title_home">home</string>
+    <string name="title_dashboard">dashboard</string>
+    <string name="title_notifications">notifications</string>
 </resources>
