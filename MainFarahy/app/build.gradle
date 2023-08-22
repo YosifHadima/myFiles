@@ -83,5 +83,6 @@ dependencies {
     implementation 'com.google.guava:guava:27.0.1-android'
     implementation 'com.github.felixsoares:ImageZoom:1.0'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
+    implementation 'androidx.cardview:cardview:1.0.0' // for CardView
 
 }
