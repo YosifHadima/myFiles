@@ -98,10 +98,12 @@ LinearLayout linearLayout=convertView.findViewById(R.id.linearGroup);
         TextView groupSubtitleTextView = convertView.findViewById(R.id.groupSubtitleTextView);
          ImageView groupImageView = convertView.findViewById(R.id.groupImageView);
         ImageView arrowImageView = convertView.findViewById(R.id.arrowid);
+        TextView countView = convertView.findViewById(R.id.countview_id);
 
       //  Log.e("my joe childPosition", groupTitle);
         groupTitleTextView.setText(groupDataList.get(groupPosition).getStoreName());
         groupSubtitleTextView.setText(groupDataList.get(groupPosition).getBusinessName());
+        countView.setText(groupDataList.get(groupPosition).getviewsCount());
         arrowImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

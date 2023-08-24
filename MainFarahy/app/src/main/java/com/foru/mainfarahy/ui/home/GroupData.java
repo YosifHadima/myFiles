@@ -8,11 +8,21 @@ public class GroupData {
     private String businessName;
     private String imageUrl;
     private String phoneNumber;
+    private String viewsCount;
    // private List<ChildData> children;
     // Getter for email
+
+    public String getviewsCount() {
+        return viewsCount;
+    }
+
+    public void setviewsCount(String viewsCount) {
+        this.viewsCount = viewsCount;
+    }
     public String getPhoneNumber() {
         return phoneNumber;
     }
+
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;

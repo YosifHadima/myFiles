@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,7 +53,7 @@ public class HomeFragment extends Fragment {
     private boolean hairstylist_flag=true;
     private boolean veildesigner_flag=true;
     private boolean videographer_flag=true;
-
+    private ProgressBar progressBar;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         HomeViewModel homeViewModel =
@@ -69,8 +70,9 @@ public class HomeFragment extends Fragment {
         veildesigner_Button = root.findViewById(R.id.veildesigner_id);
         videographer_Button = root.findViewById(R.id.videographer_id);
 
-
-
+        // Initialize the ProgressBar
+        progressBar = root.findViewById(R.id.progressBar);
+        progressBar.setVisibility(ProgressBar.VISIBLE);
        // final TextView textView = binding.textHome;
         //homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         ExpandableListView expandableListView = root.findViewById(R.id.expandableListView);
@@ -152,6 +154,7 @@ public class HomeFragment extends Fragment {
                     groupData.setStoreName(groupSnapshot.child(userID).child("StoreName").getValue(String.class));
                     groupData.setImageUrl(groupSnapshot.child(userID).child("profileImage").getValue(String.class));
                     groupData.setBusinessName(groupSnapshot.child(userID).child("BusinessName").getValue(String.class));
+                    groupData.setviewsCount(groupSnapshot.child(userID).child("myviews").getValue(String.class));
                     groupData.setUserId(userID);
                     groupData.setPhoneNumber(groupSnapshot.child(userID).child("phoneNumber").getValue(String.class));
                     /*
@@ -174,7 +177,7 @@ public class HomeFragment extends Fragment {
                     */
                     groupDataList.add(groupData);
                 }
-
+                progressBar.setVisibility(ProgressBar.GONE);
                 expandableListAdapter.notifyDataSetChanged();
             }
 

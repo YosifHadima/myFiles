@@ -63,7 +63,7 @@ public class RetriveActivity extends AppCompatActivity {
     private LinearLayout layout;
     private FirebaseAuth mAuth;
     int position=0;
-
+int countMyViews=0;
     private ProgressBar progressBar;
 
     private static final int REQUEST_IMAGE_CAPTURE = 1;
@@ -262,6 +262,7 @@ public class RetriveActivity extends AppCompatActivity {
         loadInstgramLink();
         loadbusinessName();
         loadStoreName();
+        loadmyviewsAndUpdate();
     }
 
 
@@ -892,6 +893,60 @@ public class RetriveActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+    private void loadmyviewsAndUpdate(){
 
+        DatabaseReference mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploads/"+currentUser+"/"+currentUser);
+
+        mDatabaseRef.child("myviews")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        String text = dataSnapshot.getValue(String.class);
+                        if (text != null) {
+                            // facebookLink.setText(text);
+                            // Hide the ProgressBar after loading is complete
+                            //  progressBar.setVisibility(ProgressBar.INVISIBLE);
+                            countMyViews= Integer.parseInt(text);
+
+
+                        }
+                        Log.e("my joe ", "loading" );
+                        updateMyviews();
+
+
+                        // Change this delay to suit your loading duration
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        // Handle the error if the database retrieval is canceled.
+                        // For simplicity, we'll set a default text.
+                        Log.e("my joe ", String.valueOf(databaseError));
+                    }
+                });
+    }
+
+    public void updateMyviews(){
+        DatabaseReference mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploads/"+currentUser+"/"+currentUser);
+        countMyViews=countMyViews+1;
+        String newText = String.valueOf(countMyViews);
+        if (!newText.isEmpty()) {
+            // Update the text in Firebase
+            mDatabaseRef.child("myviews")
+                    .setValue(newText)
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+
+                        } else {
+                            //    Toast.makeText(getApplicationContext(),
+                            //         "Failed to update InstgramLink",
+                            //       Toast.LENGTH_SHORT).show();
+                            Log.e("my joe ", "failed");
+                        }
+                    });
+        } else {
+            //  Toast.makeText(this, "Please enter some text to update", Toast.LENGTH_SHORT).show();
+        }
+    }
 
 }
