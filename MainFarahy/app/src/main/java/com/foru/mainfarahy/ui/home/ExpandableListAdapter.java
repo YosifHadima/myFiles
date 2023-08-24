@@ -37,14 +37,15 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     private Context context;
     private List<GroupData> groupDataList;
-    private List<GroupData> filteredData;
+   // private List<GroupData> filteredData;
 
 
     public ExpandableListAdapter(Context context, List<GroupData> groupDataList,ExpandableListView listView) {
         this.context = context;
         this.groupDataList = groupDataList;
         this.expandableListView = listView;
-        this.filteredData = new ArrayList<>(groupDataList);
+     //   this.filteredData = new ArrayList<>(groupDataList);
+
     }
 
     @Override
@@ -66,7 +67,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        return groupDataList.get(groupPosition).getChildren().get(childPosition);
+        return groupDataList.get(groupPosition);
     }
 
     @Override
@@ -147,7 +148,7 @@ if (isExpanded){
             convertView = inflater.inflate(R.layout.expandable_child_item, null);
         }
         // Retrieve the ChildData object
-        ChildData childData = groupDataList.get(groupPosition).getChildren().get(groupPosition);
+      //  ChildData childData = groupDataList.get(groupPosition).getChildren().get(groupPosition);
 
       //  Log.e("my joe groupPosition", String.valueOf(groupPosition));
         //Log.e("my joe childPosition", String.valueOf(childPosition));
@@ -156,7 +157,7 @@ if (isExpanded){
         TextView childSubtitleTextView = convertView.findViewById(R.id.childSubtitleTextView);
         ImageView childImageView = convertView.findViewById(R.id.childImageView);
 
-       childTitleTextView.setText(childData.getPhoneNumber());
+       childTitleTextView.setText(groupDataList.get(groupPosition).getPhoneNumber());
    //     childSubtitleTextView.setText("childSubtitle");
 
      childImageView.setImageResource(R.drawable.ic_call);
@@ -171,7 +172,7 @@ if (isExpanded){
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
     }
-
+/*
     public void filterByName(String query) {
         filteredData.clear();
         Log.d("joe Filter", "cleared changed: " );
@@ -195,5 +196,5 @@ if (isExpanded){
         notifyDataSetChanged();
 
     }
-
+*/
 }

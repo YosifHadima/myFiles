@@ -7,13 +7,22 @@ public class GroupData {
     private String userId;
     private String businessName;
     private String imageUrl;
-    private List<ChildData> children;
+    private String phoneNumber;
+   // private List<ChildData> children;
+    // Getter for email
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
     // Constructor
-    public GroupData(String storeName, String imageUrl, List<ChildData> children) {
+    public GroupData(String storeName, String imageUrl, String phoneNumber) {
         this.storeName = storeName;
         this.imageUrl = imageUrl;
-        this.children = children;
+        this.phoneNumber = phoneNumber;
     }
 
     public GroupData() {
@@ -35,7 +44,7 @@ public class GroupData {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
-
+/*
     public List<ChildData> getChildren() {
         return children;
     }
@@ -43,7 +52,7 @@ public class GroupData {
     public void setChildren(List<ChildData> children) {
         this.children = children;
     }
-
+*/
     public String getBusinessName() {
         return businessName;
     }

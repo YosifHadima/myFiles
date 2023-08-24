@@ -32,12 +32,15 @@
         android:paddingRight="8dp">
 
         <!-- Custom ExpandableListView -->
+
         <EditText
+            android:visibility="gone"
             android:id="@+id/etSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <LinearLayout
+            android:paddingTop="@dimen/_8sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -48,6 +51,7 @@
                 android:orientation="horizontal">
 
                 <com.beardedhen.androidbootstrap.BootstrapButton
+                    android:id="@+id/makeup_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="makeup artist"
@@ -55,12 +59,103 @@
                     app:bootstrapSize="md"
                     app:buttonMode="regular"
                     app:roundedCorners="true"
+                    app:showOutline="true"
+                    />
+
+                <com.beardedhen.androidbootstrap.BootstrapButton
+                    android:id="@+id/weddingPlanner_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="wedding planner"
+                    app:bootstrapBrand="success"
+                    app:bootstrapSize="md"
+                    app:buttonMode="regular"
+                    app:roundedCorners="true"
+                    android:layout_marginLeft="@dimen/_8sdp"
+                    app:showOutline="true" />
+
+                <com.beardedhen.androidbootstrap.BootstrapButton
+                    android:id="@+id/hairStylist_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="hair stylist"
+                    app:bootstrapBrand="success"
+                    app:bootstrapSize="md"
+                    app:buttonMode="regular"
+                    app:roundedCorners="true"
+                    android:layout_marginLeft="@dimen/_8sdp"
                     app:showOutline="true" />
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/_6sdp"
+               >
+
+                <com.beardedhen.androidbootstrap.BootstrapButton
+                    android:id="@+id/weddingvenue_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="wedding venue"
+                    app:bootstrapBrand="success"
+                    app:bootstrapSize="md"
+                    app:buttonMode="regular"
+                    app:roundedCorners="true"
+                    app:showOutline="true"
+                    />
+
+                <com.beardedhen.androidbootstrap.BootstrapButton
+                    android:id="@+id/athelier_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="athelier"
+                    app:bootstrapBrand="success"
+                    app:bootstrapSize="md"
+                    app:buttonMode="regular"
+                    app:roundedCorners="true"
+                    android:layout_marginLeft="@dimen/_8sdp"
+                    app:showOutline="true" />
+
+                <com.beardedhen.androidbootstrap.BootstrapButton
+                    android:id="@+id/veildesigner_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="veil designer"
+                    app:bootstrapBrand="success"
+                    app:bootstrapSize="md"
+                    app:buttonMode="regular"
+                    app:roundedCorners="true"
+                    android:layout_marginLeft="@dimen/_8sdp"
+                    app:showOutline="true" />
+
+
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/_6sdp"
+                >
+            <com.beardedhen.androidbootstrap.BootstrapButton
+                android:id="@+id/videographer_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="video grapher"
+                app:bootstrapBrand="success"
+                app:bootstrapSize="md"
+                app:buttonMode="regular"
+                app:roundedCorners="true"
+
+                app:showOutline="true" />
+            </LinearLayout>
         </LinearLayout>
 
         <ExpandableListView
+            android:paddingTop="@dimen/_8sdp"
             android:id="@+id/expandableListView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

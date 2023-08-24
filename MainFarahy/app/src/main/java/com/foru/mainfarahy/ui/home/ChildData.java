@@ -3,7 +3,7 @@ package com.foru.mainfarahy.ui.home;
 
 public class ChildData {
     private String phoneNumber;
-
+/*
     // Constructor
     public ChildData(String phoneNumber) {
         this.phoneNumber = phoneNumber;
@@ -21,6 +21,7 @@ public class ChildData {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+    */
 
 }
 
