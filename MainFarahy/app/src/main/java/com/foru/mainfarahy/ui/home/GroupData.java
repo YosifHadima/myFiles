@@ -56,7 +56,7 @@ public class GroupData {
         return userId;
     }
 
-    public void setUserId(String imageUrl) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 }

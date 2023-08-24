@@ -1,11 +1,17 @@
 package com.foru.mainfarahy.ui.home;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,22 +62,34 @@ public class HomeFragment extends Fragment {
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
                 //String childTitle = childData.get(groupData.get(groupPosition)).get(childPosition).get("childTitle");
                 //Toast.makeText(getActivity(), "Selected: " + childTitle, Toast.LENGTH_SHORT).show();
+                String phoneNumber =groupDataList.get(groupPosition).getChildren().get(groupPosition).getPhoneNumber();
+
+                // Specify the SIM slot index (0 for SIM1, 1 for SIM2)
+                int simSlotIndex = 0;
+
+                // Check if the device is running Android 10 or earlier
+                if (android.os.Build.VERSION.SDK_INT <= android.os.Build.VERSION_CODES.Q) {
+                    makeCallUsingSimSlot(phoneNumber, simSlotIndex);
+                } else {
+                    // For Android 11 and later, open the dialer with the number filled in
+                    openDialer(phoneNumber);
+                }
                 return true;
             }
         });
         expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+                // Create an Intent
+                Intent intent = new Intent(getActivity(), RetriveActivity.class);
 
-                if (parent.isGroupExpanded(groupPosition)) {
-                    //Log.e("my joe childPosition", "yes");
+                // Put the string as an extra in the Intent
+                intent.putExtra("STRING_EXTRA",groupDataList.get(groupPosition).getUserId() );
+                //String x= groupDataList.get(groupPosition).getUserId();
+                //Log.e("my joe childPosition", groupDataList.get(groupPosition).getUserId());
+                // Start the new activity
+                startActivity(intent);
 
-                    parent.collapseGroup(groupPosition);
-                } else {
-                 //   Log.e("my joe childPosition", "No");
-
-                    parent.expandGroup(groupPosition);
-                }
 
                 return true; // Returning true ensures the default behavior (expansion/collapse) doesn't occur
             }
@@ -128,9 +146,23 @@ public class HomeFragment extends Fragment {
                 Log.e("FirebaseRead", "Failed to read data.", databaseError.toException());
             }
         });
-        expandableListAdapter = new ExpandableListAdapter(getActivity(), groupDataList);
+        expandableListAdapter = new ExpandableListAdapter(getActivity(), groupDataList,expandableListView);
         expandableListView.setAdapter(expandableListAdapter);
       //  prepareData();
+        EditText etSearch = root.findViewById(R.id.etSearch);
+        etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                expandableListAdapter.filterByName(s.toString());
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
         return root;
     }
 
@@ -140,6 +172,24 @@ public class HomeFragment extends Fragment {
         binding = null;
     }
 
+    private void openDialer(String phoneNumber) {
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        Uri uri = Uri.fromParts("tel", phoneNumber, null);
+        intent.setData(uri);
+        startActivity(intent);
+    }
+    private void makeCallUsingSimSlot(String phoneNumber, int simSlotIndex) {
+        Intent intent = new Intent(Intent.ACTION_CALL);
+
+        Uri uri = Uri.fromParts("tel", phoneNumber, null);
+        intent.setData(uri);
+
+        // Specify the SIM slot index as an extra (0 for SIM1, 1 for SIM2)
+        intent.putExtra("com.android.phone.force.slot", true);
+        intent.putExtra("com.android.phone.extra.slot", simSlotIndex);
+
+        startActivity(intent);
+    }
 
 
 }

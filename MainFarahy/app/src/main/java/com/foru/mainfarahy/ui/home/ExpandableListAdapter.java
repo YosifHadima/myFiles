@@ -5,12 +5,14 @@ import android.animation.AnimatorSet;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -30,13 +32,19 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
+    private ExpandableListView expandableListView;
+    private ExpandableListAdapter adapter;  // Add this field
 
     private Context context;
     private List<GroupData> groupDataList;
+    private List<GroupData> filteredData;
 
-    public ExpandableListAdapter(Context context, List<GroupData> groupDataList) {
+
+    public ExpandableListAdapter(Context context, List<GroupData> groupDataList,ExpandableListView listView) {
         this.context = context;
         this.groupDataList = groupDataList;
+        this.expandableListView = listView;
+        this.filteredData = new ArrayList<>(groupDataList);
     }
 
     @Override
@@ -88,10 +96,21 @@ LinearLayout linearLayout=convertView.findViewById(R.id.linearGroup);
         TextView groupTitleTextView = convertView.findViewById(R.id.groupTitleTextView);
         TextView groupSubtitleTextView = convertView.findViewById(R.id.groupSubtitleTextView);
          ImageView groupImageView = convertView.findViewById(R.id.groupImageView);
+        ImageView arrowImageView = convertView.findViewById(R.id.arrowid);
 
       //  Log.e("my joe childPosition", groupTitle);
         groupTitleTextView.setText(groupDataList.get(groupPosition).getStoreName());
         groupSubtitleTextView.setText(groupDataList.get(groupPosition).getBusinessName());
+        arrowImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isExpanded) {
+                    expandableListView.collapseGroup(groupPosition);
+                } else {
+                    expandableListView.expandGroup(groupPosition);
+                }
+            }
+        });
 if (isExpanded){
     linearLayout.setPadding(4,4,4,0);
 }else {
@@ -153,6 +172,28 @@ if (isExpanded){
         return true;
     }
 
+    public void filterByName(String query) {
+        filteredData.clear();
+        Log.d("joe Filter", "cleared changed: " );
+        if (query.isEmpty()) {
+            filteredData.addAll(groupDataList);
+            Log.d("joe added", "Text add: " );
+        } else {
+            Log.d("joe Filter", "Text elsee: " +filteredData.size() );
+            for (GroupData group : groupDataList) {
+                //Log.d("joe Filter", group.getBusinessNacme() );
+                if (group.getBusinessName().toLowerCase().contains(query.toLowerCase())) {
+                    Log.d("joe Filter", "Text changed: "+group.getBusinessName() );
 
+                    filteredData.add(group);
+                }
+            }
+        }
+   //force reflecting filter on the exbandable list view
+        adapter= new ExpandableListAdapter(this.context, filteredData,expandableListView);
+        expandableListView.setAdapter(adapter);
+        notifyDataSetChanged();
+
+    }
 
 }

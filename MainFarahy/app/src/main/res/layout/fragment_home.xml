@@ -32,6 +32,34 @@
         android:paddingRight="8dp">
 
         <!-- Custom ExpandableListView -->
+        <EditText
+            android:id="@+id/etSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <com.beardedhen.androidbootstrap.BootstrapButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="makeup artist"
+                    app:bootstrapBrand="success"
+                    app:bootstrapSize="md"
+                    app:buttonMode="regular"
+                    app:roundedCorners="true"
+                    app:showOutline="true" />
+            </LinearLayout>
+
+        </LinearLayout>
+
         <ExpandableListView
             android:id="@+id/expandableListView"
             android:layout_width="match_parent"
