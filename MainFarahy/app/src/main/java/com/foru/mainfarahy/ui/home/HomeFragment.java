@@ -3,12 +3,15 @@ package com.foru.mainfarahy.ui.home;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ProgressBar;
@@ -54,6 +57,11 @@ public class HomeFragment extends Fragment {
     private boolean veildesigner_flag=true;
     private boolean videographer_flag=true;
     private ProgressBar progressBar;
+
+
+    private int currentIndex = 0;
+    private boolean isEnglish = true;
+    private Handler handler = new Handler();
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         HomeViewModel homeViewModel =
@@ -87,7 +95,8 @@ public class HomeFragment extends Fragment {
                 //Toast.makeText(getActivity(), "Selected: " + childTitle, Toast.LENGTH_SHORT).show();
                 //String phoneNumber =groupDataList.get(groupPosition).getPhoneNumber();
                 String phoneNumber="";
-                if (makeup_flag && athelier_flag && hairstylist_flag && veildesigner_flag&&videographer_flag&&weddingplanner_flag&&weddingVenue_flag){
+
+                if (makeup_flag && athelier_flag && hairstylist_flag && veildesigner_flag&&videographer_flag&&weddingplanner_flag&&weddingVenue_flag ){
                      phoneNumber =groupDataList.get(groupPosition).getPhoneNumber();
 
                 }else {
@@ -212,6 +221,13 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //clear all previouse buttons click
+                makeup_flag=true;
+                weddingVenue_flag=true;
+                weddingplanner_flag=true;
+                athelier_flag=true;
+                hairstylist_flag=true;
+                veildesigner_flag=true;
+
                 ClearAllButtons();
                 videographer_flag=!videographer_flag;
                 videographer_Button.setShowOutline(videographer_flag);
@@ -237,6 +253,13 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //clear all previouse buttons click
+                makeup_flag=true;
+                weddingVenue_flag=true;
+                weddingplanner_flag=true;
+                athelier_flag=true;
+                hairstylist_flag=true;
+
+                videographer_flag=true;
                 ClearAllButtons();
                 veildesigner_flag=!veildesigner_flag;
                 veildesigner_Button.setShowOutline(veildesigner_flag);
@@ -261,6 +284,13 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //clear all previouse buttons click
+
+                weddingVenue_flag=true;
+                weddingplanner_flag=true;
+                athelier_flag=true;
+                hairstylist_flag=true;
+                veildesigner_flag=true;
+                videographer_flag=true;
                 ClearAllButtons();
                 makeup_flag=!makeup_flag;
                 makeup_Button.setShowOutline(makeup_flag);
@@ -285,6 +315,13 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //clear all previouse buttons click
+                makeup_flag=true;
+                weddingVenue_flag=true;
+
+                athelier_flag=true;
+                hairstylist_flag=true;
+                veildesigner_flag=true;
+                videographer_flag=true;
                 ClearAllButtons();
                 weddingplanner_flag=!weddingplanner_flag;
                 weddingplanner_Button.setShowOutline(weddingplanner_flag);
@@ -309,6 +346,13 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //clear all previouse buttons click
+                makeup_flag=true;
+
+                weddingplanner_flag=true;
+                athelier_flag=true;
+                hairstylist_flag=true;
+                veildesigner_flag=true;
+                videographer_flag=true;
                 ClearAllButtons();
                 weddingVenue_flag=!weddingVenue_flag;
                 weddingvenue_Button.setShowOutline(weddingVenue_flag);
@@ -333,6 +377,12 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //clear all previouse buttons click
+                makeup_flag=true;
+                weddingVenue_flag=true;
+                weddingplanner_flag=true;
+                hairstylist_flag=true;
+                veildesigner_flag=true;
+                videographer_flag=true;
                 ClearAllButtons();
                 athelier_flag=!athelier_flag;
                 athelier_Button.setShowOutline(athelier_flag);
@@ -359,6 +409,12 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //clear all previouse buttons click
+                makeup_flag=true;
+                weddingVenue_flag=true;
+                weddingplanner_flag=true;
+                athelier_flag=true;
+                veildesigner_flag=true;
+                videographer_flag=true;
                 ClearAllButtons();
                 hairstylist_flag=!hairstylist_flag;
                 hairStylistButton.setShowOutline(hairstylist_flag);
@@ -378,7 +434,8 @@ public class HomeFragment extends Fragment {
             }
         });
 
-
+        groupDataList.clear();
+        startWordChangingProcess();
         return root;
     }
 private void ClearAllButtons(){
@@ -390,9 +447,13 @@ private void ClearAllButtons(){
     veildesigner_Button.setShowOutline(true);
     videographer_Button.setShowOutline(true);
 
+
+
 }    @Override
     public void onDestroyView() {
         super.onDestroyView();
+        handler.removeCallbacksAndMessages(null);
+
         binding = null;
     }
 
@@ -434,6 +495,129 @@ private void ClearAllButtons(){
                 }
             }
         }
+
+    }
+
+    private void startWordChangingProcess() {
+        handler.postDelayed(wordChangeRunnable, 5000);
+    }
+
+    private Runnable wordChangeRunnable = new Runnable() {
+        @Override
+        public void run() {
+            changeWordAndAnimate();
+            handler.postDelayed(this, 5000);
+        }
+    };
+
+    private void changeWordAndAnimate() {
+      //  final String word;
+        final String makeup_word;
+        final String weddingVenue_word;
+        final String weddingplanner_word;
+        final String athelier_word;
+        final String hairstylist_word;
+        final String veildesigner_word;
+        final String videographer_word;
+
+        if (isEnglish) {
+          //  word = "makeup artist";
+            makeup_word= "makeup artist";
+            weddingVenue_word= "wedding venue";
+            weddingplanner_word= "wedding planner";
+            athelier_word= "athelier";
+            hairstylist_word= " hair stylist";
+            videographer_word= "video grapher";
+            veildesigner_word= "veil designer";
+
+        } else {
+           // word = "خبيرة تجميل";
+            makeup_word= "خبيرة تجميل";
+            weddingVenue_word= "قاعة افراح";
+            weddingplanner_word= "منظم حفلات الزفاف";
+            athelier_word= "اتيليه";
+            hairstylist_word= " مصفف الشعر";
+            videographer_word= "مصور فيديو";
+            veildesigner_word= "مصمم الحجاب";
+        }
+
+        AlphaAnimation fadeOut = new AlphaAnimation(1.0f, 0.0f);
+        fadeOut.setDuration(1000);
+        fadeOut.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                makeup_Button.setText(makeup_word);
+                weddingplanner_Button.setText(weddingplanner_word);
+                hairStylistButton.setText(hairstylist_word);
+                weddingvenue_Button.setText(weddingVenue_word);
+                athelier_Button.setText(athelier_word);
+                veildesigner_Button.setText(veildesigner_word);
+                videographer_Button.setText(videographer_word);
+                AlphaAnimation fadeIn = new AlphaAnimation(0.0f, 1.0f);
+                fadeIn.setDuration(1000);
+                makeup_Button.startAnimation(fadeIn);
+                weddingplanner_Button.startAnimation(fadeIn);
+                hairStylistButton.startAnimation(fadeIn);
+                weddingvenue_Button.startAnimation(fadeIn);
+                athelier_Button.startAnimation(fadeIn);
+                veildesigner_Button.startAnimation(fadeIn);
+                videographer_Button.startAnimation(fadeIn);
+               // isEnglish = !isEnglish;
+               // currentIndex = (currentIndex + 1) % englishWords.length;
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
+
+        AlphaAnimation fadeIn = new AlphaAnimation(0.0f, 1.0f);
+        fadeIn.setDuration(1000);
+        fadeIn.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                makeup_Button.setText(makeup_word);
+                weddingplanner_Button.setText(weddingplanner_word);
+                hairStylistButton.setText(hairstylist_word);
+                weddingvenue_Button.setText(weddingVenue_word);
+                athelier_Button.setText(athelier_word);
+                veildesigner_Button.setText(veildesigner_word);
+                videographer_Button.setText(videographer_word);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                handler.postDelayed(() -> {
+                    makeup_Button.startAnimation(fadeOut);
+                    weddingplanner_Button.startAnimation(fadeOut);
+                    hairStylistButton.startAnimation(fadeOut);
+                    weddingvenue_Button.startAnimation(fadeOut);
+                    athelier_Button.startAnimation(fadeOut);
+                    veildesigner_Button.startAnimation(fadeOut);
+                    videographer_Button.startAnimation(fadeOut);
+                }, 3000);
+
+
+                isEnglish = !isEnglish;
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
+
+        makeup_Button.startAnimation(fadeIn);
+        weddingplanner_Button.startAnimation(fadeIn);
+        hairStylistButton.startAnimation(fadeIn);
+        weddingvenue_Button.startAnimation(fadeIn);
+        athelier_Button.startAnimation(fadeIn);
+        veildesigner_Button.startAnimation(fadeIn);
+        videographer_Button.startAnimation(fadeIn);
+
 
     }
 
