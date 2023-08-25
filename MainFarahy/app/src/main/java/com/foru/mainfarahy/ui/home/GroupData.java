@@ -8,7 +8,7 @@ public class GroupData {
     private String businessName;
     private String imageUrl;
     private String phoneNumber;
-    private String viewsCount;
+    private String viewsCount="0";
    // private List<ChildData> children;
     // Getter for email
 
