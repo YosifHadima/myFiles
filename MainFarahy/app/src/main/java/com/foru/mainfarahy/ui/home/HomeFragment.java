@@ -197,6 +197,7 @@ public class HomeFragment extends Fragment {
                 Log.e("FirebaseRead", "Failed to read data.", databaseError.toException());
             }
         });
+        filteredData = new ArrayList<>();
         expandableListAdapter = new ExpandableListAdapter(getActivity(), groupDataList,expandableListView);
         expandableListView.setAdapter(expandableListAdapter);
 
