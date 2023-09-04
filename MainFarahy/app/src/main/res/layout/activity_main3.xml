@@ -558,15 +558,16 @@
                         android:text="TextView" />
 
                     <LinearLayout
-                        android:id="@+id/TBD_id"
+                        android:id="@+id/Ads_id"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:clickable="true"
+                        android:onClick="onAdsClicked"
                         android:foreground="?android:attr/selectableItemBackground"
                         android:orientation="vertical"
-                        android:visibility="invisible"
+                        android:visibility="visible"
                         android:paddingLeft="@dimen/_35sdp"
                         android:paddingRight="@dimen/_50sdp">
 
@@ -579,7 +580,7 @@
                             android:cropToPadding="false"
                             android:scaleType="fitCenter"
                             android:visibility="visible"
-                            app:srcCompat="@drawable/appointments_1" />
+                            app:srcCompat="@drawable/ads" />
 
                         <TextView
 
@@ -588,7 +589,7 @@
                             android:fontFamily="@font/alfont"
                             android:gravity="center"
                             android:paddingTop="@dimen/_16sdp"
-                            android:text="المواعيد"
+                            android:text="اعلانات"
                             android:textColor="#575555"
                             android:textSize="@dimen/_11sdp"
                             android:textStyle="bold" />

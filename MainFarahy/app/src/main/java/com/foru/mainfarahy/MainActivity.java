@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Point;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
@@ -614,6 +615,11 @@ if (y<=0 && m<=0 && d<=0){
 
     }
 
+    public void onAdsClicked(View view){
+        String websiteUrl = "https://play.google.com/store/apps/details?id=com.foru.adsfarahy"; // Replace with your desired website URL
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(websiteUrl));
+        startActivity(intent);
+    }
 
     private void ShowIntro(String title, String text, int viewId, final int type) {
 

@@ -32,6 +32,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import android.os.Bundle;
 import android.view.View;
@@ -39,8 +41,12 @@ import android.widget.ExpandableListView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
+
 public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
     private DatabaseReference databaseReference;
@@ -166,7 +172,42 @@ public class HomeFragment extends Fragment {
                     groupData.setviewsCount(groupSnapshot.child(userID).child("myviews").getValue(String.class));
                     groupData.setUserId(userID);
                     groupData.setPhoneNumber(groupSnapshot.child(userID).child("phoneNumber").getValue(String.class));
-                    /*
+
+
+                    String EndDate=groupSnapshot.child(userID).child("endDate").getValue(String.class);
+                    String Status =groupSnapshot.child(userID).child("status").getValue(String.class);
+
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                    if(Status!=null){
+                        if (Status.equals("Active")){
+                            if (EndDate!=null) {
+                                try {
+                                    Date givenDate = dateFormat.parse(EndDate);
+                                    Date currentDate = new Date();
+
+                                    long differenceInMillis = givenDate.getTime() - currentDate.getTime();
+                                    long differenceInDays = TimeUnit.DAYS.convert(differenceInMillis, TimeUnit.MILLISECONDS);
+
+                                    if (differenceInDays >= 0) {
+
+                                        groupDataList.add(groupData);
+                                    }
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+
+                    }
+
+
+
+
+
+
+
+                            /*
+:
                     List<ChildData> childDataList = new ArrayList<>();
                     for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
                         ChildData childData = new ChildData();
@@ -184,7 +225,10 @@ public class HomeFragment extends Fragment {
 
                     groupData.setChildren(childDataList);
                     */
-                    groupDataList.add(groupData);
+
+                        //groupDataList.add(groupData);
+
+
                 }
                 progressBar.setVisibility(ProgressBar.GONE);
                 expandableListAdapter.notifyDataSetChanged();

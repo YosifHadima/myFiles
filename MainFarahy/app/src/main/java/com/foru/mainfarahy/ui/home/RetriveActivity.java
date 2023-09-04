@@ -92,13 +92,14 @@ int countMyViews=0;
     TextView businessName;
     TextView storeName;
     String storeNameTemp;
+    boolean isReview = false;
     private String selectedCategory = ""; // Store the selected category
 
     //private PrefManager prefManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_retrive);
+        setContentView(R.layout.fancylayout);
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
@@ -118,7 +119,7 @@ int countMyViews=0;
         // Initialize the ProgressBar
         progressBar = findViewById(R.id.progressBar);
         layout = findViewById(R.id.imageLayout);
-        profileButton=findViewById(R.id.changeProfile_id);
+      //  profileButton=findViewById(R.id.changeProfile_id);
         profileImageView=findViewById(R.id.profileImageView);
         displayTextView=findViewById(R.id.Description_Id);
         editeDescription=findViewById(R.id.editeDescription_id);
@@ -230,7 +231,7 @@ int countMyViews=0;
                     @Override
                     public void onClick(View v) {
 
-                        //showEnlargedImage(finalImageView, imageUrl);
+                        showEnlargedImage(finalImageView, imageUrl);
 
                     }
 
@@ -263,16 +264,52 @@ int countMyViews=0;
         loadbusinessName();
         loadStoreName();
         loadmyviewsAndUpdate();
+        loadViwes();
     }
 
+    private void loadViwes(){
 
+        DatabaseReference mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploads/"+currentUser+"/"+currentUser);
+
+        mDatabaseRef.child("myviews")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        String text = dataSnapshot.getValue(String.class);
+                        if (text != null) {
+                            // facebookLink.setText(text);
+                            // Hide the ProgressBar after loading is complete
+                            //  progressBar.setVisibility(ProgressBar.INVISIBLE);
+                            if (!text.equals("")){
+                                TextView counter_id =findViewById(R.id.counter_id);
+                                counter_id.setText(text);
+
+                            }
+
+                        }
+
+
+
+                        // Change this delay to suit your loading duration
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        // Handle the error if the database retrieval is canceled.
+                        // For simplicity, we'll set a default text.
+
+                    }
+                });
+    }
     public void onProfileImageClicked(View view) {
         // Implement the logic to capture an image or pick from the gallery
         // For simplicity, I'll show an example for picking from the gallery
+if (isReview){
+    Intent pickImageIntent = new Intent(Intent.ACTION_PICK,
+            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+    startActivityForResult(pickImageIntent, REQUEST_IMAGE_PICK);
+}
 
-        Intent pickImageIntent = new Intent(Intent.ACTION_PICK,
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(pickImageIntent, REQUEST_IMAGE_PICK);
     }
 
 
@@ -305,6 +342,8 @@ int countMyViews=0;
                             // Hide the ProgressBar after loading is complete
                             //  progressBar.setVisibility(ProgressBar.INVISIBLE);
                             facebooklinkTemp=text;
+                            TextView facebookLink_id =findViewById(R.id.facebookLink_id);
+                            facebookLink_id.setText(extractStringUntilQuestionMark(text));
                         }
 
 
@@ -320,7 +359,17 @@ int countMyViews=0;
                     }
                 });
     }
+    public String extractStringUntilQuestionMark(String inputString) {
+        int indexOfQuestionMark = inputString.indexOf('?');
 
+        if (indexOfQuestionMark != -1) {
+            // If '?' character is found, extract the substring before it
+            return inputString.substring(0, indexOfQuestionMark);
+        } else {
+            // If '?' character is not found, return the original string
+            return inputString;
+        }
+    }
     private void loadInstgramLink(){
         DatabaseReference mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploads/"+currentUser+"/"+currentUser);
 
@@ -332,6 +381,8 @@ int countMyViews=0;
                         if (text != null) {
                             //instgramLink.setText(text);
                             InstgramLinkTemp=text;
+                            TextView linkdinLink_id=findViewById(R.id.linkdinLink_id);
+                            linkdinLink_id.setText( extractStringUntilQuestionMark(text));
                             // Hide the ProgressBar after loading is complete
                             //  progressBar.setVisibility(ProgressBar.INVISIBLE);
                         }
@@ -663,7 +714,7 @@ int countMyViews=0;
             Toast.makeText(this, "Please select an image first", Toast.LENGTH_SHORT).show();
         }
     }
-/*
+
     private void showEnlargedImage(ImageView ExpandImage , String imageUrl) {
         // Create a custom dialog builder
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -674,7 +725,8 @@ int countMyViews=0;
         ImageView dialogImageView = dialogView.findViewById(R.id.dialogImageView);
         Button deleteButton = dialogView.findViewById(R.id.deleteButton);
         Button cancelButton = dialogView.findViewById(R.id.cancelButton);
-
+        deleteButton.setVisibility(View.GONE);
+        cancelButton.setVisibility(View.GONE);
         // Set up the image and other views in the dialog as needed
         // For example, you can load a different image into dialogImageView
         // dialogImageView.setImageResource(R.drawable.your_another_image);
@@ -711,130 +763,45 @@ int countMyViews=0;
                 // Toast.makeText(getApplicationContext(), "Clicked Position: " + clickedPosition, Toast.LENGTH_SHORT).show();
 
 
-                ////////////////////////////////// delete from storage/////////////
-                FirebaseStorage storage = FirebaseStorage.getInstance();
-                StorageReference folderRef = storage.getReference("uploads").child(currentUser.getEmail()).child(getImageNameFromURL(imageUrl)+".image");
-                //StorageReference fileRef = storageRef.child(getImageNameFromURL(imageUrl)+".image");
-
-                // Step 2: List all items within the folder
-                folderRef.listAll().addOnSuccessListener(new OnSuccessListener<ListResult>() {
-                    @Override
-                    public void onSuccess(ListResult listResult) {
-                        List<StorageReference> items = listResult.getItems();
-
-                        // Step 3: Iterate through the items and delete each file
-                        for (StorageReference item : items) {
-                            item.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    // File deletion successful
-
-                                    // Step 4: Remove the folder reference to delete the empty folder
-                                    folderRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            // Folder deletion successful
-                                        }
-                                    }).addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            // Folder deletion failed
-
-                                        }
-                                    });
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    // File deletion failed
-                                }
-                            });
-                        }
 
 
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        // Failed to list items within the folder
-                    }
-                });
-
-                //////////////////DELETE IMAGE////////////////////////////
-                /////////////////////////////////////////////////////////
-                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-                DatabaseReference nodeToDeleteRef = databaseReference.child("uploads/"+currentUser.getUid()+"/"+currentUser.getUid()+"/imageUrls");
-                nodeToDeleteRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        List<Object> arrayValues = new ArrayList<>();
-                        for (DataSnapshot valueSnapshot : dataSnapshot.getChildren()) {
-                            Object value = valueSnapshot.getValue();
-                            arrayValues.add(value);
-                        }
-
-                        // Remove the desired value from the array
-                        arrayValues.remove(imageUrl); // Replace "value2" with the value you want to delete
-
-                        // Update the modified array back to the database
-                        nodeToDeleteRef.setValue(arrayValues).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    // Deletion successful
-                                    Toast.makeText(getApplicationContext(), "Image have been deleted: " , Toast.LENGTH_SHORT).show();
-
-                                } else {
-                                    // Deletion failed
-                                    Toast.makeText(getApplicationContext(), "Failed to Delete image: " , Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
-
-
-                        ////////////////////////////////////////////////////////
-                        ////////////////////END OF DELETE section///////////////
-                        ////////////////////////////////////////////////////////
-
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        // Error occurred while fetching data
-                    }
-                });
 
                 dialog.dismiss();
             }
         });
     }
-*/
+
     public void onFacebookImageClicked(View view){
         // Replace 'your_facebook_link' with the actual link you want to open
         String facebookLink = facebooklinkTemp;
-
-        if (isValidUrl(facebookLink)) {
-            openAPPLink(facebookLink);
-        } else {
-            // Handle invalid URL gracefully (e.g., show a toast message)
-            // You can use a library like Toast or Snackbar for this purpose
-            // Example with Toast:
-            Toast.makeText(RetriveActivity.this, "Invalid URL", Toast.LENGTH_SHORT).show();
+        if (facebookLink != null) {
+            if (isValidUrl(facebookLink)) {
+                openAPPLink(facebookLink);
+            } else {
+                // Handle invalid URL gracefully (e.g., show a toast message)
+                // You can use a library like Toast or Snackbar for this purpose
+                // Example with Toast:
+                Toast.makeText(RetriveActivity.this, "Invalid URL", Toast.LENGTH_SHORT).show();
+            }
         }
-    }
+
+        }
+
 
     public void onInstgramImageClicked(View view){
         String instgramLink = InstgramLinkTemp;
+if (instgramLink!=null){
 
-        if (isValidUrl(instgramLink)) {
-            openAPPLink(instgramLink);
-        } else {
-            // Handle invalid URL gracefully (e.g., show a toast message)
-            // You can use a library like Toast or Snackbar for this purpose
-            // Example with Toast:
-            Toast.makeText(RetriveActivity.this, "Invalid URL", Toast.LENGTH_SHORT).show();
-        }
+    if (isValidUrl(instgramLink)) {
+        openAPPLink(instgramLink);
+    } else {
+        // Handle invalid URL gracefully (e.g., show a toast message)
+        // You can use a library like Toast or Snackbar for this purpose
+        // Example with Toast:
+        Toast.makeText(RetriveActivity.this, "Invalid URL", Toast.LENGTH_SHORT).show();
+    }
+}
+
     }
 
     public void onCallImageClicked(View view){

@@ -26,6 +26,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -96,7 +97,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 LinearLayout linearLayout=convertView.findViewById(R.id.linearGroup);
         TextView groupTitleTextView = convertView.findViewById(R.id.groupTitleTextView);
         TextView groupSubtitleTextView = convertView.findViewById(R.id.groupSubtitleTextView);
-         ImageView groupImageView = convertView.findViewById(R.id.groupImageView);
+        CircularImageView groupImageView = convertView.findViewById(R.id.groupImageView);
         ImageView arrowImageView = convertView.findViewById(R.id.arrowid);
         TextView countView = convertView.findViewById(R.id.countview_id);
 

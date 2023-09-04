@@ -5,14 +5,14 @@ plugins {
 }
 
 android {
-    compileSdk 31
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.foru.mainfarahy"
         minSdk 21
-        targetSdk 31
-        versionCode 18
-        versionName "2.7"
+        targetSdk 33
+        versionCode 19
+        versionName "3.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -85,4 +85,9 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'androidx.cardview:cardview:1.0.0' // for CardView
     implementation 'com.beardedhen:androidbootstrap:2.3.2'
+    implementation 'com.mikhaellopez:circularimageview:4.3.1'
+
+    def lifecycle_version = "2.4.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
 }

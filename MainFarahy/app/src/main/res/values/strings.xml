@@ -74,4 +74,48 @@
     <string name="title_home">home</string>
     <string name="title_dashboard">dashboard</string>
     <string name="title_notifications">notifications</string>
+
+    <string name="wedding_venue">WEDDING VENUE</string>
+    <string name="wedding_planner">wedding planner</string>
+    <string name="athelier">athelier</string>
+    <string name="hair_stylist">hair stylist</string>
+    <string name="makeup_artist">makeup artist</string>
+    <string name="veil_designer">veil designer</string>
+    <string name="video_grapher">video grapher</string>
+    <string name="choose_your_business">Choose Your Business</string>
+
+    <string name="profile_image">Profile image</string>
+    <string name="description">Description</string>
+    <string name="store_images">Photos</string>
+    <string name="contact_information">About</string>
+    <string name="publish">publish</string>
+
+    <string name="first_2_months_60_days">/ first 2 Months (60 days)</string>
+    <string name="original_price_1500_egp">Original Price: 1500 EGP</string>
+    <string name="pay_now">Pay Now</string>
+    <string name="free">Free</string>
+    <string name="egp">EGP</string>
+
+    <string name="standard">Standard</string>
+    <string name="week_7_days">/Week (7 days)</string>
+    <string name="original_price_210_egp">Original Price: 280 EGP</string>
+    <string name="business">Business</string>
+    <string name="month_30_days">/Month (30 days)</string>
+    <string name="original_price_900_egp">Original Price: 900 EGP</string>
+    <string name="professional">Professional</string>
+    <string name="_3_month_60_days">/3 Month (90 days)</string>
+    <string name="original_price_2700_egp">Original Price: 2340 EGP</string>
+    <string name="elite">Elite</string>
+    <string name="_6_month_180_days">/6 Month (180 days)</string>
+    <string name="original_price_5400_egp">Original Price: 3960 EGP</string>
+    <string name="select_images">Select Images</string>
+    <string name="upload">Upload</string>
+    <string name="update">Update</string>
+    <string name="enter_new_store_name">Enter new store name</string>
+    <string name="delete_image">Delete Image</string>
+    <string name="instgram_link">Instgram Link</string>
+    <string name="facebook_link">Facebook Link</string>
+    <string name="maximum_5_pictures_to_upload">Maximum 5 pictures to upload</string>
+    <string name="thank_you_for_your_payment_we_re_thrilled_about_your_ad_package_we_ll_review_and_activate_your_account_within_an_hour_exciting_times_ahead">Thank you for your payment! We\'re thrilled about your ad package. We\'ll review and activate your account within an hour. Exciting times ahead!</string>
+
 </resources>

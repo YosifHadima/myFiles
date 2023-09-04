@@ -23,10 +23,17 @@
             android:padding="4dp"
             android:weightSum="3">
 
-            <ImageView
+            <com.mikhaellopez.circularimageview.CircularImageView
                 android:id="@+id/groupImageView"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+
+
+                app:civ_border_color="#FDFEFF"
+                app:civ_border_width="2dp"
+                app:civ_shadow="true"
+                app:civ_shadow_radius="5dp"
+                app:civ_shadow_color="#3f51b5"
                 android:src="@drawable/ic_contact" />
 
             <LinearLayout
@@ -48,7 +55,9 @@
                     android:id="@+id/groupSubtitleTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingTop="8dp"
                     android:text="Group Subtitle"
+                    android:textAllCaps="true"
                     android:textSize="12sp" />
 
                 <LinearLayout
