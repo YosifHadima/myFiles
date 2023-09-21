@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -21,14 +22,19 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.bumptech.glide.Glide;
+import com.foru.mainfarahy.ui.home.GroupData;
+import com.foru.mainfarahy.ui.home.RetriveActivity;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
@@ -41,11 +47,21 @@ import com.google.android.gms.ads.initialization.OnInitializationCompleteListene
 //import com.facebook.ads.AudienceNetworkAds;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import render.animations.Attention;
 import render.animations.Render;
@@ -70,6 +86,10 @@ LinearLayout VendorLayout;
     TextView yearText;
     TextView monthText;
     TextView daysText;
+    private List<GroupData> groupDataList;
+
+    private DatabaseReference databaseReference;
+
     TextView weddingday;
     TextView bridename;
     TextView bridManName;
@@ -79,6 +99,7 @@ LinearLayout VendorLayout;
     LinearLayout LoveInfo;
     private AdView adView;
     Handler handler = new Handler();
+    int randomeAdSelect;
     Runnable runnable;
     int delay = 1*1000; //Delay for 15 seconds.  One second = 1000 milliseconds.
 
@@ -147,7 +168,7 @@ AudienceNetworkAds.initialize(this);
         setContentView(R.layout.activity_main3);
     //    loadadd();
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-
+        groupDataList = new ArrayList<>();
         myDb= new DataBaseHelperDate(this);
         myDbGehaz= new DataBaseHelper(this);
         dot_1=findViewById(R.id.dot_1);
@@ -498,9 +519,120 @@ LoveInfo=findViewById(R.id.infoheart_id);
                 startActivity(intent);
             }
         });
+
+
+
+        loadADs();
+        findViewById(R.id.centerImage).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, RetriveActivity.class);
+                intent.putExtra("STRING_EXTRA",groupDataList.get(randomeAdSelect).getUserId() );
+
+                startActivity(intent);
+            }
+        });
     }
     Render render;
+private void loadADs(){
+    databaseReference = FirebaseDatabase.getInstance().getReference("uploads");
+    databaseReference.addValueEventListener(new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            groupDataList.clear();
+/*
+                for (DataSnapshot childSnapshot : groupSnapshot.child("children").getChildren()) {
+                    ChildData childData = new ChildData();
+                    childData.setPhoneNumber( childSnapshot.child("phoneNumber").getValue(String.class));
+                    childDataList.add(childData);
+                }
 
+*/
+
+
+            for (DataSnapshot groupSnapshot : dataSnapshot.getChildren()) {
+                GroupData groupData = new GroupData();
+                //   Log.e("my joe id", String.valueOf( groupSnapshot.getKey()));
+                String userID =groupSnapshot.getKey();
+                groupData.setStoreName(groupSnapshot.child(userID).child("StoreName").getValue(String.class));
+                groupData.setImageUrl(groupSnapshot.child(userID).child("profileImage").getValue(String.class));
+                groupData.setBusinessName(groupSnapshot.child(userID).child("BusinessName").getValue(String.class));
+                groupData.setviewsCount(groupSnapshot.child(userID).child("myviews").getValue(String.class));
+                groupData.setUserId(userID);
+                groupData.setPhoneNumber(groupSnapshot.child(userID).child("phoneNumber").getValue(String.class));
+
+
+                String EndDate=groupSnapshot.child(userID).child("endDate").getValue(String.class);
+                String Status =groupSnapshot.child(userID).child("status").getValue(String.class);
+
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                if(Status!=null){
+                    if (Status.equals("Active")){
+                        if (EndDate!=null) {
+                            try {
+                                Date givenDate = dateFormat.parse(EndDate);
+                                Date currentDate = new Date();
+
+                                long differenceInMillis = givenDate.getTime() - currentDate.getTime();
+                                long differenceInDays = TimeUnit.DAYS.convert(differenceInMillis, TimeUnit.MILLISECONDS);
+
+                                if (differenceInDays >= 0) {
+
+                                    groupDataList.add(groupData);
+                                }
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
+                }
+
+
+            }
+            if (!groupDataList.isEmpty()){
+                // Create a new Random object
+                Random random = new Random();
+                //select random ads
+                 randomeAdSelect=random.nextInt(groupDataList.size());
+
+                ImageView imageView = findViewById(R.id.centerImage);
+                // groupDataList.get(0).getImageUrl()
+
+                Glide.with(getApplicationContext())
+                        .load(groupDataList.get(randomeAdSelect).getImageUrl())
+                        .into(imageView);
+
+                TextView myTextAd=findViewById(R.id.myTextAd);
+                myTextAd.setText(groupDataList.get(randomeAdSelect).getStoreName());
+
+                TextView myTextAd2=findViewById(R.id.myTextAd2);
+                myTextAd2.setText(groupDataList.get(randomeAdSelect).getBusinessName());
+                if (groupDataList.get(randomeAdSelect).getImageUrl()!=null){
+
+                    findViewById(R.id.Ad_Image2).setVisibility(View.VISIBLE);
+                    findViewById(R.id.Ad_Image1).setVisibility(View.VISIBLE);
+                }
+            }
+
+
+
+            //display image here
+        }
+
+
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+            Log.e("FirebaseRead", "Failed to read data.", databaseError.toException());
+        }
+    });
+}
+   public void CloseAd(View view){
+     findViewById(R.id.Ad_Image2).setVisibility(View.GONE);
+     findViewById(R.id.Ad_Image1).setVisibility(View.GONE);
+
+   }
     private void   loadallData(){
         //ArrayList<GuestClass> Headers = new ArrayList<>();
         Cursor res = myDb.getALData();

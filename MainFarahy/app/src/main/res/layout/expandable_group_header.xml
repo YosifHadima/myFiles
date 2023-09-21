@@ -78,7 +78,7 @@
                         android:layout_height="wrap_content"
                         android:paddingLeft="4dp"
                         android:text="0"
-                        android:textColor="@color/material_dynamic_neutral50" />
+                        />
                 </LinearLayout>
 
             </LinearLayout>
